@@ -1,0 +1,10 @@
+#!/usr/bin/env python3
+
+OBJCOPY = '@OBJCOPY@'
+GBAFIX = '@GBAFIX@'
+
+import subprocess
+from sys import argv
+
+subprocess.call([OBJCOPY, '-O', 'binary'] + argv[1:3])
+subprocess.call([GBAFIX] + argv[2:])
