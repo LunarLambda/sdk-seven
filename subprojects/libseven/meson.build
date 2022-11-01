@@ -1,7 +1,7 @@
 project('libseven', 'c',
-  version: '0.7.0',
+  version: '0.7.1',
   license: 'MPL-2.0',
-  default_options: ['c_std=c99'])
+  default_options: ['warning_level=2', 'c_std=c99'])
 
 sources = [
   'src/hw/dma.s',
@@ -21,14 +21,16 @@ sources = [
   'src/video/oam.s',
 ]
 
+includes = ['include']
+
 libseven = static_library(
   'seven',
   sources,
-  include_directories: ['include', 'src'],
-  c_args: ['-ffunction-sections', '-fdata-sections', '-ffreestanding'])
+  include_directories: includes + 'src',
+  c_args: ['-mthumb', '-ffunction-sections', '-fdata-sections', '-ffreestanding'])
 
 libseven_dep = declare_dependency(
-  include_directories: ['include'],
+  include_directories: includes,
   link_with: libseven)
 
 meson.override_dependency('libseven', libseven_dep)
