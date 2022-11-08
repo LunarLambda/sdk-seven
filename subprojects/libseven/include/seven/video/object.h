@@ -73,7 +73,18 @@ enum ObjectAttribute1
 
 #define OBJ_AFFINE_MATRIX(n) BITFIELD(OBJ_AFFINE_MATRIX, n)
 
+#define BF_OBJ_FLIP_H_OFFSET 12
+#define BF_OBJ_FLIP_H_LENGTH 1
+
+#define OBJ_FLIP_H(n) BITFIELD(OBJ_FLIP_H)
+
     OBJ_FLIP_H = BIT(12),
+
+#define BF_OBJ_FLIP_V_OFFSET 13
+#define BF_OBJ_FLIP_V_LENGTH 1
+
+#define OBJ_FLIP_V(n) BITFIELD(OBJ_FLIP_V)
+
     OBJ_FLIP_V = BIT(13),
 
 #define BF_OBJ_SIZE_OFFSET 14
