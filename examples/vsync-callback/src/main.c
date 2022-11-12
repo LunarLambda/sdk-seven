@@ -2,6 +2,8 @@
 
 void vblank_callback(u16 irqs)
 {
+    (void)irqs;
+
     BG_PALETTE[0] += 1;
 }
 
