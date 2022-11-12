@@ -13,10 +13,13 @@ MINRT		:= ..
 PROJECT		:= gba-minrt-template
 
 # Source files
-SOURCES		:= $(MINRT)/src/crt0.s src/main.c
+SOURCES		:= $(MINRT)/src/gba/crt0.s \
+		   $(MINRT)/src/gba/rom_header.s \
+		   $(MINRT)/src/gba/ram.c \
+		   src/main.c
 
 # Include directories
-INCLUDES	:= $(MINRT)/src
+INCLUDES	:= $(MINRT)/src/gba
 
 # Library directories, with /include and /lib
 LIBDIRS		:= $(MINRT)
@@ -28,10 +31,10 @@ LIBS		:=
 BUILDDIR	:= build
 
 # Compiler flags (all languages)
-ALLFLAGS	:=
+ALLFLAGS	:= -g -gdwarf-4 -O2 -mthumb -ffunction-sections -fdata-sections
 
 # C compiler flags
-CFLAGS		:= -g3 -gdwarf-4 -O2 -std=c99 -ffunction-sections -fdata-sections
+CFLAGS		:= -std=c99
 
 # C++ compiler flags
 CXXFLAGS	:=
@@ -42,7 +45,7 @@ ASFLAGS		:=
 # Linker flags (as passed to GCC)
 LDFLAGS		:= -mthumb -specs=$(MINRT)/lib/nocrt0.specs \
 		-specs=nano.specs -specs=nosys.specs \
-		-Wl,-Trom.ld -Wl,--no-warn-rwx-segments
+		-L$(MINRT)/lib/ldscripts -Wl,-Trom.ld -Wl,--no-warn-rwx-segments
 
 # Uncomment this if you want to use Link Time Optimization
 #
