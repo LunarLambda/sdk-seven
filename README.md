@@ -9,7 +9,7 @@
 ## Setup
 
 ```
-meson setup --cross-file=cross/arm-none-eabi.txt --cross-file=cross/arm7tdmi.txt build
+./meson-setup.sh
 meson compile -C build
 ```
 

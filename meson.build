@@ -1,5 +1,5 @@
 project('sdk-seven', 'c',
-  version: '0.1.1',
+  version: '0.2.0',
   license: 'Zlib',
   meson_version: '>=0.56.0')
 
@@ -12,7 +12,18 @@ add_project_arguments(
 add_project_link_arguments(
   '-mthumb',
   '-Wl,--gc-sections',
+  '-specs=nosys.specs',
   language: 'c')
+
+cc = meson.get_compiler('c')
+
+# Detect newlib-nano
+#
+if cc.has_argument('-specs=nano.specs')
+  add_project_link_arguments(
+    '-specs=nano.specs',
+    language: 'c')
+endif
 
 subproject('libseven')
 subproject('minrt')

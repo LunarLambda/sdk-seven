@@ -14,5 +14,7 @@ foreach bin : elfs
     input: bin,
     output: bin.name() + '.gba',
     command: [makerom, '@INPUT@', '@OUTPUT@'],
+    # https://github.com/mesonbuild/meson/discussions/10981#discussioncomment-4034259
+    depends: [gbafix],
     build_by_default: true)
 endforeach

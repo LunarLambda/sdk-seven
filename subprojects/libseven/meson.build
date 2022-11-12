@@ -27,7 +27,8 @@ libseven = static_library(
   'seven',
   sources,
   include_directories: includes + 'src',
-  c_args: ['-mthumb', '-ffunction-sections', '-fdata-sections', '-ffreestanding'])
+  c_args: ['-mthumb', '-ffunction-sections', '-fdata-sections'])
+
 
 libseven_dep = declare_dependency(
   include_directories: includes,

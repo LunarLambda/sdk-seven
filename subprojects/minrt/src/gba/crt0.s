@@ -7,33 +7,13 @@
 .syntax         unified
 .cpu            arm7tdmi
 
-.section        .rom_header,"ax",%progbits
-.align 2
-.arm
 _start:
-    b           entrypoint      @ ROM entry point
-    .include    "header.s"
-    b           entrypoint      @ Multiboot entry point
-_boot_type:
-    .zero       1               @ Boot type
-_boot_client:
-    .zero       1               @ Client number
-    .zero       26              @ Reserved
-    b           entrypoint      @ JOY Bus entry point
-
-.align 2
-.arm
-entrypoint:
     add         r0, pc, #1
     bx          r0
 .thumb
     @ IRQs off
     ldr         r3, =REG_IME
     strh        r3, [r3]
-
-    ldr         r3, =REG_WRAMCNT
-    ldr         r2, =__wramcnt
-    str         r2, [r3]
 
     ldr         r3, =REG_DMA3
 
@@ -151,12 +131,14 @@ fini_skip:
 
 pool: .pool
 
+@ HACK: Reference a symbol from the header so it doesn't get dropped during link
+.equiv          KEEP_HEADER,    __boot_type
 .equiv          REG_DMA3,       0x040000D4
 .equiv          REG_IME,        0x04000208
 .equiv          REG_WRAMCNT,    0x04000800
 .equiv          SVC_CPUSET,     11
 
-.global         _start, _exit, _boot_type, _boot_client
+.global         _start, _exit
 .weak           _exit
 
 @ vim: ft=armv4 et sta sw=4 sts=8
