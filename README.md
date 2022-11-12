@@ -2,7 +2,7 @@
 
 ## Requires
 
-- meson >=0.56.0
+- meson >=0.60.0
 - arm-none-eabi toolchain (gcc, binutils, newlib)
 - native C compiler
 

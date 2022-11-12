@@ -1,7 +1,8 @@
 project('sdk-seven', 'c',
-  version: '0.2.0',
+  version: '0.3.0',
   license: 'Zlib',
-  meson_version: '>=0.56.0')
+  meson_version: '>=0.60.0',
+  default_options: ['warning_level=2', 'c_std=c99'])
 
 add_project_arguments(
   '-mthumb',
@@ -25,8 +26,8 @@ if cc.has_argument('-specs=nano.specs')
     language: 'c')
 endif
 
-subproject('libseven')
-subproject('minrt')
+subdir('libseven')
+subdir('minrt')
 
 subdir('tools')
 
