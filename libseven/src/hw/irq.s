@@ -13,18 +13,10 @@ CONST OFF_IE_IF,  REG_IF  - REG_IE
 CONST OFF_IE_IME, REG_IME - REG_IE
 CONST OFF_IE_IFBIOS, REG_IFBIOS - REG_IE
 
-bss IRQ_TABLE .align=2
-    .fill       15, 8, 0
-    _IRQ_TABLE_IRQSET:
-    .word       0
-endb
-
 bss IRQ_CRITICAL_SECTION
     .byte       0
     .byte       0
 endb
-
-CONST IRQ_TABLE_IRQSET, _IRQ_TABLE_IRQSET - IRQ_TABLE
 
 .macro reg_ie_offset val
     .hword \val - OFF_IE
@@ -95,220 +87,41 @@ endfn
 
 @ typedef void IrqCallbackFn(u16 irqs);
 @
-@ bool irqCallbackSet(u16 irqs, IrqCallbackFn *fn, u16 priority)
-@
-@ r0    irqs
-@ r1    fn
-@ r2    priority
-@ r3    IRQ_TABLE
-@ r4    &REG_IME
-@ r5    REG_IME
-@ r6    prio+irqs from table
-@ r7    prio/fn from table
+@ bool irqCallbackSet(u16 irq, IrqCallbackFn *fn)
 fn irqCallbackSet thumb
-    push        {r4, r5, r6, r7}
+    subs        r2, r0, 1
+    blo         1f
+    ands        r2, r2, r0
+    bne         1f
 
-    @ Drop unused IRQ bits
-    lsls        r0, r0, #18
-    lsrs        r0, r0, #18
-    beq         .Lica_fail
+    ldr         r2, =0x09AF0000
+    muls        r0, r2
+    lsrs        r0, r0, 25
+    ldr         r2, =IRQ_TABLE
+    str         r1, [r2, r0]
 
-    @ Disable IME
-    ldr         r4, =REG_IME
-    ldr         r5, [r4]
-    str         r4, [r4]
-
-    @ Check if IRQs already have entries
-    ldr         r3, =IRQ_TABLE
-    ldr         r6, [r3, #IRQ_TABLE_IRQSET]
-    tst         r0, r6
-    bne         .Lica_fail
-
-    @ Add IRQs to bitset
-    orrs        r6, r6, r0
-    str         r6, [r3, #IRQ_TABLE_IRQSET]
-
-    @ Merge irqs+prio
-    lsls        r6, r2, #16
-    orrs        r0, r0, r6
-
+    movs        r0, 1
+    bx          lr
 1:
-    @ Load irqs+prio of current slot
-    ldr         r6, [r3]
-    @ if (prio+irq == 0): empty slot
-    cmp         r6, #0
-    beq         .Lica_append
-    @ Get prio
-    lsrs        r7, r6, #16
-    @ if (slot_prio  > prio): insert here
-    cmp         r7, r2
-    bgt         .Lica_insert
-    @ if (slot_prio == prio): try merging
-    beq         .Lica_try_merge
-
-2:
-    @ Next attempt
-    adds        r3, r3, #8
-    b           1b
-
-.Lica_fail:
-    movs        r0, #0
-    b           .Lica_exit
-
-.Lica_try_merge:
-    @ If functions match, just OR in the IRQs
-    ldr         r7, [r3, #4]
-    cmp         r7, r1
-    bne         2b
-    @ Get irqs
-    lsls        r0, r0, #16
-    lsrs        r0, r0, #16
-    orrs        r6, r6, r0
-    str         r6, [r3]
-    b           .Lica_success
-
-.Lica_insert:
-    movs        r2, r3
-
-    @ Find end of table
-1:
-    adds        r2, r2, #8
-    ldr         r6, [r2]
-    cmp         r6, #0
-    bne         1b
-
-    @ Shift slots forwards
-1:
-    @ Load slot
-    ldm         r2!, {r6, r7}
-    @ Move it back
-    stm         r2!, {r6, r7}
-    @ Go back one slot, accounting for ldm/stm writeback
-    subs        r2, r2, #24
-    @ We're done when r2 reaches the slot we want to write
-    cmp         r2, r3
-    bne         1b
-
-.Lica_append:
-    @ Write slot
-    stm         r3!, {r0, r1}
-.Lica_success:
-    movs        r0, #1
-
-.Lica_exit:
-    @ Restore IME
-    str         r5, [r4]
-    pop         {r4, r5, r6, r7}
+    movs        r0, 0
     bx          lr
 endfn
 
-@ bool irqCallbackDelete(u16 irqs);
-@
-@ r0    irqs
-@ r1    &REG_IME
-@ r2    REG_IME
-@ r3    IRQ_TABLE
-@ r4    IRQ_TABLE_IRQSET
-@ r5    slot
-@ r6    temp
-@ r7    temp
-@
-@ TODO: Allow deleting multiple callbacks
-fn irqCallbackDelete thumb
-    push        {r4, r5, r6, r7}
+fn irqCallbackGet thumb
+    subs        r2, r0, 1
+    blo         1f
+    ands        r2, r2, r0
+    bne         1f
 
-    @ Drop unused IRQ bits
-    lsls        r0, r0, #18
-    lsrs        r0, r0, #18
-    beq         .Licd_fail
+    ldr         r2, =0x09AF0000
+    muls        r0, r2
+    lsrs        r0, r0, 25
+    ldr         r2, =IRQ_TABLE
+    ldr         r0, [r2, r0]
 
-    @ Disable IME
-    ldr         r1, =REG_IME
-    ldr         r2, [r1]
-    str         r1, [r1]
-
-    @ Check if IRQs already have entries
-    ldr         r3, =IRQ_TABLE
-    ldr         r4, [r3, #IRQ_TABLE_IRQSET]
-
-    @ To test if irqs is a subset of irq_set
-    @ We can do (irqs & ~irq_set) == 0
-    @ If this is not true, we can't hope to remove the IRQs from the table.
-    movs        r5, r0
-    bics        r5, r5, r4
-    bne         .Licd_fail
-
-    movs        r5, r3
-    @ Find slot
-    @ We need to figure out if the irqs to remove are a subset of any slot
-1:
-    ldr         r6, [r5]
-    cmp         r6, #0
-    beq         .Licd_fail
-    @ subset check
-    movs        r7, r0
-    bics        r7, r7, r6
-    beq         .Licd_remove
-    adds        r5, r5, #8
-    b           1b
-
-.Licd_fail:
-    movs        r0, #0
-    b           .Licd_exit
-
-.Licd_remove:
-    @ we found a slot, the address is in r5
-    @ update irqset
-    bics        r4, r4, r0
-    str         r4, [r3, #IRQ_TABLE_IRQSET]
-    @ Clear bits
-    bics        r6, r6, r0
-    str         r6, [r5]
-    @ Is the slot now empty?
-    bne         .Licd_success
-
-.Licd_shift:
-    @ r1 holds &REG_IME
-    @ r2 holds REG_IME
-    @ r5 holds slot address
-1:
-    @ read next slot
-    adds        r5, r5, #8
-    ldm         r5!, {r3, r4}
-    @ return to current slot
-    subs        r5, r5, #16
-    @ write slot
-    stm         r5!, {r3, r4}
-    @ if we copied a zero slot, we're done
-    cmp         r3, #0
-    bne         1b
-
-.Licd_success:
-    movs        r0, #1
-
-.Licd_exit:
-    str         r2, [r1]
-    pop         {r4, r5, r6, r7}
     bx          lr
-endfn
-
-@ IrqCallbackFn* irqCallbackLookup(u16 irqs)
-@
-@ r0    irqs
-@ r1    IRQ_TABLE
-fn irqCallbackLookup arm
-    ldr         r1, =IRQ_TABLE
-    ldr         r2, [r1, #IRQ_TABLE_IRQSET]
-    tst         r2, r0
-    moveq       r0, #0
-    bxeq        lr
-
 1:
-    ldr         r2, [r1], #8
-    tst         r2, r0
-    beq         1b
-
-    ldr         r0, [r1, #-4]
+    movs        r0, 0
     bx          lr
 endfn
 
@@ -539,63 +352,85 @@ fn irqFree thumb
     bx          r3
 endfn
 
-@ void irqDefaultHandler(void)
-@
-@ r0    REG_BASE
-@ r1    IE & IF
-@ r2    <tmp>
-@ r3    <tmp>
-@ r12   IME
 fn irqDefaultHandler arm local
-    @ Give the mGBA debugger a harmless instruction to replace with bkpt
-    nop
-    mov         r1, #REG_BASE
+    mov         r1, REG_BASE                    @ 1
+    @ Post-increment so we can reach IF
+    ldr         r0, [r1, OFF_IE]!               @ 3
+    and         r0, r0, r0, lsr 16              @ 4
 
-    @ Get IE & IF
-    ldr         r0, [r1, #OFF_IE]!
-    and         r0, r0, r0, lsr #16
+    @ Isolate lowest set bit, that's the one we'll handle
+    rsb         r2, r0, 0                       @ 5
+    and         r0, r0, r2                      @ 6
 
-    @ Ack IF
-    strh        r0, [r1, #OFF_IE_IF]
+    @ Acknowlegde IF
+    strh        r0, [r1, OFF_IE_IF]             @ 8
 
-    @ Ack IFBIOS
-    ldr         r2, [r1, #OFF_IE_IFBIOS]
-    orr         r2, r2, r0
-    str         r2, [r1, #OFF_IE_IFBIOS]
+    @ This little dance leaves us with REG_BASE back in r1,
+    @ and also lets us write only to IFBIOS,
+    @ just in case that could ever be a correctness issue.
+    ldr         r2, [r1, OFF_IE_IFBIOS]!        @ 11
+    orr         r2, r2, r0                      @ 12
+    strh        r2, [r1], 8                     @ 14
 
-    @ Check if we have a callback registered for these irqs
-    ldr         r2, =IRQ_TABLE
-    ldr         r3, [r2, #IRQ_TABLE_IRQSET]
-    tst         r0, r3
-    bxeq        lr
+    @ Lookup the IRQ-flag in the handler table using a 16-bit Debruijn sequence.
+    mov         r2, 0x09000000                  @ 15
+    add         r2, r2, 0xAF0000                @ 16
 
-    @ Fast search
-1:
-    ldr         r3, [r2], #8
-    tst         r0, r3
-    beq         1b
+    mul         r2, r0, r2                      @ 19
+    adr         r3, IRQ_TABLE                   @ 20
+    ldr         r2, [r3, r2, lsr 25]            @ 23
 
-.Ldispatch:
-    @ Disable IME (r12)
-    ldr         r12, [r1, #OFF_IE_IME]
-    str         r1, [r1, #OFF_IE_IME]
+    @ Quick exit if NULL
+    cmp         r2, 0                           @ 24
+    bxeq        lr                              @ 25 27 (Exit)
 
-    mrs         r3, spsr
-    msr         cpsr_c, #0x5F
-    @ MEM_IO, SPSR_irq, REG_IME, LR
-    push        {r1, r3, r12, lr}
+    @ Save some time by assuming IME is always 1 at this point
+    @
+    @ Only single-cycle race conditions, async DMA, or a debugger
+    @ could really cause IME to be 0 here.
+    str         r1, [r1, OFF_IME]               @ 27
 
-    ldr         r2, [r2, #-4]
-    mov         lr, pc
-    bx          r2
+    @ Only needed for nested IRQs.
+    mrs         r3, spsr                        @ 28
+    @ Default IRQ stack would have 160 bytes, -24 used by BIOS vector.
+    @ With SPSR/LR saved, that's 128 bytes left, or 5 layers of nesting total.
+    @
+    @ Saving to the system stack would at best give us one more nest
+    msr         cpsr_c, #0x52 @ MODE_IRQ | FIQ_DISABLE @ 29
+    push        {r3, lr}                        @ 32
 
-    pop         {r1, r3, r12, lr}
-    msr         cpsr_c, #0xD2
-    msr         spsr, r3
+    mov         lr, pc                          @ 33
+    bx          r2                              @ 36+
 
-    str         r12, [r1, #OFF_IE_IME]
+    pop         {r3, lr}                        @ 4
+    msr         cpsr_c, #0xD2 @ MODE_IRQ | FIQ_DISABLE | IRQ_DISABLE @ 5
+    msr         spsr, r3                        @ 6
 
-    bx          lr
+    @ Spending 2 cycles resynthesizing these is faster
+    @ than spending 4 cycles pushing/popping them.
+    mov         r1, REG_BASE                    @ 7
+    mov         r0, 1                           @ 8
+    str         r0, [r1, OFF_IME]               @ 10
+    bx          lr                              @ 13
+
+@ 0000  0 HBLANK
+@ 0001  1 VBLANK
+@ 0010  2 VCOUNT
+@ 0011  5 TIMER2
+@ 0100  3 TIMER0
+@ 0101  9 DMA1
+@ 0110  6 TIMER3
+@ 0111 11 DMA3
+@ 1000 15 NONE
+@ 1001  4 TIMER1
+@ 1010  8 DMA0
+@ 1011 10 DMA2
+@ 1100 14 NONE
+@ 1101  7 SERIAL
+@ 1110 13 CART
+@ 1111 12 KEY
+IRQ_TABLE:
+    .fill       16, 4, 0
 endfn
 
 fn irqSimpleHandler arm local
@@ -647,9 +482,9 @@ fn irqStubHandler arm local
     strh        r0, [r1, #OFF_IE_IF]
 
     @ Ack IFBIOS
-    ldr         r2, [r1, #OFF_IE_IFBIOS]
+    ldr         r2, [r1, #OFF_IE_IFBIOS]!
     orr         r2, r2, r0
-    str         r2, [r1, #OFF_IE_IFBIOS]
+    strh        r2, [r1], 8
 
     bx          lr
 endfn

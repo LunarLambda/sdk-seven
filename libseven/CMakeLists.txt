@@ -16,6 +16,8 @@ add_library(seven STATIC
     src/hw/sram.s
     src/hw/svc.s
     src/hw/timer.s
+    src/util/bit.s
+    src/util/debug.s
     src/util/log.c
     src/util/mem.s
     src/util/profile.s

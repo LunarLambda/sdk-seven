@@ -114,27 +114,16 @@ extern void irqInitSimple(IrqCallbackFn *fn);
 //
 extern void irqInitStub(void);
 
-// Set the callback associated with the specified irqs.
+// Set the callback associated with the specified irq.
 //
-// The priority argument is used to set the search order.
-// A lower value specifies a higher priority.
+// Fails if irq specifies more than one interrupt.
 //
-// Fails if any of the irqs already have a callback set.
-//
-extern bool irqCallbackSet(u16 irqs, IrqCallbackFn *fn, u16 priority);
+extern bool irqCallbackSet(u16 irq, IrqCallbackFn *fn);
 
-// Delete the callback associated with the specified irqs.
+// Get the callback associated with the specified irq.
 //
-// Fails if the irqs don't share a slot, or any of the irqs don't have a slot.
-//
-extern bool irqCallbackDelete(u16 irqs);
-
-// Gets the highest priority callback function matching the specified irqs,
-// or NULL if none is found.
-//
-// This function is placed in IWRAM so that it can be called quickly from
-// a user-provided IRQ handler.
-extern IrqCallbackFn* irqCallbackLookup(u16 irqs);
+// Returns null if irq specifies more than one interrupt, or no callback is set.
+extern IrqCallbackFn* irqCallbackGet(u16 irq);
 
 // Enable the specified IRQs.
 //
@@ -182,9 +171,10 @@ extern bool irqCriticalSectionActive(void);
 //
 // Equivalent to
 //
-// irqCriticalSectionEnter()
-// f(data)
-// irqCriticalSectionExit()
+// bool i = REG_IME;
+// REG_IME = 0;
+// f(data);
+// REG_IME = i;
 // return;
 extern void irqFree(void (*f)(void*), void *data);
 

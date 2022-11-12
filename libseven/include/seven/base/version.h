@@ -10,7 +10,7 @@
 #include <seven/base.h>
 
 #define LIBSEVEN_VERSION_MAJOR 0
-#define LIBSEVEN_VERSION_MINOR 8
+#define LIBSEVEN_VERSION_MINOR 9
 #define LIBSEVEN_VERSION_PATCH 0
 
 #define LIBSEVEN_VERSION \

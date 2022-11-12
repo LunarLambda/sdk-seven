@@ -1,4 +1,4 @@
-version = '0.8.0'
+version = '0.9.0'
 
 sources = [
   'src/hw/dma.s',
@@ -7,6 +7,7 @@ sources = [
   'src/hw/sram.s',
   'src/hw/svc.s',
   'src/hw/timer.s',
+  'src/util/bit.s',
   'src/util/debug.s',
   'src/util/log.c',
   'src/util/mem.s',
