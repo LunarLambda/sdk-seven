@@ -1,3 +1,5 @@
+version = '0.8.0'
+
 sources = [
   'src/hw/dma.s',
   'src/hw/input.s',
@@ -26,6 +28,6 @@ libseven = static_library(
 libseven_dep = declare_dependency(
   include_directories: includes,
   link_with: libseven,
-  version: '0.7.1')
+  version: version)
 
 meson.override_dependency('libseven', libseven_dep)

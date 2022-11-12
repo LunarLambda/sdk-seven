@@ -4,14 +4,16 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_PRELUDE_H
-#define _LIBSEVEN_PRELUDE_H
+#ifndef _LIBSEVEN_HW_VIDEO_PALETTE_H
+#define _LIBSEVEN_HW_VIDEO_PALETTE_H
 
 #include <seven/base.h>
-#include <seven/hw/input.h>
-#include <seven/hw/irq.h>
-#include <seven/hw/memory.h>
 #include <seven/hw/video.h>
-#include <seven/hw/bios/wait.h>
 
-#endif /* !_LIBSEVEN_PRELUDE_H */
+_LIBSEVEN_EXTERN_C
+
+#error "seven/hw/video/palette.h is a stub header"
+
+_LIBSEVEN_EXTERN_C_END
+
+#endif /* !_LIBSEVEN_HW_VIDEO_PALETTE_H */
