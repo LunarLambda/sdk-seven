@@ -23,5 +23,5 @@ Address   | Size | Access | GBATEK | libgba | libtonc | libseven
 10    | DMA 2 transfer completion   | IRQ_DMA_2
 11    | DMA 3 transfer completion   | IRQ_DMA_3
 12    | D-pad/button input          | IRQ_KEYPAD
-13    | Cartridge interrupt request | IRQ_CARTRIDGE
+13    | Cartridge /IRQ signal       | IRQ_CARTRIDGE
 14-15 | -                           | -

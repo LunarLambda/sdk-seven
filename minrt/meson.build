@@ -15,7 +15,20 @@ link_args = ['-specs=' + lib / 'nocrt0.specs', '-L' + lib / 'ldscripts']
 minrt = static_library(
   'minrt',
   sources,
-  include_directories: includes + 'src' + 'src/gba')
+  include_directories: includes + 'src' + 'src/gba',
+  install: true)
+
+install_headers('include/minrt.h')
+
+libdata = [
+  'lib/ldscripts/gba_base.ld',
+  'lib/ldscripts/multiboot.ld',
+  'lib/ldscripts/rom.ld',
+  'lib/ldscripts/rom_alt_wram.ld',
+  'lib/nocrt0.specs',
+]
+
+install_data(libdata, install_dir: get_option('libdir'))
 
 minrt_dep = declare_dependency(
   include_directories: includes,

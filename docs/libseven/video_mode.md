@@ -8,8 +8,8 @@ Mode | BG0 | BG1 | BG2 | BG3 | Scroll     | Transform | Object VRAM
 3    | ❌  | ❌  | ✔️   | ❌  | ❌          | ✔️        | 16K
 4    | ❌  | ❌  | ✔️   | ❌  | ❌          | ✔️        | 16K
 5    | ❌  | ❌  | ✔️   | ❌  | ❌          | ✔️        | 16K
-6    | ❌  | ❌  | ❌   | ❌  | ❌          | ❌        | 16K?
-7    | ❌  | ❌  | ❌   | ❌  | ❌          | ❌        | 16K?
+6    | ❌  | ❌  | ❌   | ❌  | ❌          | ❌        | 16K
+7    | ❌  | ❌  | ❌   | ❌  | ❌          | ❌        | 16K
 
 Objects, blending, mosaic and windows are always available.
 

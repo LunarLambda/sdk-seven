@@ -118,8 +118,8 @@ Address     | Size | Access | GBATEK      | libgba          | libtonc     | libs
 [³]: #errata
 
 [0400 0000]: io/dispcnt.md
-[0400 00BA]: io/dmacnt.h
-[0400 00C6]: io/dmacnt.h
-[0400 00D2]: io/dmacnt.h
-[0400 00DE]: io/dmacnt.h
+[0400 00BA]: io/dmacnt.md
+[0400 00C6]: io/dmacnt.md
+[0400 00D2]: io/dmacnt.md
+[0400 00DE]: io/dmacnt.md
 [0400 0200]: io/ie.md
