@@ -7,13 +7,10 @@
 #ifndef _LIBSEVEN_BASE_TYPES_H
 #define _LIBSEVEN_BASE_TYPES_H
 
-#include <seven/base.h>
 #include <limits.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
-
-_LIBSEVEN_EXTERN_C
 
 typedef int8_t          i8;
 typedef int16_t         i16;
@@ -21,13 +18,6 @@ typedef int32_t         i32;
 typedef int64_t         i64;
 typedef ptrdiff_t       isize;
 typedef intptr_t        iptr;
-
-typedef int8_t          s8;
-typedef int16_t         s16;
-typedef int32_t         s32;
-typedef int64_t         s64;
-typedef ptrdiff_t       ssize;
-typedef intptr_t        sptr;
 
 typedef uint8_t         u8;
 typedef uint16_t        u16;
@@ -57,27 +47,6 @@ typedef uintptr_t       uptr;
 #define ISIZE_BITS      (CHAR_BIT * sizeof(isize))
 #define IPTR_BITS       (CHAR_BIT * sizeof(iptr))
 
-#define S8_MIN          INT8_MIN
-#define S16_MIN         INT16_MIN
-#define S32_MIN         INT32_MIN
-#define S64_MIN         INT64_MIN
-#define SSIZE_MIN       PTRDIFF_MIN
-#define SPTR_MIN        INTPTR_MIN
-
-#define S8_MAX          INT8_MAX
-#define S16_MAX         INT16_MAX
-#define S32_MAX         INT32_MAX
-#define S64_MAX         INT64_MAX
-#define SSIZE_MAX       PTRDIFF_MAX
-#define SPTR_MAX        INTPTR_MAX
-
-#define S8_BITS         8
-#define S16_BITS        16
-#define S32_BITS        32
-#define S64_BITS        64
-#define SSIZE_BITS      (CHAR_BIT * sizeof(ssize))
-#define SPTR_BITS       (CHAR_BIT * sizeof(sptr))
-
 #define U8_MIN          0
 #define U16_MIN         0
 #define U32_MIN         0
@@ -99,6 +68,36 @@ typedef uintptr_t       uptr;
 #define USIZE_BITS      (CHAR_BIT * sizeof(usize))
 #define UPTR_BITS       (CHAR_BIT * sizeof(uptr))
 
-_LIBSEVEN_EXTERN_C_END
+#ifndef _LIBSEVEN_NOCOMPATIBLE
+
+typedef i8              s8;
+typedef i16             s16;
+typedef i32             s32;
+typedef i64             s64;
+typedef isize           ssize;
+typedef iptr            sptr;
+
+#define S8_MIN          I8_MIN
+#define S16_MIN         I16_MIN
+#define S32_MIN         I32_MIN
+#define S64_MIN         I64_MIN
+#define SSIZE_MIN       ISIZE_MIN
+#define SPTR_MIN        IPTR_MIN
+
+#define S8_MAX          I8_MAX
+#define S16_MAX         I16_MAX
+#define S32_MAX         I32_MAX
+#define S64_MAX         I64_MAX
+#define SSIZE_MAX       ISIZE_MAX
+#define SPTR_MAX        IPTR_MAX
+
+#define S8_BITS         I8_BITS
+#define S16_BITS        I16_BITS
+#define S32_BITS        I32_BITS
+#define S64_BITS        I64_BITS
+#define SSIZE_BITS      ISIZE_BITS
+#define SPTR_BITS       IPTR_BITS
+
+#endif /* !_LIBSEVEN_NOCOMPATIBLE */
 
 #endif /* !_LIBSEVEN_BASE_TYPES_H */

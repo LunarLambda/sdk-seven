@@ -8,11 +8,11 @@
 #define _LIBSEVEN_BASE_H
 
 #ifdef __cplusplus
-#define _LIBSEVEN_EXTERN_C extern "C" {
-#define _LIBSEVEN_EXTERN_C_END }
+    #define _LIBSEVEN_EXTERN_C extern "C" {
+    #define _LIBSEVEN_EXTERN_C_END }
 #else
-#define _LIBSEVEN_EXTERN_C
-#define _LIBSEVEN_EXTERN_C_END
+    #define _LIBSEVEN_EXTERN_C
+    #define _LIBSEVEN_EXTERN_C_END
 #endif
 
 #define _LIBSEVEN_STR(s) #s

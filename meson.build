@@ -1,5 +1,5 @@
 project('sdk-seven', 'c',
-  version: '0.5.1',
+  version: '0.6.0',
   license: 'Zlib',
   meson_version: '>=0.60.0',
   default_options: ['warning_level=2', 'c_std=c99'])
@@ -13,6 +13,7 @@ add_project_arguments(
 add_project_link_arguments(
   '-mthumb',
   '-Wl,--gc-sections',
+  '-Wl,--no-warn-rwx-segments',
   '-specs=nosys.specs',
   language: 'c')
 
@@ -28,7 +29,6 @@ endif
 
 subdir('libseven')
 subdir('minrt')
-
 subdir('tools')
 
 mapfile = '-Wl,-Map,@0@.map'

@@ -12,6 +12,8 @@
 #include <seven/hw/irq.h>
 #include <seven/hw/memory.h>
 #include <seven/hw/video.h>
+#include <seven/hw/bios/memory.h>
+#include <seven/hw/bios/reset.h>
 #include <seven/hw/bios/wait.h>
 
 #endif /* !_LIBSEVEN_PRELUDE_H */

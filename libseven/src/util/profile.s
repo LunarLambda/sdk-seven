@@ -7,8 +7,8 @@
 .syntax         unified
 .cpu            arm7tdmi
 
+.include        "constants.s"
 .include        "macros.s"
-.include        "seven/asm/hw/timer.s"
 
 @ u32 profileFunction(void (*f)(void*), void *data);
 @

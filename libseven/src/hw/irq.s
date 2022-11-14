@@ -6,12 +6,14 @@
 .syntax         unified
 .cpu            arm7tdmi
 
+.include        "constants.s"
 .include        "macros.s"
-.include        "seven/asm/hw/irq.s"
 
-CONST OFF_IE_IF,  REG_IF  - REG_IE
-CONST OFF_IE_IME, REG_IME - REG_IE
-CONST OFF_IE_IFBIOS, REG_IFBIOS - REG_IE
+.equiv OFF_IE,          REG_IE - REG_BASE
+.equiv OFF_IME,         REG_IME - REG_BASE
+.equiv OFF_IE_IF,       REG_IF  - REG_IE
+.equiv OFF_IE_IME,      REG_IME - REG_IE
+.equiv OFF_IE_IFBIOS,   REG_IFBIOS - REG_IE
 
 bss IRQ_CRITICAL_SECTION
     .byte       0

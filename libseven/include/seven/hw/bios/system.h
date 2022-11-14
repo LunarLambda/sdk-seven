@@ -17,7 +17,7 @@ enum BiosChecksum
     BIOS_CHECKSUM_NDS = 0xBAAE1880,
 };
 
-extern u32 svcBiosChecksum(void);
+extern u32 biosBiosChecksum(void);
 
 _LIBSEVEN_EXTERN_C_END
 

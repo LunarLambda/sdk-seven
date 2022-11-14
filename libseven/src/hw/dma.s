@@ -7,11 +7,8 @@
 .syntax         unified
 .cpu            arm7tdmi
 
+.include        "constants.s"
 .include        "macros.s"
-.include        "seven/asm/hw/dma.s"
-
-CONST SOUND_FIFO_A, 0x040000A0
-CONST SOUND_FIFO_B, 0x040000A4
 
 @ void dmaEnable(u32 num)
 @

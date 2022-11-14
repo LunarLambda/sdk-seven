@@ -7,10 +7,6 @@
 #ifndef _LIBSEVEN_BASE_BITS_H
 #define _LIBSEVEN_BASE_BITS_H
 
-#include <seven/base.h>
-
-_LIBSEVEN_EXTERN_C
-
 #define BIT(n)                          (1 << (n))
 #define BITS(n)                         (BIT(n) - 1)
 
@@ -59,7 +55,5 @@ _LIBSEVEN_EXTERN_C
 
 #define BF_ECMP(lhs, name, enum)        \
     (((lhs) & BF_MASK(name)) == name##_##enum)
-
-_LIBSEVEN_EXTERN_C_END
 
 #endif /* !_LIBSEVEN_BASE_BITS_H */

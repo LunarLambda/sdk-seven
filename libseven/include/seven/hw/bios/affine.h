@@ -32,7 +32,7 @@ struct BgAffineDstData
     i32 start_y;
 };
 
-extern void svcBgAffineSet(
+extern void biosBgAffineSet(
     const struct BgAffineSrcData *src,
     struct BgAffineDstData *dst,
     u32 num);
@@ -58,7 +58,7 @@ enum ObjAffineSetOffset
     OAS_OFFSET_OAM     = 8,
 };
 
-extern void svcObjAffineSet(
+extern void biosObjAffineSet(
         const struct ObjAffineSrcData *src,
         void *dst,
         u32 num,

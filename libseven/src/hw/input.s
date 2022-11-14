@@ -7,8 +7,8 @@
 .syntax         unified
 .cpu            arm7tdmi
 
+.include        "constants.s"
 .include        "macros.s"
-.include        "seven/asm/hw/input.s"
 
 bss KEYINPUT
     .word 0

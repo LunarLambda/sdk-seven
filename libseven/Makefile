@@ -10,11 +10,11 @@ AR = arm-none-eabi-ar
 PROJECT = seven
 
 SOURCES = \
+	src/hw/bios.s \
 	src/hw/dma.s \
 	src/hw/input.s \
 	src/hw/irq.s \
 	src/hw/sram.s \
-	src/hw/svc.s \
 	src/hw/timer.s \
 	src/util/assert.c \
 	src/util/bit.s \
@@ -25,7 +25,6 @@ SOURCES = \
 	src/util/rand.s \
 	src/util/simd.s \
 	src/util/str.s \
-	src/video/bmp.s \
 	src/video/oam.s \
 
 INCLUDES = \
@@ -37,7 +36,6 @@ CFLAGS = \
 	-g3 -gdwarf-4 \
 	-ffunction-sections \
 	-fdata-sections \
-	-ffreestanding \
 	-std=c99 \
 	-Wall \
 	-Wpedantic \

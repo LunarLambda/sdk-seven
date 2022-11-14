@@ -20,6 +20,6 @@ int main(void)
     while (1)
     {
         // Wait for V-sync
-        svcVBlankIntrWait();
+        biosVBlankIntrWait();
     }
 }

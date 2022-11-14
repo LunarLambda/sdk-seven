@@ -11,11 +11,11 @@
 
 _LIBSEVEN_EXTERN_C
 
-extern void svcSoundDriverMain(void);
-extern void svcSoundDriverVSync(void);
-extern void svcSoundChannelClear(void);
-extern void svcSoundDriverVSyncOff(void);
-extern void svcSoundDriverVSyncOn(void);
+extern void biosSoundDriverMain(void);
+extern void biosSoundDriverVSync(void);
+extern void biosSoundChannelClear(void);
+extern void biosSoundDriverVSyncOff(void);
+extern void biosSoundDriverVSyncOn(void);
 
 _LIBSEVEN_EXTERN_C_END
 

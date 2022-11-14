@@ -11,21 +11,11 @@
 
 _LIBSEVEN_EXTERN_C
 
-extern void svcHalt(void);
-extern void svcStop(void);
+extern void biosHalt(void);
+extern void biosStop(void);
 
-extern void svcIntrWait(bool wait_next, u16 intr_flags);
-
-enum IntrWaitExFlags
-{
-    IWE_WAIT_NEXT       = BIT(0),
-    IWE_EXCLUSIVE       = BIT(1),
-    IWE_INCLUSIVE       = !IWE_EXCLUSIVE,
-};
-
-extern void svcIntrWaitEx(u8 op, u16 intr_flags);
-
-extern void svcVBlankIntrWait(void);
+extern void biosIntrWait(bool wait_next, u16 intr_flags);
+extern void biosVBlankIntrWait(void);
 
 _LIBSEVEN_EXTERN_C_END
 

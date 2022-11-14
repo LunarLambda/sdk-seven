@@ -12,7 +12,7 @@ int main(void)
     while (1)
     {
         // Wait for V-sync
-        svcVBlankIntrWait();
+        biosVBlankIntrWait();
 
         // Update the background color for the next frame
         BG_PALETTE[0] += 1;

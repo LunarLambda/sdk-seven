@@ -20,19 +20,19 @@ struct BitUnPackParam
     u32 keep_zeroes:1;  // whether to add offset to zero elements too
 };
 
-extern void svcBitUnPack(
+extern void biosBitUnPack(
         const void *src,
         void *dst,
         const struct BitUnPackParam *param);
 
-extern void svcLZ77UnCompWram(const void *src, void *dst);
-extern void svcLZ77UnCompVram(const void *src, void *dst);
-extern void svcHuffUnComp(const void *src, void *dst);
-extern void svcRLUnCompWram(const void *src, void *dst);
-extern void svcRLUnCompVram(const void *src, void *dst);
-extern void svcDiff8bitUnFilterWram(const void *src, void *dst);
-extern void svcDiff8bitUnFilterVram(const void *src, void *dst);
-extern void svcDiff16bitUnFilter(const void *src, void *dst);
+extern void biosLZ77UnCompWram(const void *src, void *dst);
+extern void biosLZ77UnCompVram(const void *src, void *dst);
+extern void biosHuffUnComp(const void *src, void *dst);
+extern void biosRLUnCompWram(const void *src, void *dst);
+extern void biosRLUnCompVram(const void *src, void *dst);
+extern void biosDiff8bitUnFilterWram(const void *src, void *dst);
+extern void biosDiff8bitUnFilterVram(const void *src, void *dst);
+extern void biosDiff16bitUnFilter(const void *src, void *dst);
 
 _LIBSEVEN_EXTERN_C_END
 

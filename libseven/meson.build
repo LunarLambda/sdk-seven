@@ -1,11 +1,11 @@
-version = '0.9.1'
+version = '0.10.0'
 
 sources = [
+  'src/hw/bios.s',
   'src/hw/dma.s',
   'src/hw/input.s',
   'src/hw/irq.s',
   'src/hw/sram.s',
-  'src/hw/svc.s',
   'src/hw/timer.s',
   'src/util/assert.c',
   'src/util/bit.s',
@@ -16,7 +16,6 @@ sources = [
   'src/util/rand.s',
   'src/util/simd.s',
   'src/util/str.s',
-  'src/video/bmp.s',
   'src/video/oam.s',
 ]
 

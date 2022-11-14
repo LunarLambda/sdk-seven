@@ -33,11 +33,6 @@ typedef u16 Mode3Frame[MODE3_HEIGHT][MODE3_WIDTH];
 typedef u16 Mode4Frame[MODE4_HEIGHT][MODE4_WIDTH/2];
 typedef u16 Mode5Frame[MODE5_HEIGHT][MODE5_HEIGHT];
 
-extern void* bmpInitMode3(void);
-extern void* bmpInitMode4(void);
-extern void* bmpInitMode5(void);
-extern void* bmpSwapBuffers(void);
-
 _LIBSEVEN_EXTERN_C_END
 
 #endif /* !_LIBSEVEN_HW_VIDEO_BG_BITMAP_H */
