@@ -96,7 +96,8 @@ fn irqCallbackSet thumb
 
     ldr         r2, =0x09AF0000
     muls        r0, r2
-    lsrs        r0, r0, 25
+    lsrs        r0, r0, 28
+    lsls        r0, r0, 2
     ldr         r2, =IRQ_TABLE
     str         r1, [r2, r0]
 
@@ -115,7 +116,8 @@ fn irqCallbackGet thumb
 
     ldr         r2, =0x09AF0000
     muls        r0, r2
-    lsrs        r0, r0, 25
+    lsrs        r0, r0, 28
+    lsls        r0, r0, 2
     ldr         r2, =IRQ_TABLE
     ldr         r0, [r2, r0]
 
@@ -376,45 +378,52 @@ fn irqDefaultHandler arm local
     mov         r2, 0x09000000                  @ 15
     add         r2, r2, 0xAF0000                @ 16
 
-    mul         r2, r0, r2                      @ 19
-    adr         r3, IRQ_TABLE                   @ 20
-    ldr         r2, [r3, r2, lsr 25]            @ 23
+    @ Faster to do r2 * r0 than r0 * r2
+    @ This is because the ARM7 has a 32x8 multiplier.
+    @ So the number of used bytes in the second operand
+    @ determines the number of cycles taken to do the multiply.
+    @
+    @ The ARM ARM says "it is believed" to be valid to make Rd = Rn, although
+    @ it used to be marked as UNPREDICTABLE.
+    @ (THUMB-mode muls forces Rd = Rn anyway?)
+    mul         r2, r2, r0                      @ 18/19
+    lsr         r2, r2, 28                      @ 20
+    adr         r3, IRQ_TABLE                   @ 21
+    ldr         r2, [r3, r2, lsl 2]             @ 24
 
     @ Quick exit if NULL
-    cmp         r2, 0                           @ 24
-    bxeq        lr                              @ 25 27 (Exit)
+    cmp         r2, 0                           @ 25
+    bxeq        lr                              @ 26 28 (Exit)
 
     @ Save some time by assuming IME is always 1 at this point
     @
     @ Only single-cycle race conditions, async DMA, or a debugger
     @ could really cause IME to be 0 here.
-    str         r1, [r1, OFF_IME]               @ 27
+    str         r1, [r1, OFF_IME]               @ 28
 
     @ Only needed for nested IRQs.
-    mrs         r3, spsr                        @ 28
-    @ Default IRQ stack would have 160 bytes, -24 used by BIOS vector.
-    @ With SPSR/LR saved, that's 128 bytes left, or 5 layers of nesting total.
-    @
-    @ Saving to the system stack would at best give us one more nest
-    msr         cpsr_c, #0x52 @ MODE_IRQ | FIQ_DISABLE @ 29
-    push        {r3, lr}                        @ 32
+    mrs         r3, spsr                        @ 29
+    @ Default IRQ Stack allows up to 6 nested IRQs, but only if we use the
+    @ system mode stack for dispatch.
+    msr         cpsr_c, #0x5F                   @ 29
+    push        {r3, lr}                        @ 33
 
-    mov         lr, pc                          @ 33
-    bx          r2                              @ 36+
+    mov         lr, pc                          @ 34
+    bx          r2                              @ 37+
 
-    pop         {r3, lr}                        @ 4
-    msr         cpsr_c, #0xD2 @ MODE_IRQ | FIQ_DISABLE | IRQ_DISABLE @ 5
-    msr         spsr, r3                        @ 6
+    pop         {r3, lr}                        @ 41
+    msr         cpsr_c, #0xD2                   @ 42
+    msr         spsr, r3                        @ 43
 
     @ Spending 2 cycles resynthesizing these is faster
     @ than spending 4 cycles pushing/popping them.
-    mov         r1, REG_BASE                    @ 7
-    mov         r0, 1                           @ 8
-    str         r0, [r1, OFF_IME]               @ 10
-    bx          lr                              @ 13
+    mov         r1, REG_BASE                    @ 44
+    mov         r0, 1                           @ 45
+    str         r0, [r1, OFF_IME]               @ 47
+    bx          lr                              @ 50+
 
-@ 0000  0 HBLANK
-@ 0001  1 VBLANK
+@ 0000  0 VBLANK
+@ 0001  1 HBLANK
 @ 0010  2 VCOUNT
 @ 0011  5 TIMER2
 @ 0100  3 TIMER0
