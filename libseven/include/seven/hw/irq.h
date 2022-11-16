@@ -11,9 +11,9 @@
 
 _LIBSEVEN_EXTERN_C
 
-// Attribute for compiling functions in a way that is suitable for IRQ handlers.
+// Attribute for compiling functions in a way that is suitable for ISRs.
 //
-#define IRQ_HANDLER     IWRAM_CODE ARM_CODE
+#define ISR_FUNCTION    IWRAM_CODE ARM_CODE
 
 // Interrupt Enable
 //
@@ -26,6 +26,10 @@ _LIBSEVEN_EXTERN_C
 // Interrupt Master Enable
 //
 #define REG_IME         VOLADDR(0x04000208, u16)
+
+// Interrupt Service Routine Function Pointer
+//
+#define MEM_ISR         MEMADDR(0x03FFFFFC, IsrFn*)
 
 // IRQ bitflags
 //
@@ -83,100 +87,70 @@ enum IRQIndex
 //
 // Function must be ARM code, and ideally be placed in IWRAM.
 //
-// Use the IRQ_HANDLER attribute to mark the function appropriately.
-typedef void IrqHandlerFn(void);
+// Use the ISR_FUNCTION attribute to mark the function appropriately.
+typedef void IsrFn(void);
 
 // Function type for interrupt callbacks.
 //
 // The function receives the triggered IRQs as the first parameter.
-typedef void IrqCallbackFn(u16);
+typedef void IrqHandlerFn(u16);
 
 // Initialize interrupt handling with a user-provided function.
 //
-extern void irqInit(IrqHandlerFn *isr);
+extern void irqInit(IsrFn *isr);
 
-// Initialize interrupt handling using a callback system.
+// Initialize interrupt handling using a handler system.
 //
+// Used with the irqHandler* functions.
 extern void irqInitDefault(void);
 
-// Initialize interrupt handling using a single callback function.
+// Initialize interrupt handling using a single handler function.
 //
-// irqInitSimple(my_callback) is roughly similar to
-// irqCallbackSet(IRQS_ALL, my_callback, 0),
-// but has a lower overhead.
-//
-extern void irqInitSimple(IrqCallbackFn *fn);
+extern void irqInitSimple(IrqHandlerFn *fn);
 
 // Initialize interrupt handling using a stub handler
 // that only acknowledges the IRQs and returns.
 //
-// This is enough for svcHalt, svcIntrWait, and svcVBlankIntrWait to work.
-//
+// This is enough for the BIOS interrupt wait functions to work.
 extern void irqInitStub(void);
 
-// Set the callback associated with the specified irq.
+// Set the handler associated with the specified irq.
 //
 // Fails if irq specifies more than one interrupt.
-//
-extern bool irqCallbackSet(u16 irq, IrqCallbackFn *fn);
+extern bool irqHandlerSet(u16 irq, IrqHandlerFn *fn);
 
 // Get the callback associated with the specified irq.
 //
-// Returns null if irq specifies more than one interrupt, or no callback is set.
-extern IrqCallbackFn* irqCallbackGet(u16 irq);
+// Fails if irq specifies more than one interrupt.
+extern bool irqHandlerGet(u16 irq, IrqHandlerFn **fn);
+
+// Swap the handler associated with the specified irq, returning the old one.
+//
+// Fails if irq specifies more than one interrupt.
+extern bool irqHandlerSwap(u16, IrqHandlerFn **fn);
 
 // Enable the specified IRQs.
 //
 // Returns the old value of the IE register.
-//
 extern u16 irqEnable(u16 irqs);
 
 // Disable the specified IRQs.
 //
 // Returns the old value of the IE register.
-//
 extern u16 irqDisable(u16 irqs);
 
-// Enable the specified IRQs and set the matching I/O registers.
+// Enable the specified IRQs and IRQ enable bits in the respective IO registers.
 //
 // Returns the old value of the IE register.
-//
 extern u16 irqEnableFull(u16 irqs);
 
-// Disable the specified IRQs and set the matching I/O registers.
+// Disable the specified IRQs and IRQ enable bits in the respective IO registers.
 //
 // Returns the old value of the IE register.
-//
 extern u16 irqDisableFull(u16 irqs);
 
-// Saves the current value of the IME register and disables it until
-// a call to irqCriticalSectionExit.
-//
-// Calls can be nested. Only the outermost call affects IME.
-//
-extern void irqCriticalSectionEnter(void);
-
-// Restores the value of IME saved by a
-// previous call to irqCriticalSectionEnter.
-//
-// Only the outermost call affects IME.
-//
-extern void irqCriticalSectionExit(void);
-
-// Returns true if currently inside a critical section.
-//
-extern bool irqCriticalSectionActive(void);
-
-// Calls the function f with IRQs disabled, passing data as an argument.
-//
-// Equivalent to
-//
-// bool i = REG_IME;
-// REG_IME = 0;
-// f(data);
-// REG_IME = i;
-// return;
-extern void irqFree(void (*f)(void*), void *data);
+// Calls a function with IRQs disabled, passing data as an argument.
+extern void irqFree(void (*f)(void*), void *arg);
 
 _LIBSEVEN_EXTERN_C_END
 

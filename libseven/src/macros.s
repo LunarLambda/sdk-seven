@@ -93,10 +93,12 @@
 .endm
 
 @ Declares read-writable data.
-.macro data .name:req .linkage=local .section .align
+.macro data .name:req .linkage=local .section .align .inline
     .macro              endd
         .size           \.name,.-\.name
-        .previous
+        .ifb            \.inline
+            .previous
+        .endif
         .purgem         endd
     .endm
 
@@ -110,10 +112,12 @@
         .endif
     .endif
 
-    .ifnb \.section
-        .section        \.section,"aw",%progbits
-    .else
-        .section        .data.\.name,"aw",%progbits
+    .ifb \.inline
+        .ifnb \.section
+            .section    \.section,"aw",%progbits
+        .else
+            .section    .data.\.name,"aw",%progbits
+        .endif
     .endif
 
     .ifnb \.align
@@ -125,10 +129,12 @@
 .endm
 
 @ Declares read-only data.
-.macro rodata .name:req .linkage=local .section .align
+.macro rodata .name:req .linkage=local .section .align .inline
     .macro              endr
         .size           \.name,.-\.name
-        .previous
+        .ifb           \.inline
+            .previous
+        .endif
         .purgem         endr
     .endm
 
@@ -138,14 +144,16 @@
         .ifc \.linkage,local
             .local \.name
         .else
-            .error "please specify linkage of \.name `local` or `global`"
+            .error "please specify linkage of \.name as `local` or `global`"
         .endif
     .endif
 
-    .ifnb \.section
-        .section        \.section,"a",%progbits
-    .else
-        .section        .rodata.\.name,"a",%progbits
+    .ifb \.inline
+        .ifnb \.section
+            .section    \.section,"a",%progbits
+        .else
+            .section    .rodata.\.name,"a",%progbits
+        .endif
     .endif
 
     .ifnb \.align

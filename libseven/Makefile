@@ -13,7 +13,8 @@ SOURCES = \
 	src/hw/bios.s \
 	src/hw/dma.s \
 	src/hw/input.s \
-	src/hw/irq.s \
+	src/hw/irq.c \
+	src/hw/isr.s \
 	src/hw/sram.s \
 	src/hw/timer.s \
 	src/util/assert.c \
@@ -47,6 +48,7 @@ CFLAGS = \
 
 BUILD = build
 LIB   = lib
+
 
 #
 # You don't need to touch anything below this point!

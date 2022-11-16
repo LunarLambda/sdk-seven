@@ -1,5 +1,5 @@
 project('sdk-seven', 'c',
-  version: '0.6.0',
+  version: '0.7.0',
   license: 'Zlib',
   meson_version: '>=0.60.0',
   default_options: ['warning_level=2', 'c_std=c99'])
@@ -13,18 +13,20 @@ add_project_arguments(
 add_project_link_arguments(
   '-mthumb',
   '-Wl,--gc-sections',
-  '-Wl,--no-warn-rwx-segments',
-  '-specs=nosys.specs',
   language: 'c')
 
 cc = meson.get_compiler('c')
 
-# Detect newlib-nano
+# devkitARM has nano.specs, but no libc_nano
 #
-if cc.has_argument('-specs=nano.specs')
-  add_project_link_arguments(
-    '-specs=nano.specs',
-    language: 'c')
+if cc.find_library('c_nano', required: false).found()
+  add_project_link_arguments('-specs=nano.specs', language: 'c')
+endif
+
+# Remove warnings on newer toolchains
+#
+if find_program('ld', version: '>=2.39', required: false).found()
+  add_project_link_arguments('-Wl,--no-warn-rwx-segments', language: 'c')
 endif
 
 subdir('libseven')

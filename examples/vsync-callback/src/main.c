@@ -12,7 +12,7 @@ int main(void)
     // Set up the necessary interrupt handling
     irqInitDefault();
     irqEnableFull(IRQ_VBLANK);
-    irqCallbackSet(IRQ_VBLANK, vblank_callback);
+    irqHandlerSet(IRQ_VBLANK, vblank_callback);
 
     // Clear the force-blank bit
     REG_DISPCNT = 0;
