@@ -4,8 +4,8 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_TEMPLATE_H
-#define _LIBSEVEN_TEMPLATE_H
+#ifndef _LIBSEVEN_UTIL_DEBUG_H
+#define _LIBSEVEN_UTIL_DEBUG_H
 
 #include <seven/base.h>
 
@@ -25,5 +25,5 @@ bool dbgRaiseException(u32 exception);
 
 _LIBSEVEN_EXTERN_C_END
 
-#endif /* !_LIBSEVEN_TEMPLATE_H */
+#endif /* !_LIBSEVEN_UTIL_DEBUG_H */
 
