@@ -42,6 +42,8 @@ struct ObjAffineSrcData
     i16 ratio_x;
     i16 ratio_y;
     u16 theta;
+    // BIOS wants this type to be 8 bytes but doesn't need alignment > 2
+    u8 pad[2];
 };
 
 struct ObjAffineDstData
