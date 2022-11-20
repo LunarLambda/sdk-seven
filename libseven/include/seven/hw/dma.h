@@ -11,11 +11,11 @@
 
 _LIBSEVEN_EXTERN_C
 
-//        RAM  ROM  Transfer limit
-// DMA 0  R/W   -   16K
-// DMA 1  R/W   R   16K
-// DMA 2  R/W   R   16K
-// DMA 3  R/W  R/W  64K
+// DMA RAM  ROM  Transfer limit
+//  0  R/W   -   16K
+//  1  R/W   R   16K
+//  2  R/W   R   16K
+//  3  R/W  R/W  64K
 
 #define REG_DMA0SRC     VOLADDR(0x040000B0, const void *)
 #define REG_DMA0DST     VOLADDR(0x040000B4, void *)
@@ -37,27 +37,30 @@ _LIBSEVEN_EXTERN_C
 #define REG_DMA3LEN     VOLADDR(0x040000DC, u16)
 #define REG_DMA3CNT     VOLADDR(0x040000DE, u16)
 
-#define BF_DMA_DST_OFFSET 5
-#define BF_DMA_DST_LENGTH 2
-
-#define DMA_DST(n) BITFIELD(DMA_DST, (n))
-
-#define BF_DMA_SRC_OFFSET 7
-#define BF_DMA_SRC_LENGTH 2
-
-#define DMA_SRC(n) BITFIELD(DMA_SRC, (n))
-
-#define BF_DMA_START_OFFSET 12
-#define BF_DMA_START_LENGTH 2
-
-#define DMA_START(n) BITFIELD(DMA_START, (n))
+struct DMA
+{
+    const void *src;
+    void *dst;
+    u16 len;
+    u16 cnt;
+};
 
 enum DMAControl
 {
+    #define BF_DMA_DST_OFFSET 5
+    #define BF_DMA_DST_LENGTH 2
+
+    #define DMA_DST(n) BITFIELD(DMA_DST, (n))
+
     DMA_DST_INCREMENT   = DMA_DST(0),
     DMA_DST_DECREMENT   = DMA_DST(1),
     DMA_DST_FIXED       = DMA_DST(2),
-    DNA_DST_RELOAD      = DMA_DST(3),
+    DMA_DST_RELOAD      = DMA_DST(3),
+
+    #define BF_DMA_SRC_OFFSET 7
+    #define BF_DMA_SRC_LENGTH 2
+
+    #define DMA_SRC(n) BITFIELD(DMA_SRC, (n))
 
     DMA_SRC_INCREMENT   = DMA_SRC(0),
     DMA_SRC_DECREMENT   = DMA_SRC(1),
@@ -68,39 +71,44 @@ enum DMAControl
     DMA_32BIT           = BIT(10),
     DMA_16BIT           = !DMA_32BIT,
 
+    #define BF_DMA_START_OFFSET 12
+    #define BF_DMA_START_LENGTH 2
+
+    #define DMA_START(n) BITFIELD(DMA_START, (n))
+
     DMA_START_NOW       = DMA_START(0),
     DMA_START_HBLANK    = DMA_START(1),
     DMA_START_VBLANK    = DMA_START(2),
-    DMA_START_SPECIAL   = DMA_START(3),
 
     // DMA1, DMA2
-    DMA_START_SOUND     = DMA_START_SPECIAL,
+    DMA_START_SOUND     = DMA_START(3),
     // DMA3
-    DMA_START_CAPTURE   = DMA_START_SPECIAL,
+    DMA_START_CAPTURE   = DMA_START(3),
 
     // On transfer completion
     DMA_IRQ_ENABLE      = BIT(14),
     DMA_ENABLE          = BIT(15),
 };
 
-extern void dmaEnable(u32 num);
-extern void dmaDisable(u32 num);
+enum DMAControlPreset
+{
+    DMA_PRESET_COPY16   = DMA_16BIT,
+    DMA_PRESET_COPY32   = DMA_32BIT,
+    DMA_PRESET_FILL16   = DMA_16BIT | DMA_SRC_FIXED,
+    DMA_PRESET_FILL32   = DMA_32BIT | DMA_SRC_FIXED,
+    DMA_PRESET_HBLANK   = DMA_REPEAT | DMA_START_HBLANK,
+    DMA_PRESET_VBLANK   = DMA_REPEAT | DMA_START_VBLANK,
+    DMA_PRESET_SOUND    = DMA_REPEAT | DMA_START_SOUND,
+    DMA_PRESET_CAPTURE  = DMA_REPEAT | DMA_START_CAPTURE,
+};
 
-// General purpose memory copy using DMA3
-extern void dmaCopy16(const void *src, void *dst, u32 len);
-extern void dmaCopy32(const void *src, void *dst, u32 len);
+#define DMA_LEN(len, flags) \
+    ((flags) & DMA_32BIT ? (len) >> 2 : (len) >> 1)
 
-// Repeating Sound FIFO A transfer using DMA1
-extern void dmaSoundFifoATransfer(const void *src, u16 flags);
+#define DMA_BUILD(src, dst, len, flags) \
+    ((struct DMA){ src, dst, DMA_LEN(len, flags), flags })
 
-// Repeating Sound FIFO B transfer using DMA2
-extern void dmaSoundFifoBTransfer(const void *src, u16 flags);
-
-// Repeating H-Blank transfer using DMA0.
-extern void dmaHBlankTransfer(const void *src, void *dst, u32 len, u16 flags);
-
-// Atomically sets up a DMA channel, using a byte count
-extern void dmaAtomicSet(u32 num, const void *src, void *dst, u32 len, u16 flags);
+extern void dmaSet(u32 channel, struct DMA dma);
 
 _LIBSEVEN_EXTERN_C_END
 
