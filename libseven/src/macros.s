@@ -30,7 +30,7 @@
                     .section .text.\.name,"ax",%progbits
                 .endif
                 .align 1
-                .thumb_func
+                .thumb
             .else
                 .error "please specify function \.name as `arm` or `thumb` code"
             .endif
