@@ -15,6 +15,13 @@ add_project_link_arguments(
   '-Wl,--gc-sections',
   language: 'c')
 
+# Generate debug info compatible with no$gba v3.05
+#
+# This does not work if libc or other system code is built with newer debug info
+if get_option('debug')
+  add_project_arguments('-gdwarf-4', language: 'c')
+endif
+
 cc = meson.get_compiler('c')
 
 # devkitARM has nano.specs, but no libc_nano
