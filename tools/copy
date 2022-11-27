@@ -3,4 +3,4 @@
 import shutil
 from sys import argv
 
-shutil.copyfile(argv[1], argv[2])
+shutil.copy(argv[1], argv[2])

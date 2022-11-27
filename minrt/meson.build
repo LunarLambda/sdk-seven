@@ -6,6 +6,12 @@ sources = [
   'src/gba/ram.c',
 ]
 
+sources_mb = [
+  'src/gba/multiboot_header.s',
+  'src/gba/crt0.s',
+  'src/gba/ram.c',
+]
+
 includes = ['include']
 
 lib = meson.current_source_dir() / 'lib'
@@ -13,8 +19,14 @@ lib = meson.current_source_dir() / 'lib'
 link_args = ['-specs=' + lib / 'nocrt0.specs', '-L' + lib / 'ldscripts']
 
 minrt = static_library(
-  'minrt',
+  'minrt_rom',
   sources,
+  include_directories: includes + 'src' + 'src/gba',
+  install: true)
+
+minrt_mb = static_library(
+  'minrt_mb',
+  sources_mb,
   include_directories: includes + 'src' + 'src/gba',
   install: true)
 
@@ -38,7 +50,7 @@ minrt_dep = declare_dependency(
 
 minrt_mb_dep = declare_dependency(
   include_directories: includes,
-  link_with: minrt,
+  link_with: minrt_mb,
   link_args: link_args + '-Tmultiboot.ld',
   version: version)
 

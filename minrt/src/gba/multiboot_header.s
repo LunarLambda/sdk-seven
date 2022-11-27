@@ -11,11 +11,13 @@
 
     b           _start                  @ ROM entry point
     .include    "header_data.s"     @ ROM header information
-    .zero       4
+    b           _start                  @ Multiboot entry point
 __boot_type:
     .zero       1                       @ Link transfer boot type
 __boot_client:
     .zero       1                       @ Multiplayer player number
+    .zero       26                      @ Reserved
+    b           _start                  @ JOY Bus entry point
 
 .global         __boot_type, __boot_client
 
