@@ -9,7 +9,7 @@ make_dist() {
     sha256sum -b $PROJECT-$VERSION.zip > $PROJECT-$VERSION.zip.sha256sum
 }
 
-[ ! -d "$DIST" ] && mkdir "$DIST" && rm "$DIST"/*
+[ ! -d "$DIST" ] && mkdir "$DIST" || rm "$DIST"/*
 
 (PROJECT=libseven VERSION=0.12.0 make_dist)
 (PROJECT=minrt VERSION=0.2.1 make_dist)
