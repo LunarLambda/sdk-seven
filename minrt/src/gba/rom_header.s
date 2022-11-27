@@ -9,13 +9,13 @@
 
 .section        .rom_header,"ax",%progbits
 
-    b           _start                  @ ROM entry point
-    .include    "header_data.s"     @ ROM header information
+    b           _start          @ ROM entry point
+    .include    "header_data.s" @ ROM header information
     .zero       4
 __boot_type:
-    .zero       1                       @ Link transfer boot type
+    .zero       1               @ Link transfer boot type
 __boot_client:
-    .zero       1                       @ Multiplayer player number
+    .zero       1               @ Multiplayer player number
 
 .global         __boot_type, __boot_client
 

@@ -12,4 +12,4 @@ make_dist() {
 [ ! -d "$DIST" ] && mkdir "$DIST" && rm "$DIST"/*
 
 (PROJECT=libseven VERSION=0.12.0 make_dist)
-(PROJECT=minrt VERSION=0.2.0 make_dist)
+(PROJECT=minrt VERSION=0.2.1 make_dist)
