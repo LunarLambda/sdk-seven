@@ -16,3 +16,5 @@ makerom = custom_target('makerom',
   command: ['copy', '@INPUT@', '@OUTPUT@'],
   depends: [gbafix],
   build_by_default: true)
+
+meson.override_find_program('makerom', makerom)
