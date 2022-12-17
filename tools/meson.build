@@ -17,4 +17,5 @@ makerom = custom_target('makerom',
   depends: [gbafix],
   build_by_default: true)
 
-meson.override_find_program('makerom', files(makerom.full_path()))
+# Broken: https://github.com/mesonbuild/meson/issues/11167#issuecomment-1356302184
+# meson.override_find_program('makerom', files(makerom.full_path()))
