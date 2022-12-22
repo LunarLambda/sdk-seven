@@ -65,9 +65,9 @@ clean:
 
 install: $(TARGET)
 	@echo "install: $(DESTDIR)$(DEVKITPRO)"
-	@mkdir -p $(DESTDIR)$(DEVKITPRO)/libseven/
-	@cp -r include $(DESTDIR)$(DEVKITPRO)/libseven/
-	@cp -r lib $(DESTDIR)$(DEVKITPRO)/libseven/
+	@mkdir -p $(DESTDIR)$(DEVKITPRO)/minrt/
+	@cp -r include $(DESTDIR)$(DEVKITPRO)/minrt/
+	@cp -r lib $(DESTDIR)$(DEVKITPRO)/minrt/
 
 .PHONY: builddirs clean install
 
