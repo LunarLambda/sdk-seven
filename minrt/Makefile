@@ -60,8 +60,8 @@ builddirs:
 	@mkdir -p $(OBJDIRS) $(LIB)
 
 clean:
-	@echo "clean: $(BUILD) $(LIB)"
-	@rm -rf $(BUILD) $(LIB)
+	@echo "clean: $(BUILD) $(TARGET)"
+	@rm -rf $(BUILD) $(TARGET)
 
 install: $(TARGET)
 	@echo "install: $(DESTDIR)$(DEVKITPRO)"

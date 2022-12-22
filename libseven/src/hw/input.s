@@ -10,7 +10,7 @@
 .include        "constants.s"
 .include        "macros.s"
 
-bss KEYINPUT
+bss KEYINPUT .align=2
     .word 0
 endb
 
