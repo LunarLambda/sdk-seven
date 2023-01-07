@@ -1,21 +1,13 @@
 objcopy = find_program('objcopy')
 
-gbafix = executable('gbafix', 'gbafix.c', native: true)
+gbafix = meson.current_source_dir() / 'src/gbafix.py'
 
 makerom = configure_file(
   input: 'makerom.in',
-  output: 'makerom.in',
+  output: 'makerom',
   configuration: {
     'OBJCOPY': objcopy.full_path(),
-    'GBAFIX': gbafix.full_path(),
+    'GBAFIX': gbafix,
   })
 
-makerom = custom_target('makerom',
-  input: makerom,
-  output: 'makerom',
-  command: ['copy', '@INPUT@', '@OUTPUT@'],
-  depends: [gbafix],
-  build_by_default: true)
-
-# Broken: https://github.com/mesonbuild/meson/issues/11167#issuecomment-1356302184
-# meson.override_find_program('makerom', files(makerom.full_path()))
+meson.override_find_program('makerom', makerom)

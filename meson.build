@@ -1,5 +1,5 @@
 project('sdk-seven', 'c',
-  version: '0.8.5',
+  version: '0.9.0',
   license: 'Zlib',
   meson_version: '>=0.60.0',
   default_options: ['warning_level=2', 'c_std=c99'])
