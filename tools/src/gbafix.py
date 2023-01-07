@@ -95,11 +95,11 @@ def main():
     h = opts.file.read(192)
 
     if len(h) < 192:
-        raise Exception("too short")
+        raise Exception("specified file is too small (min. 192 bytes)")
 
     header = GBAHeader.from_bytes(h)
 
-    opts.title = opts.file.name if opts.title == "" else opts.title
+    opts.title = path.basename(opts.file.name) if opts.title == "" else opts.title
 
     header.title        = opts.title or header.title
     header.game_code    = opts.game_code or header.game_code
