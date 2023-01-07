@@ -1,6 +1,0 @@
-#!/usr/bin/env python3
-
-import shutil
-from sys import argv
-
-shutil.copy(argv[1], argv[2])
