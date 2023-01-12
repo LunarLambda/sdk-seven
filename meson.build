@@ -32,7 +32,7 @@ endif
 
 # Remove warnings on newer toolchains
 #
-if find_program('ld', version: '>=2.39', required: false).found()
+if cc.links('int _exit(int) {} int main() {}', args: ['-Wl,--no-warn-rwx-segments'])
   add_project_link_arguments('-Wl,--no-warn-rwx-segments', language: 'c')
 endif
 
