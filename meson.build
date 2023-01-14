@@ -1,5 +1,5 @@
 project('sdk-seven', 'c',
-  version: '0.9.0',
+  version: '0.9.1',
   license: 'Zlib',
   meson_version: '>=0.60.0',
   default_options: ['warning_level=2', 'c_std=c99'])
@@ -32,7 +32,14 @@ endif
 
 # Remove warnings on newer toolchains
 #
-if cc.links('int _exit(int) {} int main() {}', args: ['-Wl,--no-warn-rwx-segments'])
+# Different toolchains are quite badly behaved, making meson's usual tests
+# fail spuriously.
+#
+# So we just ask ld directly. Meson uses a variant of this (-Wl,--version)
+# to detect the version of ld used by the compiler.
+ld_h = run_command(cc, '-Wl,--help', capture: true, check: false)
+
+if ld_h.stdout().contains('--no-warn-rwx-segments')
   add_project_link_arguments('-Wl,--no-warn-rwx-segments', language: 'c')
 endif
 
