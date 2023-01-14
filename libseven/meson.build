@@ -25,7 +25,7 @@ includes = ['include']
 libseven = static_library(
   'seven',
   sources,
-  include_directories: includes + 'src',
+  include_directories: includes + ['src'],
   install: true)
 
 install_subdir('include/seven', install_dir: get_option('includedir'))

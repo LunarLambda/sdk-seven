@@ -21,13 +21,13 @@ link_args = ['-specs=' + lib / 'nocrt0.specs', '-L' + lib / 'ldscripts']
 minrt = static_library(
   'minrt_rom',
   sources,
-  include_directories: includes + 'src' + 'src/gba',
+  include_directories: includes + ['src', 'src/gba'],
   install: true)
 
 minrt_mb = static_library(
   'minrt_mb',
   sources_mb,
-  include_directories: includes + 'src' + 'src/gba',
+  include_directories: includes + ['src', 'src/gba'],
   install: true)
 
 install_headers('include/minrt.h')
@@ -45,13 +45,13 @@ install_data(libdata, install_dir: get_option('libdir'))
 minrt_dep = declare_dependency(
   include_directories: includes,
   link_with: minrt,
-  link_args: link_args + '-Trom.ld',
+  link_args: link_args + ['-Trom.ld'],
   version: version)
 
 minrt_mb_dep = declare_dependency(
   include_directories: includes,
   link_with: minrt_mb,
-  link_args: link_args + '-Tmultiboot.ld',
+  link_args: link_args + ['-Tmultiboot.ld'],
   version: version)
 
 meson.override_dependency('minrt', minrt_dep)
