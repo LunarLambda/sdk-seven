@@ -131,8 +131,6 @@ fini_skip:
 
 pool: .pool
 
-@ HACK: Reference a symbol from the header so it doesn't get dropped during link
-.equiv          KEEP_HEADER,    __boot_type
 .equiv          REG_DMA3,       0x040000D4
 .equiv          REG_IME,        0x04000208
 .equiv          REG_WRAMCNT,    0x04000800

@@ -7,12 +7,16 @@
 OUTPUT_FORMAT(elf32-littlearm)
 OUTPUT_ARCH(arm)
 ENTRY(_start)
+EXTERN(_header)
 
 SECTIONS
 {
-        .rom_header :
+        PROVIDE(__boot_type = ORIGIN(LOAD_REGION) + 0xC4);
+        PROVIDE(__boot_client = ORIGIN(LOAD_REGION) + 0xC5);
+
+        .header :
         {
-                KEEP(*(.rom_header))
+                *(.header)
         } >LOAD_REGION
 
         .text :

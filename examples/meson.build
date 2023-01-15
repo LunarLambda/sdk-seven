@@ -1,11 +1,13 @@
 subdir('template')
 subdir('vsync')
 subdir('vsync-callback')
+subdir('multiboot')
 
 elfs = [
   example_template,
   example_vsync,
   example_vsync_callback,
+  example_multiboot,
 ]
 
 foreach bin : elfs

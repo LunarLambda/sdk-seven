@@ -7,18 +7,14 @@
 .syntax         unified
 .cpu            arm7tdmi
 
-.section        .rom_header,"ax",%progbits
-
+.section        .header,"ax",%progbits
+_header:
     b           _start          @ ROM entry point
     .include    "header_data.s" @ ROM header information
     b           _start          @ Multiboot entry point
-__boot_type:
-    .zero       1               @ Link transfer boot type
-__boot_client:
-    .zero       1               @ Multiplayer player number
-    .zero       26              @ Reserved
-    b           _start          @ JOY Bus entry point
+    .zero       32              @ Multiboot reserved
 
-.global         __boot_type, __boot_client
+.global         _header
+.weak           _header
 
 @ vim: ft=armv4 et sta sw=4 sts=8
