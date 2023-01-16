@@ -1,17 +1,25 @@
 #include <stdint.h>
 #include <minrt.h>
 
-extern char __iwram_size;
-extern char __ewram_size;
+extern char __load;
+extern char __load_end;
+extern char __iwram_end;
+extern char __ewram_end;
+extern char __sp_sys;
 
 size_t minrt_used_static_iwram(void)
 {
-    return (size_t)&__iwram_size;
+    return (size_t)&__iwram_end - 0x03000000;
 }
 
 size_t minrt_used_static_ewram(void)
 {
-    return (size_t)&__ewram_size;
+    return (size_t)&__ewram_end - 0x02000000;
+}
+
+size_t minrt_rom_size(void)
+{
+    return (size_t)&__load_end - (size_t)&__load;
 }
 
 size_t minrt_used_stack(void)
@@ -20,14 +28,5 @@ size_t minrt_used_stack(void)
 
     __asm__("mov %0, sp" : "=r"(sp));
 
-    return 0x03007F00 - sp;
-}
-
-ptrdiff_t minrt_stack_left(void)
-{
-    intptr_t sp;
-
-    __asm__("mov %0, sp" : "=r"(sp));
-
-    return sp - ((intptr_t)&__iwram_size + 0x03000000);
+    return (uintptr_t)&__sp_sys - sp;
 }

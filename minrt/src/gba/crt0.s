@@ -8,135 +8,105 @@
 .cpu            arm7tdmi
 
 _start:
+    @ IRQs off
+    ldr         r0, =REG_IME
+    str         r0, [r0]
+
+    @ Stack setup
+    msr         cpsr_c, 0xD3
+    ldr         sp, =__sp_svc
+    msr         cpsr_c, 0xD2
+    ldr         sp, =__sp_irq
+    msr         cpsr_c, 0x1F
+    ldr         sp, =__sp_sys
+
     add         r0, pc, #1
     bx          r0
+
 .thumb
-    @ IRQs off
-    ldr         r3, =REG_IME
-    strh        r3, [r3]
-
-    ldr         r3, =REG_DMA3
-
     @ .iwram section
-    ldr         r0, =__iwram_lma
-    ldr         r1, =__iwram_vma
-    ldr         r2, =__iwram_dma
-    bl          dma_copy
-
-    @ .iwram0 section
-    ldr         r0, =__load_start_iwram0
-    ldr         r1, =__iwram_overlay_vma
-    ldr         r2, =__iwram_overlay_dma
-    bl          dma_copy
-
-    @ .iwram_bss section
-    mov         r0, sp
-    ldr         r1, =__iwram_bss_vma
-    ldr         r2, =__iwram_bss_dma
-    bl          dma_copy
+    ldr         r0, =__iwram_vma
+    ldr         r1, =__iwram_lma
+    ldr         r2, =__iwram_len
+    cmp         r2, 0
+    beq         1f
+    bl          memcpy
+1:
 
     @ .ewram section
-    ldr         r0, =__ewram_lma
-    ldr         r1, =__ewram_vma
-    ldr         r2, =__ewram_dma
-    bl          dma_copy
+    ldr         r0, =__ewram_vma
+    ldr         r1, =__ewram_lma
+    ldr         r2, =__ewram_len
+    cmp         r2, 0
+    beq         1f
+    bl          memcpy
+1:
 
-    @ .ewram0 section
-    ldr         r0, =__load_start_ewram0
-    ldr         r1, =__ewram_overlay_vma
-    ldr         r2, =__ewram_overlay_dma
-    bl          dma_copy
+    @ .data section
+    ldr         r0, =__data_vma
+    ldr         r1, =__data_lma
+    ldr         r2, =__data_len
+    cmp         r2, 0
+    beq         1f
+    bl          memcpy
+1:
 
-    @ .ewram_bss section
-    mov         r0, sp
-    ldr         r1, =__ewram_bss_vma
-    ldr         r2, =__ewram_bss_dma
-    bl          dma_copy
+    @ .persistent section
+    ldr         r3, =init
+    ldrb        r0, [r3]
+    cmp         r0, 0
+    bne         1f
+    movs        r0, 1
+    strb        r0, [r3]
+    ldr         r0, =__persistent_vma
+    ldr         r1, =__persistent_lma
+    ldr         r2, =__persistent_len
+    cmp         r2, 0
+    beq         1f
+    bl          memcpy
+1:
 
-    @ .preinit_array section
-    ldr         r4, =__preinit_array_start
-    ldr         r5, =__preinit_array_end
-    bl          init_array
+    @ .iwram.bss section
+    ldr         r0, =__iwram_bss_vma
+    movs        r1, 0
+    ldr         r2, =__iwram_bss_len
+    bl          memset
 
-    @ .init_array section
-    ldr         r4, =__init_array_start
-    ldr         r5, =__init_array_end
-    bl          init_array
+    @ .ewram.bss section
+    ldr         r0, =__ewram_bss_vma
+    movs        r1, 0
+    ldr         r2, =__ewram_bss_len
+    bl          memset
+
+    @ .bss section
+    ldr         r0, =__bss_vma
+    movs        r1, 0
+    ldr         r2, =__bss_len
+
+    @ Initialization
+    bl          __libc_init_array
 
     @ main(0, NULL,NULL)
     movs        r0, #0 @ argc
     movs        r1, #0 @ argv
     movs        r2, #0 @ envp
-    ldr         r3, =main
-    bl          bx_r3
-    movs        r7, r0
-
-    @ .fini_array section
-    ldr         r4, =__fini_array_start
-    ldr         r5, =__fini_array_end
-    bl          fini_array
-
-    @ exit()
-    movs        r0, r7
-    ldr         r3, =exit
-    bl          bx_r3
+    bl          main
+    bl          exit
 
 _exit:
     @ Disable IRQs and halt
     ldr         r3, =REG_IME
     strh        r3, [r3]
-    1: b        1b
-
-dma_copy:
-    @ NOTE: This checks against a non-zero section size.
-    @ In the case of an EWRAM section spanning all of EWRAM (256K),
-    @ The lower 16-bit will be zero. This works fine for the DMA,
-    @ since the lower 5 bit of DMACNT are unused.
-    @ That's why we shift 15, not 16.
-    lsls        r4, r2, #15
-    beq         dma_skip
-    stm         r3!, {r0, r1, r2}
-    subs        r3, r3, #12
-dma_skip:
-    bx          lr
-
-init_array:
-    mov         r6, lr
-    cmp         r4, r5
-    beq         init_skip
-init_loop:
-    ldr         r3, [r4]
-    bl          bx_r3
-    adds        r4, r4, #4
-    cmp         r4, r5
-    bne         init_loop
-init_skip:
-    bx          r6
-
-bx_r3:
-    bx          r3
-
-fini_array:
-    mov         r6, lr
-    cmp         r5, r4
-    beq         fini_skip
-fini_loop:
-    subs        r5, r5, #4
-    ldr         r3, [r5]
-    bl          bx_r3
-    cmp         r5, r4
-    bne         fini_loop
-fini_skip:
-    bx          r6
+    b           .
 
 pool: .pool
 
-.equiv          REG_DMA3,       0x040000D4
-.equiv          REG_IME,        0x04000208
-.equiv          REG_WRAMCNT,    0x04000800
-.equiv          SVC_CPUSET,     11
+.section        .noinit,"aw",%nobits
+init: .byte     0
 
-.global         _start, _exit
+.equiv          REG_IME,        0x04000208
+
+.global         _start
 .weak           _exit
 
 @ vim: ft=armv4 et sta sw=4 sts=8
