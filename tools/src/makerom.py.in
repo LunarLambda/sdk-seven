@@ -2,8 +2,8 @@
 import subprocess
 import sys
 
-OBJCOPY = '@OBJCOPY@'
-GBAFIX = '@GBAFIX@'
+OBJCOPY = r"@OBJCOPY@"
+GBAFIX = r"@GBAFIX@"
 
 subprocess.call([OBJCOPY, '-O', 'binary'] + sys.argv[1:3])
 subprocess.call([sys.executable, GBAFIX] + sys.argv[2:])

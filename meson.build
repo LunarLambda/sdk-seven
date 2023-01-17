@@ -1,5 +1,5 @@
 project('sdk-seven', 'c',
-  version: '0.11.0',
+  version: '0.11.1',
   license: 'Zlib',
   meson_version: '>=0.55.0',
   default_options: ['warning_level=2', 'c_std=c99'])
@@ -13,6 +13,7 @@ add_project_arguments(
 add_project_link_arguments(
   '-mthumb',
   '-Wl,--gc-sections',
+  '-Wl,-z,max-page-size=1',
   language: 'c')
 
 # Generate debug info compatible with no$gba v3.05
@@ -46,8 +47,6 @@ endif
 subdir('libseven')
 subdir('minrt')
 subdir('tools')
-
-mapfile = '-Wl,-Map,@0@.map'
 
 if not meson.is_subproject()
   subdir('examples')
