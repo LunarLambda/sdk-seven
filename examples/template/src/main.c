@@ -1,6 +1,8 @@
 #include <seven/hw/video/prelude.h>
 #include <seven/hw/video/bg_bitmap.h>
 
+libsevenEmitVersionString();
+
 int main(void)
 {
     REG_DISPCNT = VIDEO_MODE_BITMAP | VIDEO_BG2_ENABLE;

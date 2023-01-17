@@ -18,6 +18,7 @@ SECTIONS
                 *(.header)
                 __boot_type = 0xC4;
                 __boot_client = 0xC5;
+                KEEP(*(.header_pad .header_pad.*))
         } >LOAD_REGION
 
         /* Standard code */
@@ -36,6 +37,107 @@ SECTIONS
         {
                 *(.rodata .rodata.* .gnu.linkonce.r.*)
         } >LOAD_REGION
+
+        /* IWRAM code/data */
+
+        .iwram :
+        {
+                *(SORT(.iwram.sorted.*))
+                *(.iwram .iwram.*)
+        } >IWRAM AT>LOAD_REGION
+
+        OVERLAY : NOCROSSREFS
+        {
+                .iwram0 { *(.iwram0 .iwram0.*) }
+                .iwram1 { *(.iwram1 .iwram1.*) }
+                .iwram2 { *(.iwram2 .iwram2.*) }
+                .iwram3 { *(.iwram3 .iwram3.*) }
+                .iwram4 { *(.iwram4 .iwram4.*) }
+                .iwram5 { *(.iwram5 .iwram5.*) }
+                .iwram6 { *(.iwram6 .iwram6.*) }
+                .iwram7 { *(.iwram7 .iwram7.*) }
+                .iwram8 { *(.iwram8 .iwram8.*) }
+                .iwram9 { *(.iwram9 .iwram9.*) }
+                .iwramA { *(.iwramA .iwramA.*) }
+                .iwramB { *(.iwramB .iwramB.*) }
+                .iwramC { *(.iwramC .iwramC.*) }
+                .iwramD { *(.iwramD .iwramD.*) }
+                .iwramE { *(.iwramE .iwramE.*) }
+                .iwramF { *(.iwramF .iwramF.*) }
+        } >IWRAM AT>LOAD_REGION
+
+        /* EWRAM code/data */
+
+        .ewram :
+        {
+                *(SORT(.ewram.sorted.*))
+                *(.ewram .ewram.*)
+        } >EWRAM AT>LOAD_REGION
+
+        OVERLAY : NOCROSSREFS
+        {
+                .ewram0 { *(.ewram0 .ewram0.*) }
+                .ewram1 { *(.ewram1 .ewram1.*) }
+                .ewram2 { *(.ewram2 .ewram2.*) }
+                .ewram3 { *(.ewram3 .ewram3.*) }
+                .ewram4 { *(.ewram4 .ewram4.*) }
+                .ewram5 { *(.ewram5 .ewram5.*) }
+                .ewram6 { *(.ewram6 .ewram6.*) }
+                .ewram7 { *(.ewram7 .ewram7.*) }
+                .ewram8 { *(.ewram8 .ewram8.*) }
+                .ewram9 { *(.ewram9 .ewram9.*) }
+                .ewramA { *(.ewramA .ewramA.*) }
+                .ewramB { *(.ewramB .ewramB.*) }
+                .ewramC { *(.ewramC .ewramC.*) }
+                .ewramD { *(.ewramD .ewramD.*) }
+                .ewramE { *(.ewramE .ewramE.*) }
+                .ewramF { *(.ewramF .ewramF.*) }
+        } >EWRAM AT>LOAD_REGION
+
+        /* Standard data */
+
+        .data :
+        {
+                *(.data .data.* .gnu.linkonce.d.*)
+        } >DATA_REGION AT>LOAD_REGION
+
+        /* Persistent data */
+
+        .persistent :
+        {
+                *(.persistent .persistent.* .gnu.linkonce.p.*)
+        } >PERSISTENT_REGION AT>LOAD_REGION
+
+        /* IWRAM zero-initialized data */
+
+        .iwram_bss (NOLOAD) :
+        {
+                *(.iwram_bss .iwram_bss.*)
+        } >IWRAM
+
+        /* EWRAM zero-initialized data */
+
+        .ewram_bss (NOLOAD) :
+        {
+                *(.ewram_bss .ewram_bss.*)
+                /* devkitARM compatibility */
+                *(.sbss .sbss.*)
+        } >EWRAM
+
+        /* Standard zero-initialized data */
+
+        .bss (NOLOAD) :
+        {
+                *(.bss .bss.* .gnu.linkonce.b.*)
+                *(COMMON)
+        } >BSS_REGION
+
+        /* Persistent zero-initialized data */
+
+        .noinit (NOLOAD) :
+        {
+                *(.noinit .noinit.* .gnu.linkonce.n.*)
+        } >NOINIT_REGION
 
         /* Exception handling and unwinding */
 
@@ -108,131 +210,36 @@ SECTIONS
                 PROVIDE_HIDDEN(__fini_array_end = .);
         } >LOAD_REGION
 
-        /* IWRAM code/data */
+        /* ROM padding */
 
-        .iwram :
+        .pad :
         {
-                *(SORT(.iwram.sorted.*))
-                *(.iwram .iwram.*)
-        } >EWRAM AT>LOAD_REGION
-
-        OVERLAY : NOCROSSREFS
-        {
-                .iwram0 { *(.iwram0 .iwram0.*) }
-                .iwram1 { *(.iwram1 .iwram1.*) }
-                .iwram2 { *(.iwram2 .iwram2.*) }
-                .iwram3 { *(.iwram3 .iwram3.*) }
-                .iwram4 { *(.iwram4 .iwram4.*) }
-                .iwram5 { *(.iwram5 .iwram5.*) }
-                .iwram6 { *(.iwram6 .iwram6.*) }
-                .iwram7 { *(.iwram7 .iwram7.*) }
-                .iwram8 { *(.iwram8 .iwram8.*) }
-                .iwram9 { *(.iwram9 .iwram9.*) }
-                .iwramA { *(.iwramA .iwramA.*) }
-                .iwramB { *(.iwramB .iwramB.*) }
-                .iwramC { *(.iwramC .iwramC.*) }
-                .iwramD { *(.iwramD .iwramD.*) }
-                .iwramE { *(.iwramE .iwramE.*) }
-                .iwramF { *(.iwramF .iwramF.*) }
-        } >IWRAM AT>LOAD_REGION
-
-        /* EWRAM code/data */
-
-        .ewram :
-        {
-                *(SORT(.ewram.sorted.*))
-                *(.ewram .ewram.*)
-        } >EWRAM AT>LOAD_REGION
-
-        OVERLAY : NOCROSSREFS
-        {
-                .ewram0 { *(.ewram0 .ewram0.*) }
-                .ewram1 { *(.ewram1 .ewram1.*) }
-                .ewram2 { *(.ewram2 .ewram2.*) }
-                .ewram3 { *(.ewram3 .ewram3.*) }
-                .ewram4 { *(.ewram4 .ewram4.*) }
-                .ewram5 { *(.ewram5 .ewram5.*) }
-                .ewram6 { *(.ewram6 .ewram6.*) }
-                .ewram7 { *(.ewram7 .ewram7.*) }
-                .ewram8 { *(.ewram8 .ewram8.*) }
-                .ewram9 { *(.ewram9 .ewram9.*) }
-                .ewramA { *(.ewramA .ewramA.*) }
-                .ewramB { *(.ewramB .ewramB.*) }
-                .ewramC { *(.ewramC .ewramC.*) }
-                .ewramD { *(.ewramD .ewramD.*) }
-                .ewramE { *(.ewramE .ewramE.*) }
-                .ewramF { *(.ewramF .ewramF.*) }
-        } >EWRAM AT>LOAD_REGION
-
-        /* Standard data */
-
-        .data :
-        {
-                *(.data .data.* .gnu.linkonce.d.*)
-        } >DATA_REGION AT>LOAD_REGION
-
-        /* Persistent data */
-
-        .persistent :
-        {
-                *(.persistent .persistent.* .gnu.linkonce.p.*)
-        } >PERSISTENT_REGION AT>LOAD_REGION
-
-        /* IWRAM BSS */
-
-        .iwram.bss (NOLOAD) :
-        {
-                *(.iwram_bss .iwram_bss.*)
-        } >IWRAM
-
-        /* EWRAM BSS */
-
-        .ewram.bss (NOLOAD) :
-        {
-                *(.ewram_bss .ewram_bss.*)
-                /* devkitARM compatibility */
-                *(.sbss .sbss.*)
-        } >EWRAM
-
-        /* Standard BSS */
-
-        .bss (NOLOAD) :
-        {
-                *(.bss .bss.* .gnu.linkonce.b.*)
-                *(COMMON)
-        } >BSS_REGION
-
-        /* Persistent BSS */
-
-        .noinit (NOLOAD) :
-        {
-                *(.noinit .noinit.* .gnu.linkonce.n.*)
-        } >NOINIT_REGION
+                KEEP(*(.pad .pad.*))
+                . = ALIGN(32);
+        } >LOAD_REGION =0
 
         /* Empty marker sections for memory regions */
 
-        .load.end : {} >LOAD_REGION
-
-        __load = ORIGIN(LOAD_REGION);
-        __load_end = ADDR(.load.end);
-
-        .iwram.end : {} >IWRAM
-
-        __iwram_end = ADDR(.iwram.end);
-
-        .ewram.end : {} >EWRAM
-
-        __ewram_end = ADDR(.ewram.end);
+        .load_end : {} >LOAD_REGION
+        .iwram_end : {} >IWRAM
+        .ewram_end : {} >EWRAM
 
         /* Section symbols */
+
+        __header = ADDR(.header);
+        __header_end = ADDR(.header) + SIZEOF(.header);
 
         __iwram_vma = ADDR(.iwram);
         __iwram_lma = LOADADDR(.iwram);
         __iwram_len = SIZEOF(.iwram);
 
+        __iwram_overlay = ADDR(.iwram0);
+
         __ewram_vma = ADDR(.ewram);
         __ewram_lma = LOADADDR(.ewram);
         __ewram_len = SIZEOF(.ewram);
+
+        __ewram_overlay = ADDR(.ewram0);
 
         __data_vma = ADDR(.data);
         __data_lma = LOADADDR(.data);
@@ -242,11 +249,11 @@ SECTIONS
         __persistent_lma = LOADADDR(.persistent);
         __persistent_len = SIZEOF(.persistent);
 
-        __iwram_bss_vma = ADDR(.iwram.bss);
-        __iwram_bss_len = SIZEOF(.iwram.bss);
+        __iwram_bss_vma = ADDR(.iwram_bss);
+        __iwram_bss_len = SIZEOF(.iwram_bss);
 
-        __ewram_bss_vma = ADDR(.ewram.bss);
-        __ewram_bss_len = SIZEOF(.ewram.bss);
+        __ewram_bss_vma = ADDR(.ewram_bss);
+        __ewram_bss_len = SIZEOF(.ewram_bss);
 
         __bss_vma = ADDR(.bss);
         __bss_len = SIZEOF(.bss);
@@ -254,9 +261,15 @@ SECTIONS
         __noinit_vma = ADDR(.noinit);
         __noinit_len = SIZEOF(.noinit);
 
+        __load = ORIGIN(LOAD_REGION);
+        __load_end = ADDR(.load_end);
+
+        __iwram_end = ADDR(.iwram_end);
+        __ewram_end = ADDR(.ewram_end);
+
         /* libc-compatibility symbols */
 
-        /* Stabs debugging sections.  */
+        /* Stabs debugging sections. */
         .stab          0 : { *(.stab) }
         .stabstr       0 : { *(.stabstr) }
         .stab.excl     0 : { *(.stab.excl) }
@@ -267,17 +280,17 @@ SECTIONS
         .gnu.build.attributes : { *(.gnu.build.attributes .gnu.build.attributes.*) }
         /* DWARF debug sections.
            Symbols in the DWARF debugging sections are relative to the beginning
-           of the section so we begin them at 0.  */
-        /* DWARF 1.  */
+           of the section so we begin them at 0. */
+        /* DWARF 1. */
         .debug          0 : { *(.debug) }
         .line           0 : { *(.line) }
         /* GNU DWARF 1 extensions.  */
         .debug_srcinfo  0 : { *(.debug_srcinfo) }
         .debug_sfnames  0 : { *(.debug_sfnames) }
-        /* DWARF 1.1 and DWARF 2.  */
+        /* DWARF 1.1 and DWARF 2. */
         .debug_aranges  0 : { *(.debug_aranges) }
         .debug_pubnames 0 : { *(.debug_pubnames) }
-        /* DWARF 2.  */
+        /* DWARF 2. */
         .debug_info     0 : { *(.debug_info .gnu.linkonce.wi.*) }
         .debug_abbrev   0 : { *(.debug_abbrev) }
         .debug_line     0 : { *(.debug_line .debug_line.* .debug_line_end) }
@@ -285,15 +298,15 @@ SECTIONS
         .debug_str      0 : { *(.debug_str) }
         .debug_loc      0 : { *(.debug_loc) }
         .debug_macinfo  0 : { *(.debug_macinfo) }
-        /* SGI/MIPS DWARF 2 extensions.  */
+        /* SGI/MIPS DWARF 2 extensions. */
         .debug_weaknames 0 : { *(.debug_weaknames) }
         .debug_funcnames 0 : { *(.debug_funcnames) }
         .debug_typenames 0 : { *(.debug_typenames) }
         .debug_varnames  0 : { *(.debug_varnames) }
-        /* DWARF 3.  */
+        /* DWARF 3. */
         .debug_pubtypes 0 : { *(.debug_pubtypes) }
         .debug_ranges   0 : { *(.debug_ranges) }
-        /* DWARF 5.  */
+        /* DWARF 5. */
         .debug_addr     0 : { *(.debug_addr) }
         .debug_line_str 0 : { *(.debug_line_str) }
         .debug_loclists 0 : { *(.debug_loclists) }
@@ -304,7 +317,6 @@ SECTIONS
         .debug_sup      0 : { *(.debug_sup) }
         .ARM.attributes 0 : { KEEP (*(.ARM.attributes)) KEEP (*(.gnu.attributes)) }
         .note.gnu.arm.ident 0 : { KEEP (*(.note.gnu.arm.ident)) }
-        .note.gnu.build-id  : { *(.note.gnu.build-id) }
         /DISCARD/ : { *(.note.GNU-stack) *(.gnu_debuglink) *(.gnu.lto_*) }
 }
 

@@ -7,6 +7,35 @@
 .syntax         unified
 .cpu            arm7tdmi
 
+.section        .text._start_rom,"ax",%progbits
+_start_rom:
+    and         r0, pc, 0xFF000000
+    ldr         r1, =__load
+
+    cmp         r1, r0
+    @ Wrong entrypoint, continue.
+    beq         _start
+    @ Wanted ROM, got RAM, give up
+    bhi         .
+    @ Wanted RAM, got ROM, copy
+    ldr         r2, =__load_end
+
+    @ r0 = we loaded here
+    @ r1 = we want to be here
+    @ r2 = end
+1:
+    cmp         r1, r2
+    bhs         1f
+    ldm         r0!, {r4, r5, r6, r7, r8, r9, r10, r11}
+    stm         r1!, {r4, r5, r6, r7, r8, r9, r10, r11}
+    b           1b
+1:
+    @ Long branch to the real _start
+    @ b _start would appear to work, but would continue
+    @ running code in the wrong memory segment.
+    ldr         pc, =_start
+
+.section        .text._start,"ax",%progbits
 _start:
     @ IRQs off
     ldr         r0, =REG_IME
@@ -104,9 +133,12 @@ pool: .pool
 .section        .noinit,"aw",%nobits
 init: .byte     0
 
+.section        .pad,"a",%progbits
+.string         "minrt 0.5.0"
+
 .equiv          REG_IME,        0x04000208
 
-.global         _start
+.global         _start, _start_rom, _exit
 .weak           _exit
 
 @ vim: ft=armv4 et sta sw=4 sts=8
