@@ -12,7 +12,7 @@ set(CMAKE_INCLUDE_FLAG_ASM "-Wa,-I")
 add_library(seven STATIC
     src/hw/bios.s
     src/hw/dma.s
-    src/hw/input.s
+    src/hw/input.c
     src/hw/irq.c
     src/hw/isr.s
     src/hw/sram.s

@@ -12,7 +12,7 @@ PROJECT = seven
 SOURCES = \
 	src/hw/bios.s \
 	src/hw/dma.s \
-	src/hw/input.s \
+	src/hw/input.c \
 	src/hw/irq.c \
 	src/hw/isr.s \
 	src/hw/sram.s \

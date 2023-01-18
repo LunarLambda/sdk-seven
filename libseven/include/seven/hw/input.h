@@ -70,48 +70,53 @@ enum KeyIRQ
     KEY_IRQ_PRESS_ANY    = !KEY_IRQ_PRESS_ALL,
 };
 
-// Updates the internal keypad state. Should be called once per frame.
-extern void inputPoll(void);
+struct InputState
+{
+    u16 now;
+    u16 last;
+} __attribute__((aligned(4)));
 
-// Gets the internal keypad state. The lower halfword contains the current
-// input state, the upper halfword contains the last input state.
-extern u32 inputState(void);
+// Returns a fresh InputState.
+extern struct InputState inputNew(void);
+
+// Updates the given keypad state. Should be called once per frame.
+extern struct InputState inputPoll(struct InputState i);
 
 // Returns the keys that were pressed this frame. ("Rising egde")
-extern u16 inputKeysPressed(u16 keys);
+extern u16 inputKeysPressed(u16 keys, struct InputState i);
 
 // Returns the keys that were released this frame. ("Falling edge")
-extern u16 inputKeysReleased(u16 keys);
+extern u16 inputKeysReleased(u16 keys, struct InputState i);
 
 // Returns the keys that are being held this frame.
-extern u16 inputKeysDown(u16 keys);
+extern u16 inputKeysDown(u16 keys, struct InputState i);
 
 // Returns the keys that are not being held this frame.
-extern u16 inputKeysUp(u16 keys);
+extern u16 inputKeysUp(u16 keys, struct InputState i);
 
 // Gets the state of the Dpad X-axis.
 // -1: Left
 //  0: None
 //  1: Right
-extern i32 inputAxisX(void);
+extern i32 inputAxisX(struct InputState i);
 
 // Gets the state of the Dpad Y-axis.
 // -1: Up
 //  0: None
 //  1: Down
-extern i32 inputAxisY(void);
+extern i32 inputAxisY(struct InputState i);
 
 // Gets the state of the shoulder button axis.
 // -1: L
 //  0: None/Both
 //  1: R
-extern i32 inputAxisLR(void);
+extern i32 inputAxisLR(struct InputState i);
 
 // Gets the state of the face button axis.
 // -1: B
 //  0: None/Both
 //  1: A
-extern i32 inputAxisAB(void);
+extern i32 inputAxisAB(struct InputState i);
 
 _LIBSEVEN_EXTERN_C_END
 
