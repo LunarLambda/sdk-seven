@@ -2,7 +2,7 @@
 
 extern struct InputState inputNew(void)
 {
-    return (struct InputState){ 0x3FFF, 0x3FFF };
+    return (struct InputState){ KEYS_ALL, KEYS_ALL };
 }
 
 extern struct InputState inputPoll(struct InputState i)
