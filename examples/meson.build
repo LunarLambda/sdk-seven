@@ -6,5 +6,3 @@ minrt_mb = dependency('minrt-multiboot')
 
 subdir('template')
 subdir('vsync')
-subdir('vsync-callback')
-subdir('multiboot')
