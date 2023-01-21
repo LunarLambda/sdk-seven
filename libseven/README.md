@@ -12,6 +12,8 @@ replace existing libraries like libgba or libtonc.
 
 ### [Implementation Status](../../docs/libseven/status.md)
 
+### [Stability](../../docs/libseven/stability.md)
+
 ### [Build, Installation, and Linking](../../docs/libseven/build.md)
 
 ### [Documentation](../../docs/libseven)
