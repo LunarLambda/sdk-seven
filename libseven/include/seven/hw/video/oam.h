@@ -8,8 +8,7 @@
 #define _LIBSEVEN_HW_VIDEO_OAM_H
 
 #include <seven/base.h>
-#include <seven/hw/video/matrix.h>
-#include <seven/hw/video/object.h>
+#include <seven/hw/video/memory.h>
 
 _LIBSEVEN_EXTERN_C
 

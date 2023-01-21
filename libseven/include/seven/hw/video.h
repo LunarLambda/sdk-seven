@@ -8,7 +8,6 @@
 #define _LIBSEVEN_HW_VIDEO_H
 
 #include <seven/base.h>
-#include <seven/hw/memory.h>
 
 _LIBSEVEN_EXTERN_C
 
@@ -131,20 +130,6 @@ enum BackgroundControl
     BG_AFFINE_SIZE_512X512   = BG_AFFINE_SIZE(2),
     BG_AFFINE_SIZE_1024X1024 = BG_AFFINE_SIZE(3),
 };
-
-#define GFX_BASE_ADDR(n) (MEM_VRAM + ((n) << 14))
-#define MAP_BASE_ADDR(n) (MEM_VRAM + ((n) << 11))
-
-// TODO: Move these?
-typedef u16 Color;
-typedef Color Palette[256];
-typedef Color PaletteBank[16];
-
-#define BG_PALETTE       MEMADDR(MEM_PALETTE, Palette)
-#define OBJ_PALETTE      MEMADDR(MEM_PALETTE + 512, Palette)
-
-#define BG_PALETTE_BANK  MEMARRAY(MEM_PALETTE, PaletteBank, 16)
-#define OBJ_PALETTE_BANK MEMARRAY(MEM_PALETTE + 512, PaletteBank, 16)
 
 _LIBSEVEN_EXTERN_C_END
 

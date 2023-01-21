@@ -8,9 +8,25 @@
 #define _LIBSEVEN_HW_VIDEO_BG_TILED_H
 
 #include <seven/base.h>
-#include <seven/hw/video.h>
+#include <seven/hw/video/memory.h>
 
 _LIBSEVEN_EXTERN_C
+
+enum Tile
+{
+    #define BF_TILE_NUMBER_OFFSET 0
+    #define BF_TILE_NUMBER_LENGTH 10
+
+    #define TILE_NUMBER(n) BITFIELD(TILE_NUMBER, (n))
+
+    TILE_FLIP_H = BIT(10),
+    TILE_FLIP_V = BIT(11),
+
+    #define BF_TILE_PALETTE_OFFSET 12
+    #define BF_TILE_PALETTE_LENGTH 4
+
+    #define TILE_PALETTE(n) BITFIELD(TILE_PALETTE, (n))
+};
 
 _LIBSEVEN_EXTERN_C_END
 

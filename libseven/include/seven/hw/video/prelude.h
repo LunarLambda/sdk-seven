@@ -9,7 +9,9 @@
 
 #include <seven/base.h>
 #include <seven/hw/video.h>
-#include <seven/hw/video/bg_regular.h>
+#include <seven/hw/video/bg_tiled.h>
 #include <seven/hw/video/color.h>
+#include <seven/hw/video/memory.h>
+#include <seven/hw/video/types.h>
 
 #endif /* !_LIBSEVEN_HW_VIDEO_PRELUDE_H */

@@ -8,8 +8,7 @@
 #define _LIBSEVEN_HW_VIDEO_BG_BITMAP_H
 
 #include <seven/base.h>
-#include <seven/hw/video.h>
-#include <seven/hw/video/bg_transform.h>
+#include <seven/hw/video/memory.h>
 
 _LIBSEVEN_EXTERN_C
 

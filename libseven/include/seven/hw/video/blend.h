@@ -8,7 +8,6 @@
 #define _LIBSEVEN_HW_VIDEO_BLEND_H
 
 #include <seven/base.h>
-#include <seven/hw/video.h>
 
 _LIBSEVEN_EXTERN_C
 

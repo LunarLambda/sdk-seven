@@ -8,8 +8,7 @@
 #define _LIBSEVEN_HW_VIDEO_BG_TRANSFORM_H
 
 #include <seven/base.h>
-#include <seven/hw/video.h>
-#include <seven/hw/video/matrix.h>
+#include <seven/hw/video/types.h>
 
 _LIBSEVEN_EXTERN_C
 

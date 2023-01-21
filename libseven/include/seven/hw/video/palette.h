@@ -8,11 +8,9 @@
 #define _LIBSEVEN_HW_VIDEO_PALETTE_H
 
 #include <seven/base.h>
-#include <seven/hw/video.h>
+#include <seven/hw/video/memory.h>
 
 _LIBSEVEN_EXTERN_C
-
-#error "seven/hw/video/palette.h is a stub header"
 
 _LIBSEVEN_EXTERN_C_END
 

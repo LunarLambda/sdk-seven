@@ -8,16 +8,9 @@
 #define _LIBSEVEN_HW_VIDEO_MATRIX_H
 
 #include <seven/base.h>
+#include <seven/hw/video/types.h>
 
 _LIBSEVEN_EXTERN_C
-
-struct Matrix
-{
-    i16 hdx;
-    i16 vdx;
-    i16 hdy;
-    i16 vdy;
-} ALIGN(4);
 
 _LIBSEVEN_EXTERN_C_END
 
