@@ -19,6 +19,7 @@
 .byte   0x65, 0xC0, 0x7C, 0x63, 0x87, 0xF0, 0x3C, 0xAF
 .byte   0xD6, 0x25, 0xE4, 0x8B, 0x38, 0x0A, 0xAC, 0x72
 .byte   0x21, 0xD4, 0xF8, 0x07
+
 @ Checksum Area Start
 .zero   12              @ Game title
 .zero   4               @ Game code
@@ -28,6 +29,7 @@
 .zero   1               @ Device type
 .zero   7               @ Reserved
 .zero   1               @ Game version
+
 @ Checksum Area End
 .byte   0x51            @ Checksum
 .zero   2               @ Reserved

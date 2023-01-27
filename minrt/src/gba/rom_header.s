@@ -11,7 +11,7 @@
 _header:
     b           _start          @ ROM entry point
     .include    "header_data.s" @ ROM header information
-    .zero       6               @ Multiboot area
+    .zero       10              @ Multiboot area
 
 .global         _header
 .weak           _header

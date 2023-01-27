@@ -2,15 +2,14 @@
 
 ## Requires
 
-- meson >=0.60.0
+- meson >=0.55.0
 - arm-none-eabi toolchain (gcc, binutils, newlib)
-- native C compiler
 
 ## Setup
 
 ```
 ./meson-setup.sh
-meson compile -C build
+ninja -C build
 ```
 
 ## Support

@@ -122,19 +122,20 @@ _start:
     bl          main
     bl          exit
 
+pool: .pool
+
+.section        .text._exit,"ax",%progbits
 _exit:
     @ Disable IRQs and halt
     ldr         r3, =REG_IME
     strh        r3, [r3]
     b           .
 
-pool: .pool
-
 .section        .noinit,"aw",%nobits
 init: .byte     0
 
-.section        .pad,"a",%progbits
-.string         "minrt 0.5.0"
+.section        .pad,"aR",%progbits
+.string         "minrt 0.5.1"
 
 .equiv          REG_IME,        0x04000208
 

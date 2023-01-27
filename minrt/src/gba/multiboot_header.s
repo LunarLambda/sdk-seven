@@ -9,7 +9,7 @@
 
 .section        .header,"ax",%progbits
 _header:
-    b           _start          @ ROM entry point
+    b           _start_rom      @ ROM entry point
     .include    "header_data.s" @ ROM header information
     b           _start          @ Multiboot entry point
     .zero       32              @ Multiboot reserved
