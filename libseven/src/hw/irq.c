@@ -59,7 +59,7 @@ extern bool irqHandlerSet(u16 irq, IrqHandlerFn *fn)
         return false;
     }
 
-    ISR_DEFAULT_HANDLERS[(0x09AF0000 * irq) >> 28] = fn;
+    ISR_DEFAULT_HANDLERS[(u32)(0x09AF0000 * irq) >> 28] = fn;
 
     return true;
 }
@@ -71,7 +71,7 @@ extern bool irqHandlerGet(u16 irq, IrqHandlerFn **fn)
         return false;
     }
 
-    *fn = ISR_DEFAULT_HANDLERS[(0x09AF0000 * irq) >> 28];
+    *fn = ISR_DEFAULT_HANDLERS[(u32)(0x09AF0000 * irq) >> 28];
 
     return true;
 }
@@ -83,7 +83,7 @@ extern bool irqHandlerSwap(u16 irq, IrqHandlerFn **fn)
         return false;
     }
 
-    u32 idx = (0x09AF0000 * irq) >> 28;
+    u32 idx = (u32)(0x09AF0000 * irq) >> 28;
 
     IrqHandlerFn *p = ISR_DEFAULT_HANDLERS[idx];
     ISR_DEFAULT_HANDLERS[idx] = *fn;
