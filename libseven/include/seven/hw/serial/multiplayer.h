@@ -7,32 +7,33 @@
 #ifndef _LIBSEVEN_HW_SERIAL_MULTIPLAYER_H
 #define _LIBSEVEN_HW_SERIAL_MULTIPLAYER_H
 
-#error "seven/hw/serial/multiplayer.h is unfinished and should not be used"
-
 #include <seven/base.h>
-#include <seven/hw/serial.h>
 
 _LIBSEVEN_EXTERN_C
 
-// Send for Multiplayer
-#define REG_SIODATA16   VOLADDR(0x0400012A, u16)
-
-// Receive for Multiplayer
-#define REG_SIOMULTI0   VOLADDR(0x04000120, u16)
-#define REG_SIOMULTI1   VOLADDR(0x04000122, u16)
-#define REG_SIOMULTI2   VOLADDR(0x04000124, u16)
-#define REG_SIOMULTI3   VOLADDR(0x04000126, u16)
-
-// 0-1: Baud rate (9600, 38400, 57600, 115200)
-// 2: SI Pin (0 = Parent, 1 = Child)
-// 3: SD Pin (0 = Error, 1 = Everyone Ready)
-// 4-5: Client ID (0 = Server)
-// 6: Error
-// 7: Start/Busy (0 = Inactive, 1 = Start/Busy)
-// 14: IRQ Enable
-enum SerialIOControlMultiplayer
+enum SerialControlMultiplayer
 {
+    #define BF_MULTI_BAUD_OFFSET 0
+    #define BF_MULTI_BAUD_LENGTH 2
 
+    #define MULTI_BAUD BITFIELD(MULTI_BAUD, (n))
+
+    MULTI_BAUD_9600 = MULTI_BAUD(0),
+    MULTI_BAUD_38400 = MULTI_BAUD(1),
+    MULTI_BAUD_57600 = MULTI_BAUD(2),
+    MULTI_BAUD_115200 = MULTI_BAUD(3),
+
+    MULTI_CLIENT_FLAG = BIT(2),
+
+    MULTI_READY_FLAG = BIT(3),
+
+    #define BF_MULTI_CLIENT_ID_OFFSET 4
+    #define BF_MULTI_CLIENT_ID_LENGTH 2
+
+    MULTI_ERROR_FLAG = BIT(6),
+
+    MULTI_START = BIT(7),
+    MULTI_BUSY = MULTI_START,
 };
 
 _LIBSEVEN_EXTERN_C_END

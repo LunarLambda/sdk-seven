@@ -7,27 +7,39 @@
 #ifndef _LIBSEVEN_HW_SERIAL_UART_H
 #define _LIBSEVEN_HW_SERIAL_UART_H
 
-#error "seven/hw/serial/uart.h is unfinished and should not be used"
-
 #include <seven/base.h>
-#include <seven/hw/serial.h>
 
 _LIBSEVEN_EXTERN_C
-//
-// 0-1: Baud rate (Like above)
-// 2: CTS (Clearance to Send Enable) (0 = Send always, 1 = Wait for SC=0)
-// 3: Parity control (0 = Even, 1 = Odd)
-// 4: Send data flag (0 = Not full, 1 = Full)
-// 5: Recv data flag (0 = Not empty, 1 = Empty)
-// 6: Error
-// 7: Data length (0 = 7 Bit, 1 = 8 Bit)
-// 8: FIFO Enable
-// 9: Parity Enable
-// 10: Send Enable
-// 11: Recv Enable
-// 14: IRQ Enable
-enum SerialIOControlUART
+
+enum SerialControlUART
 {
+    #define BF_UART_BAUD_OFFSET 0
+    #define BF_UART_BAUD_LENGTH 2
+
+    #define UART_BAUD(n) BITFIELD(UART_BAUD, (n))
+
+    UART_BAUD_9600 = UART_BAUD(0),
+    UART_BAUD_38400 = UART_BAUD(1),
+    UART_BAUD_57600 = UART_BAUD(2),
+    UART_BAUD_115200 = UART_BAUD(3),
+
+    UART_CTS_ENABLE = BIT(2),
+
+    UART_PARITY_ODD = BIT(3),
+    UART_PARITY_EVEN = !UART_PARITY_ODD,
+
+    UART_SEND_FULL = BIT(4),
+    UART_RECEIVE_EMPTY = BIT(5),
+
+    UART_ERROR = BIT(6),
+
+    UART_8BIT = BIT(8),
+    UART_7BIT = !UART_8BIT,
+
+    UART_FIFO_ENABLE = BIT(8),
+    UART_PARITY_ENABLE = BIT(9),
+    UART_SEND_ENABLE = BIT(10),
+    UART_RECEIVE_ENABLE = BIT(11),
 };
 
 _LIBSEVEN_EXTERN_C_END
