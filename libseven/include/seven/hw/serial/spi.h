@@ -16,6 +16,8 @@ enum SerialControlSPI
     #define BF_SPI_CLOCK_OFFSET 0
     #define BF_SPI_CLOCK_LENGTH 2
 
+    #define SPI_CLOCK(n) BITFIELD(SPI_CLOCK, (n))
+
     SPI_CLOCK_EXTERNAL = SPI_CLOCK(0),
     SPI_CLOCK_256KHZ = SPI_CLOCK(1),
     SPI_CLOCK_2MHZ = SPI_CLOCK(3),
