@@ -15,3 +15,7 @@ extern void __minrt_fini_array(void)
         __fini_array_start[i-1]();
     }
 }
+
+// Some newlib builds will reference _fini even if it's never actually called.
+// Also, the linker never discards _init or _fini, for some unknown reason.
+extern void _fini(void) {}
