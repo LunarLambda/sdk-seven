@@ -11,17 +11,17 @@
 
 _LIBSEVEN_EXTERN_C
 
-#define REG_TM0VAL      VOLADDR(0x04000100, u16)
-#define REG_TM0CNT      VOLADDR(0x04000102, u16)
+#define REG_TM0VAL      VOLADDR(0x04000100, uint16_t)
+#define REG_TM0CNT      VOLADDR(0x04000102, uint16_t)
 
-#define REG_TM1VAL      VOLADDR(0x04000104, u16)
-#define REG_TM1CNT      VOLADDR(0x04000106, u16)
+#define REG_TM1VAL      VOLADDR(0x04000104, uint16_t)
+#define REG_TM1CNT      VOLADDR(0x04000106, uint16_t)
 
-#define REG_TM2VAL      VOLADDR(0x04000108, u16)
-#define REG_TM2CNT      VOLADDR(0x0400010A, u16)
+#define REG_TM2VAL      VOLADDR(0x04000108, uint16_t)
+#define REG_TM2CNT      VOLADDR(0x0400010A, uint16_t)
 
-#define REG_TM3VAL      VOLADDR(0x0400010C, u16)
-#define REG_TM3CNT      VOLADDR(0x0400010E, u16)
+#define REG_TM3VAL      VOLADDR(0x0400010C, uint16_t)
+#define REG_TM3CNT      VOLADDR(0x0400010E, uint16_t)
 
 #define BF_TIMER_FREQ_OFFSET 0
 #define BF_TIMER_FREQ_LENGTH 3
@@ -39,13 +39,13 @@ enum TimerControl
     TIMER_ENABLE        = BIT(7),
 };
 
-extern void timerSet(u32 num, u16 reload, u16 flags);
+extern void timerSet(uint32_t num, uint16_t reload, uint16_t flags);
 
-extern void timerEnable(u32 num);
+extern void timerEnable(uint32_t num);
 
-extern void timerDisable(u32 num);
+extern void timerDisable(uint32_t num);
 
-extern u16 timerGetValue(u32 num);
+extern uint16_t timerGetValue(uint32_t num);
 
 _LIBSEVEN_EXTERN_C_END
 

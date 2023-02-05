@@ -13,11 +13,11 @@ _LIBSEVEN_EXTERN_C
 
 struct BitUnPackParam
 {
-    u16 src_length;     // in bytes
-    u8  src_width;      // width of each src element (1, 2, 4, 8)
-    u8  dst_width;      // width of each dst element (1, 2, 4, 8, 16, 32)
-    u32 offset:31;      // value to add to each dst element
-    u32 keep_zeroes:1;  // whether to add offset to zero elements too
+    uint16_t src_length;     // in bytes
+    uint8_t  src_width;      // width of each src element (1, 2, 4, 8)
+    uint8_t  dst_width;      // width of each dst element (1, 2, 4, 8, 16, 32)
+    uint32_t offset:31;      // value to add to each dst element
+    uint32_t keep_zeroes:1;  // whether to add offset to zero elements too
 };
 
 extern void biosBitUnPack(

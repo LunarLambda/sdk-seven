@@ -13,11 +13,11 @@ _LIBSEVEN_EXTERN_C
 
 // Keypad input register. Reports held keys as active-low bits.
 //
-#define REG_KEYINPUT    VOLADDR(0x04000130, const u16)
+#define REG_KEYINPUT    VOLADDR(0x04000130, const uint16_t)
 
 // Keypad control register. Allows configuring the keypad IRQ.
 //
-#define REG_KEYCNT      VOLADDR(0x04000132, u16)
+#define REG_KEYCNT      VOLADDR(0x04000132, uint16_t)
 
 // Key bits as used by KEYINPUT and KEYCNT.
 enum Key
@@ -72,8 +72,8 @@ enum KeyIRQ
 
 struct InputState
 {
-    u16 now;
-    u16 last;
+    uint16_t now;
+    uint16_t last;
 } __attribute__((aligned(4)));
 
 // Returns a fresh InputState.
@@ -83,40 +83,40 @@ extern struct InputState inputNew(void);
 extern struct InputState inputPoll(struct InputState i);
 
 // Returns the keys that were pressed this frame. ("Rising egde")
-extern u16 inputKeysPressed(u16 keys, struct InputState i);
+extern uint16_t inputKeysPressed(uint16_t keys, struct InputState i);
 
 // Returns the keys that were released this frame. ("Falling edge")
-extern u16 inputKeysReleased(u16 keys, struct InputState i);
+extern uint16_t inputKeysReleased(uint16_t keys, struct InputState i);
 
 // Returns the keys that are being held this frame.
-extern u16 inputKeysDown(u16 keys, struct InputState i);
+extern uint16_t inputKeysDown(uint16_t keys, struct InputState i);
 
 // Returns the keys that are not being held this frame.
-extern u16 inputKeysUp(u16 keys, struct InputState i);
+extern uint16_t inputKeysUp(uint16_t keys, struct InputState i);
 
 // Gets the state of the Dpad X-axis.
 // -1: Left
 //  0: None
 //  1: Right
-extern i32 inputAxisX(struct InputState i);
+extern int32_t inputAxisX(struct InputState i);
 
 // Gets the state of the Dpad Y-axis.
 // -1: Up
 //  0: None
 //  1: Down
-extern i32 inputAxisY(struct InputState i);
+extern int32_t inputAxisY(struct InputState i);
 
 // Gets the state of the shoulder button axis.
 // -1: L
 //  0: None/Both
 //  1: R
-extern i32 inputAxisLR(struct InputState i);
+extern int32_t inputAxisLR(struct InputState i);
 
 // Gets the state of the face button axis.
 // -1: B
 //  0: None/Both
 //  1: A
-extern i32 inputAxisAB(struct InputState i);
+extern int32_t inputAxisAB(struct InputState i);
 
 _LIBSEVEN_EXTERN_C_END
 

@@ -23,8 +23,8 @@ enum CpuFastSetFlags
     CFS_SRC_FIXED       = BIT(24),
 };
 
-extern void biosCpuSet(const void *src, void *dst, u32 ctrl);
-extern void biosCpuFastSet(const void *src, void *dst, u32 ctrl);
+extern void biosCpuSet(const void *src, void *dst, uint32_t ctrl);
+extern void biosCpuFastSet(const void *src, void *dst, uint32_t ctrl);
 
 _LIBSEVEN_EXTERN_C_END
 

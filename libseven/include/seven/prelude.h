@@ -8,6 +8,8 @@
 #define _LIBSEVEN_PRELUDE_H
 
 #include <seven/base.h>
+#include <seven/attributes.h>
+#include <seven/types.h>
 #include <seven/hw/input.h>
 #include <seven/hw/irq.h>
 #include <seven/hw/memory.h>

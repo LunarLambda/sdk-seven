@@ -7,7 +7,7 @@
 #include <seven/util/log.h>
 
 typedef bool LogInitFn(void);
-typedef void LogOutputFn(u8, const char *);
+typedef void LogOutputFn(uint8_t, const char *);
 
 static LogInitFn logInitNone;
 static LogInitFn logInitMgba;
@@ -19,11 +19,11 @@ static LogOutputFn logOutputMgba;
 static LogOutputFn logOutputNocash;
 static LogOutputFn logOutputVba;
 
-static u8 LOG_MAX_LEVEL = LOG_OFF;
+static uint8_t LOG_MAX_LEVEL = LOG_OFF;
 
 struct LogInterfaceDescriptor
 {
-    u32 id;
+    uint32_t id;
     LogInitFn *init;
     LogOutputFn *output;
     const char *name;
@@ -63,7 +63,7 @@ static struct LogInterfaceDescriptor CUSTOM_INTERFACE =
 static const struct LogInterfaceDescriptor *LOG_INTERFACE =
     &INTERFACES[LOGIF_NONE];
 
-extern u8 logInit(void)
+extern uint8_t logInit(void)
 {
     const enum LogInterface *lid = INTERFACE_SEARCH_ORDER;
     const struct LogInterfaceDescriptor *lf;
@@ -78,7 +78,7 @@ extern u8 logInit(void)
     return lf->id;
 }
 
-extern bool logInitInterface(u8 interface)
+extern bool logInitInterface(uint8_t interface)
 {
     if (interface >= (sizeof(INTERFACES) / sizeof(INTERFACES[0])))
     {
@@ -108,7 +108,7 @@ extern void logInitCustom(LogCustomOutputFunction *f)
     LOG_INTERFACE = &CUSTOM_INTERFACE;
 }
 
-extern u8 logGetInterface(void)
+extern uint8_t logGetInterface(void)
 {
     return LOG_INTERFACE->id;
 }
@@ -118,17 +118,17 @@ extern const char* logGetInterfaceName(void)
     return LOG_INTERFACE->name;
 }
 
-extern u8 logGetMaxLevel(void)
+extern uint8_t logGetMaxLevel(void)
 {
     return LOG_MAX_LEVEL;
 }
 
-extern void logSetMaxLevel(u8 level)
+extern void logSetMaxLevel(uint8_t level)
 {
     LOG_MAX_LEVEL = level;
 }
 
-extern void logOutput(u8 level, const char *message)
+extern void logOutput(uint8_t level, const char *message)
 {
     // Prevent silliness with logOutput(LOG_OFF, "Message");
     if (!level || level > LOG_MAX_LEVEL)
@@ -146,14 +146,14 @@ static bool logInitNone(void)
     return true;
 }
 
-static void logOutputNone(u8 level, const char *message)
+static void logOutputNone(uint8_t level, const char *message)
 {
     (void)level;
     (void)message;
 }
 
-#define REG_MGBA_ENABLE         VOLADDR(0x04FFF780, u16)
-#define REG_MGBA_FLAGS          VOLADDR(0x04FFF700, u16)
+#define REG_MGBA_ENABLE         VOLADDR(0x04FFF780, uint16_t)
+#define REG_MGBA_FLAGS          VOLADDR(0x04FFF700, uint16_t)
 #define MGBA_LOG_OUT            ((char*)0x04FFF600)
 
 static bool logInitMgba(void)
@@ -163,7 +163,7 @@ static bool logInitMgba(void)
     return REG_MGBA_ENABLE == 0x1DEA;
 }
 
-static void logOutputMgba(u8 level, const char *message)
+static void logOutputMgba(uint8_t level, const char *message)
 {
     for (int i = 0; message[i] && i < 256; i++)
     {
@@ -175,7 +175,7 @@ static void logOutputMgba(u8 level, const char *message)
 }
 
 #define NOCASH_SIG              ((char*)0x04FFFA00)
-#define REG_NOCASH_LOG          VOLADDR(0x04FFFA1C, u8)
+#define REG_NOCASH_LOG          VOLADDR(0x04FFFA1C, uint8_t)
 
 static bool logInitNocash(void)
 {
@@ -190,7 +190,7 @@ static bool logInitNocash(void)
     return true;
 }
 
-static void logOutputNocash(u8 level, const char *message)
+static void logOutputNocash(uint8_t level, const char *message)
 {
     (void)level;
 
@@ -207,7 +207,7 @@ static bool logInitVba(void)
     return true;
 }
 
-static void logOutputVba(u8 level, const char *message)
+static void logOutputVba(uint8_t level, const char *message)
 {
     (void)level;
 

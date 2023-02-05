@@ -12,11 +12,11 @@
 _LIBSEVEN_EXTERN_C
 
 // GPIO Data
-#define REG_GPIODAT     VOLADDR(0x080000C4, u16)
+#define REG_GPIODAT     VOLADDR(0x080000C4, uint16_t)
 // GPIO Direction
-#define REG_GPIODIR     VOLADDR(0x080000C6, u16)
+#define REG_GPIODIR     VOLADDR(0x080000C6, uint16_t)
 // GPIO Control
-#define REG_GPIOCNT     VOLADDR(0x080000C8, u16)
+#define REG_GPIOCNT     VOLADDR(0x080000C8, uint16_t)
 
 enum GpioDirection
 {

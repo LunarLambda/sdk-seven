@@ -11,8 +11,8 @@
 
 _LIBSEVEN_EXTERN_C
 
-#define ROR(x, a)                       ((u32)(x) >> (a) | (u32)(x) << (32-(a)))
-#define ROL(x, a)                       ((u32)(x) << (a) | (u32)(x) >> (32-(a)))
+#define ROR(x, a)                       ((uint32_t)(x) >> (a) | (uint32_t)(x) << (32-(a)))
+#define ROL(x, a)                       ((uint32_t)(x) << (a) | (uint32_t)(x) >> (32-(a)))
 
 #define BIT_TRISTATE(val, m, p)         \
     (((val)>>(p)&1)-((val)>>(m)&1))
@@ -54,13 +54,13 @@ _LIBSEVEN_EXTERN_C
 #define BF_ECMP(lhs, name, enum)        \
     (((lhs) & BF_MASK(name)) == name##_##enum)
 
-extern u32 bitCTZ32(u32 value);
-extern u32 bitCTZ16(u16 value);
-extern u32 bitCTZ8(u8 value);
+extern uint32_t bitCTZ32(uint32_t value);
+extern uint32_t bitCTZ16(uint16_t value);
+extern uint32_t bitCTZ8(uint8_t value);
 
-extern u32 bitCLZ32(u32 value);
-extern u32 bitCLZ16(u16 value);
-extern u32 bitCLZ8(u8 value);
+extern uint32_t bitCLZ32(uint32_t value);
+extern uint32_t bitCLZ16(uint16_t value);
+extern uint32_t bitCLZ8(uint8_t value);
 
 _LIBSEVEN_EXTERN_C_END
 

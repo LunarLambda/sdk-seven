@@ -18,8 +18,8 @@ enum SIMDMask
     SIMD_MASK_2XRGB = 0xC210C210, // 2 RGB5 colors packed
 };
 
-extern void simdAdd(u32 mask, void *lhs, const void *rhs, usize len);
-extern void simdSub(u32 mask, void *lhs, const void *rhs, usize len);
+extern void simdAdd(uint32_t mask, void *lhs, const void *rhs, size_t len);
+extern void simdSub(uint32_t mask, void *lhs, const void *rhs, size_t len);
 
 _LIBSEVEN_EXTERN_C_END
 

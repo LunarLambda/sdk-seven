@@ -12,53 +12,53 @@ extern struct InputState inputPoll(struct InputState i)
     return i;
 }
 
-extern u16 inputKeysPressed(u16 keys, struct InputState i)
+extern uint16_t inputKeysPressed(uint16_t keys, struct InputState i)
 {
     return (~i.now & i.last) & keys;
 }
 
-extern u16 inputKeysReleased(u16 keys, struct InputState i)
+extern uint16_t inputKeysReleased(uint16_t keys, struct InputState i)
 {
     return (i.now & ~i.last) & keys;
 }
 
-extern u16 inputKeysChanged(u16 keys, struct InputState i)
+extern uint16_t inputKeysChanged(uint16_t keys, struct InputState i)
 {
     return (i.now ^ i.last) & keys;
 }
 
-extern u16 inputKeysDown(u16 keys, struct InputState i)
+extern uint16_t inputKeysDown(uint16_t keys, struct InputState i)
 {
     return ~i.now & keys;
 }
 
-extern u16 inputKeysUp(u16 keys, struct InputState i)
+extern uint16_t inputKeysUp(uint16_t keys, struct InputState i)
 {
     return i.now & keys;
 }
 
-extern i32 inputAxisX(struct InputState i)
+extern int32_t inputAxisX(struct InputState i)
 {
     int keys = (i.now << 26) >> 30;
 
     return -keys >> 1;
 }
 
-extern i32 inputAxisY(struct InputState i)
+extern int32_t inputAxisY(struct InputState i)
 {
     int keys = ((i.now << 24) >> 30) + 1;
 
     return keys >> 1;
 }
 
-extern i32 inputAxisLR(struct InputState i)
+extern int32_t inputAxisLR(struct InputState i)
 {
     int keys = (i.now << 22) >> 30;
 
     return -keys >> 1;
 }
 
-extern i32 inputAxisAB(struct InputState i)
+extern int32_t inputAxisAB(struct InputState i)
 {
     int keys = (i.now << 30) >> 30;
 

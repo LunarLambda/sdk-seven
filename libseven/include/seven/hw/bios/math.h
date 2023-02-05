@@ -13,15 +13,15 @@ _LIBSEVEN_EXTERN_C
 
 struct Div
 {
-    i32 quot;
-    i32 rem;
+    int32_t quot;
+    int32_t rem;
 };
 
-extern i32 biosDiv(i32 numerator, i32 denominator);
-extern struct Div biosDivMod(i32 numerator, i32 denominator);
-extern u16 biosSqrt(u32 x);
-extern i16 biosArcTan(i16 tan);
-extern u16 biosArcTan2(i16 x, i16 y);
+extern int32_t biosDiv(int32_t numerator, int32_t denominator);
+extern struct Div biosDivMod(int32_t numerator, int32_t denominator);
+extern uint16_t biosSqrt(uint32_t x);
+extern int16_t biosArcTan(int16_t tan);
+extern uint16_t biosArcTan2(int16_t x, int16_t y);
 
 _LIBSEVEN_EXTERN_C_END
 

@@ -11,7 +11,7 @@
 
 static struct {
     AssertHandlerFn *handler;
-    u32 panic;
+    uint32_t panic;
 } ASSERT;
 
 extern AssertHandlerFn* assertSetHandler(AssertHandlerFn *handler)
@@ -30,7 +30,7 @@ extern void _LIBSEVEN_NORETURN assertRaise(
         const char *message,
         const char *function,
         const char *file,
-        u32 line)
+        uint32_t line)
 {
     REG_IME = 0;
 

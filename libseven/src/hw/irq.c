@@ -30,7 +30,7 @@ extern void irqInitDefault(void)
 {
     REG_IME = 0;
 
-    for (usize i = 0; i < 16; i++)
+    for (size_t i = 0; i < 16; i++)
     {
         ISR_DEFAULT_HANDLERS[i] = NULL;
     }
@@ -52,38 +52,38 @@ extern void irqInitStub(void)
     irqInit(isrStub);
 }
 
-extern bool irqHandlerSet(u16 irq, IrqHandlerFn *fn)
+extern bool irqHandlerSet(uint16_t irq, IrqHandlerFn *fn)
 {
     if (!irq || (irq & (irq - 1)))
     {
         return false;
     }
 
-    ISR_DEFAULT_HANDLERS[(u32)(0x09AF0000 * irq) >> 28] = fn;
+    ISR_DEFAULT_HANDLERS[(uint32_t)(0x09AF0000 * irq) >> 28] = fn;
 
     return true;
 }
 
-extern bool irqHandlerGet(u16 irq, IrqHandlerFn **fn)
+extern bool irqHandlerGet(uint16_t irq, IrqHandlerFn **fn)
 {
     if (!irq || (irq & (irq - 1)))
     {
         return false;
     }
 
-    *fn = ISR_DEFAULT_HANDLERS[(u32)(0x09AF0000 * irq) >> 28];
+    *fn = ISR_DEFAULT_HANDLERS[(uint32_t)(0x09AF0000 * irq) >> 28];
 
     return true;
 }
 
-extern bool irqHandlerSwap(u16 irq, IrqHandlerFn **fn)
+extern bool irqHandlerSwap(uint16_t irq, IrqHandlerFn **fn)
 {
     if (!irq || (irq & (irq - 1)))
     {
         return false;
     }
 
-    u32 idx = (u32)(0x09AF0000 * irq) >> 28;
+    uint32_t idx = (uint32_t)(0x09AF0000 * irq) >> 28;
 
     IrqHandlerFn *p = ISR_DEFAULT_HANDLERS[idx];
     ISR_DEFAULT_HANDLERS[idx] = *fn;
@@ -92,12 +92,12 @@ extern bool irqHandlerSwap(u16 irq, IrqHandlerFn **fn)
     return true;
 }
 
-extern u16 irqEnable(u16 irqs)
+extern uint16_t irqEnable(uint16_t irqs)
 {
-    u32 ime = REG_IME;
+    uint32_t ime = REG_IME;
     REG_IME = 0;
 
-    u16 old = REG_IE;
+    uint16_t old = REG_IE;
     REG_IE = old | irqs;
 
     REG_IME = ime;
@@ -105,12 +105,12 @@ extern u16 irqEnable(u16 irqs)
     return old;
 }
 
-extern u16 irqDisable(u16 irqs)
+extern uint16_t irqDisable(uint16_t irqs)
 {
-    u32 ime = REG_IME;
+    uint32_t ime = REG_IME;
     REG_IME = 0;
 
-    u16 old = REG_IE;
+    uint16_t old = REG_IE;
     REG_IE = old & ~irqs;
 
     REG_IME = ime;
@@ -120,7 +120,7 @@ extern u16 irqDisable(u16 irqs)
 
 extern void irqFree(void (*f)(void*), void *arg)
 {
-    u32 ime = REG_IME;
+    uint32_t ime = REG_IME;
     REG_IME = 0;
 
     f(arg);

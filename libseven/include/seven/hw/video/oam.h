@@ -12,11 +12,11 @@
 
 _LIBSEVEN_EXTERN_C
 
-usize oamWriteObjects(usize oam_index, struct Object *objs, usize n_objs);
-usize oamWriteObjectsUnchecked(usize oam_index, struct Object *objs, usize n_objs);
+size_t oamWriteObjects(size_t oam_index, struct Object *objs, size_t n_objs);
+size_t oamWriteObjectsUnchecked(size_t oam_index, struct Object *objs, size_t n_objs);
 
-usize oamWriteMatrices(usize oam_index, struct Matrix *mats, usize n_mats);
-usize oamWriteMatricesUnchecked(usize oam_index, struct Matrix *mats, usize n_mats);
+size_t oamWriteMatrices(size_t oam_index, struct Matrix *mats, size_t n_mats);
+size_t oamWriteMatricesUnchecked(size_t oam_index, struct Matrix *mats, size_t n_mats);
 
 _LIBSEVEN_EXTERN_C_END
 

@@ -21,7 +21,7 @@ enum DebugException
 };
 
 // Emulates entry to the given exception vector
-bool dbgRaiseException(u32 exception);
+bool dbgRaiseException(uint32_t exception);
 
 _LIBSEVEN_EXTERN_C_END
 

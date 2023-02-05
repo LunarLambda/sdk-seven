@@ -14,7 +14,7 @@ _LIBSEVEN_EXTERN_C
 extern void biosHalt(void);
 extern void biosStop(void);
 
-extern void biosIntrWait(bool wait_next, u16 intr_flags);
+extern void biosIntrWait(bool wait_next, uint16_t intr_flags);
 extern void biosVBlankIntrWait(void);
 
 _LIBSEVEN_EXTERN_C_END

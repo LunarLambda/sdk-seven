@@ -54,7 +54,7 @@ _LIBSEVEN_EXTERN_C
 
 #endif /* !NDEBUG */
 
-typedef void AssertHandlerFn(const char*, const char*, const char*, u32);
+typedef void AssertHandlerFn(const char*, const char*, const char*, uint32_t);
 
 extern AssertHandlerFn* assertSetHandler(AssertHandlerFn *handler);
 
@@ -64,7 +64,7 @@ extern void _LIBSEVEN_NORETURN assertRaise(
         const char *message,
         const char *function,
         const char *file,
-        u32 line);
+        uint32_t line);
 
 _LIBSEVEN_EXTERN_C_END
 

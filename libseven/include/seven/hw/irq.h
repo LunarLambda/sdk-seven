@@ -17,15 +17,15 @@ _LIBSEVEN_EXTERN_C
 
 // Interrupt Enable
 //
-#define REG_IE          VOLADDR(0x04000200, u16)
+#define REG_IE          VOLADDR(0x04000200, uint16_t)
 
 // Interrupt Flags
 //
-#define REG_IF          VOLADDR(0x04000202, u16)
+#define REG_IF          VOLADDR(0x04000202, uint16_t)
 
 // Interrupt Master Enable
 //
-#define REG_IME         VOLADDR(0x04000208, u16)
+#define REG_IME         VOLADDR(0x04000208, uint16_t)
 
 // Interrupt Service Routine Function Pointer
 //
@@ -93,7 +93,7 @@ typedef void IsrFn(void);
 // Function type for interrupt callbacks.
 //
 // The function receives the triggered IRQs as the first parameter.
-typedef void IrqHandlerFn(u16);
+typedef void IrqHandlerFn(uint16_t);
 
 // Initialize interrupt handling with a user-provided function.
 //
@@ -117,37 +117,37 @@ extern void irqInitStub(void);
 // Set the handler associated with the specified irq.
 //
 // Fails if irq specifies more than one interrupt.
-extern bool irqHandlerSet(u16 irq, IrqHandlerFn *fn);
+extern bool irqHandlerSet(uint16_t irq, IrqHandlerFn *fn);
 
 // Get the callback associated with the specified irq.
 //
 // Fails if irq specifies more than one interrupt.
-extern bool irqHandlerGet(u16 irq, IrqHandlerFn **fn);
+extern bool irqHandlerGet(uint16_t irq, IrqHandlerFn **fn);
 
 // Swap the handler associated with the specified irq, returning the old one.
 //
 // Fails if irq specifies more than one interrupt.
-extern bool irqHandlerSwap(u16, IrqHandlerFn **fn);
+extern bool irqHandlerSwap(uint16_t, IrqHandlerFn **fn);
 
 // Enable the specified IRQs.
 //
 // Returns the old value of the IE register.
-extern u16 irqEnable(u16 irqs);
+extern uint16_t irqEnable(uint16_t irqs);
 
 // Disable the specified IRQs.
 //
 // Returns the old value of the IE register.
-extern u16 irqDisable(u16 irqs);
+extern uint16_t irqDisable(uint16_t irqs);
 
 // Enable the specified IRQs and IRQ enable bits in the respective IO registers.
 //
 // Returns the old value of the IE register.
-extern u16 irqEnableFull(u16 irqs);
+extern uint16_t irqEnableFull(uint16_t irqs);
 
 // Disable the specified IRQs and IRQ enable bits in the respective IO registers.
 //
 // Returns the old value of the IE register.
-extern u16 irqDisableFull(u16 irqs);
+extern uint16_t irqDisableFull(uint16_t irqs);
 
 // Calls a function with IRQs disabled, passing data as an argument.
 extern void irqFree(void (*f)(void*), void *arg);

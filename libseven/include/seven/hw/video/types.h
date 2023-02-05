@@ -11,27 +11,27 @@
 
 _LIBSEVEN_EXTERN_C
 
-typedef u16 Color;
+typedef uint16_t Color;
 typedef Color Palette[256];
 typedef Color PaletteBank[16];
 
-typedef u16 MapEntry;
-typedef u8 AffineMapEntry;
+typedef uint16_t MapEntry;
+typedef uint8_t AffineMapEntry;
 
 struct Matrix
 {
-    i16 hdx; // horizontal scaling factor
-    i16 vdx; // vertical shearing factor
-    i16 hdy; // horizontal shearing factor
-    i16 vdy; // vertical scaling factor
+    int16_t hdx; // horizontal scaling factor
+    int16_t vdx; // vertical shearing factor
+    int16_t hdy; // horizontal shearing factor
+    int16_t vdy; // vertical scaling factor
 } _LIBSEVEN_ALIGN4;
 
 struct Object
 {
-    u16 attr0;
-    u16 attr1;
-    u16 attr2;
-    u16 _reserved;
+    uint16_t attr0;
+    uint16_t attr1;
+    uint16_t attr2;
+    uint16_t _reserved;
 } _LIBSEVEN_ALIGN4;
 
 _LIBSEVEN_EXTERN_C_END

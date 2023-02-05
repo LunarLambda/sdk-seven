@@ -19,30 +19,30 @@ _LIBSEVEN_EXTERN_C
 
 #define REG_DMA0SRC     VOLADDR(0x040000B0, const void *)
 #define REG_DMA0DST     VOLADDR(0x040000B4, void *)
-#define REG_DMA0LEN     VOLADDR(0x040000B8, u16)
-#define REG_DMA0CNT     VOLADDR(0x040000BA, u16)
+#define REG_DMA0LEN     VOLADDR(0x040000B8, uint16_t)
+#define REG_DMA0CNT     VOLADDR(0x040000BA, uint16_t)
 
 #define REG_DMA1SRC     VOLADDR(0x040000BC, const void *)
 #define REG_DMA1DST     VOLADDR(0x040000C0, void *)
-#define REG_DMA1LEN     VOLADDR(0x040000C4, u16)
-#define REG_DMA1CNT     VOLADDR(0x040000C6, u16)
+#define REG_DMA1LEN     VOLADDR(0x040000C4, uint16_t)
+#define REG_DMA1CNT     VOLADDR(0x040000C6, uint16_t)
 
 #define REG_DMA2SRC     VOLADDR(0x040000C8, const void *)
 #define REG_DMA2DST     VOLADDR(0x040000CC, void *)
-#define REG_DMA2LEN     VOLADDR(0x040000D0, u16)
-#define REG_DMA2CNT     VOLADDR(0x040000D2, u16)
+#define REG_DMA2LEN     VOLADDR(0x040000D0, uint16_t)
+#define REG_DMA2CNT     VOLADDR(0x040000D2, uint16_t)
 
 #define REG_DMA3SRC     VOLADDR(0x040000D4, const void *)
 #define REG_DMA3DST     VOLADDR(0x040000D8, void *)
-#define REG_DMA3LEN     VOLADDR(0x040000DC, u16)
-#define REG_DMA3CNT     VOLADDR(0x040000DE, u16)
+#define REG_DMA3LEN     VOLADDR(0x040000DC, uint16_t)
+#define REG_DMA3CNT     VOLADDR(0x040000DE, uint16_t)
 
 struct DMA
 {
     const void *src;
     void *dst;
-    u16 len;
-    u16 cnt;
+    uint16_t len;
+    uint16_t cnt;
 };
 
 enum DMAControl
@@ -108,7 +108,7 @@ enum DMAControlPreset
 #define DMA_BUILD(src, dst, len, flags) \
     ((struct DMA){ src, dst, DMA_LEN(len, flags), flags })
 
-extern void dmaSet(u32 channel, struct DMA dma);
+extern void dmaSet(uint32_t channel, struct DMA dma);
 
 _LIBSEVEN_EXTERN_C_END
 

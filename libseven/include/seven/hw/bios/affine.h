@@ -13,45 +13,45 @@ _LIBSEVEN_EXTERN_C
 
 struct BgAffineSrcData
 {
-    i32 src_center_x;
-    i32 src_center_y;
-    i16 disp_center_x;
-    i16 disp_center_y;
-    i16 ratio_x;
-    i16 ratio_y;
-    u16 theta;
+    int32_t src_center_x;
+    int32_t src_center_y;
+    int16_t disp_center_x;
+    int16_t disp_center_y;
+    int16_t ratio_x;
+    int16_t ratio_y;
+    uint16_t theta;
 };
 
 struct BgAffineDstData
 {
-    i16 h_diff_x;
-    i16 v_diff_x;
-    i16 h_diff_y;
-    i16 v_diff_y;
-    i32 start_x;
-    i32 start_y;
+    int16_t h_diff_x;
+    int16_t v_diff_x;
+    int16_t h_diff_y;
+    int16_t v_diff_y;
+    int32_t start_x;
+    int32_t start_y;
 };
 
 extern void biosBgAffineSet(
     const struct BgAffineSrcData *src,
     struct BgAffineDstData *dst,
-    u32 num);
+    uint32_t num);
 
 struct ObjAffineSrcData
 {
-    i16 ratio_x;
-    i16 ratio_y;
-    u16 theta;
+    int16_t ratio_x;
+    int16_t ratio_y;
+    uint16_t theta;
     // BIOS wants this type to be 8 bytes but doesn't need alignment > 2
-    u8 pad[2];
+    uint8_t pad[2];
 };
 
 struct ObjAffineDstData
 {
-    i16 h_diff_x;
-    i16 v_diff_x;
-    i16 h_diff_y;
-    i16 v_diff_y;
+    int16_t h_diff_x;
+    int16_t v_diff_x;
+    int16_t h_diff_y;
+    int16_t v_diff_y;
 };
 
 enum ObjAffineSetOffset
@@ -63,8 +63,8 @@ enum ObjAffineSetOffset
 extern void biosObjAffineSet(
         const struct ObjAffineSrcData *src,
         void *dst,
-        u32 num,
-        u32 offset);
+        uint32_t num,
+        uint32_t offset);
 
 _LIBSEVEN_EXTERN_C_END
 

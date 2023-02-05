@@ -28,7 +28,7 @@ _LIBSEVEN_EXTERN_C
 #define COLOR_B(n) BITFIELD(COLOR_B, (n))
 
 #define RGB5(r, g, b) \
-    ((u16)(COLOR_R((r)) | COLOR_G((g)) | COLOR_B((b))))
+    ((uint16_t)(COLOR_R((r)) | COLOR_G((g)) | COLOR_B((b))))
 
 #define RGB8(r, g, b) \
     RGB5((r) >> 3, (g) >> 3, (b) >> 3)

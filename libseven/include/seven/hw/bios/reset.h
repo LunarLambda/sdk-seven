@@ -23,7 +23,7 @@ enum SoftResetExFlags
 // Combines biosRegisterRamReset and svcSoftReset
 // Allows reset from EWRAM, automatically unsets RRR_EWRAM
 // Disables IME to prevent IRQs crashing from a dangling handler
-extern void _LIBSEVEN_NORETURN biosSoftResetEx(u8 reset_flags, bool from_ewram);
+extern void _LIBSEVEN_NORETURN biosSoftResetEx(uint8_t reset_flags, bool from_ewram);
 
 enum RegisterRamResetFlags
 {
@@ -38,7 +38,7 @@ enum RegisterRamResetFlags
     RRR_EVERYTHING      = BITS(8),
 };
 
-extern void biosRegisterRamReset(u8 reset_flags);
+extern void biosRegisterRamReset(uint8_t reset_flags);
 
 _LIBSEVEN_EXTERN_C_END
 

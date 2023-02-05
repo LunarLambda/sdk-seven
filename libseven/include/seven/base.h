@@ -7,6 +7,10 @@
 #ifndef _LIBSEVEN_BASE_H
 #define _LIBSEVEN_BASE_H
 
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+
 #ifdef __cplusplus
     #define _LIBSEVEN_EXTERN_C extern "C" {
     #define _LIBSEVEN_EXTERN_C_END }
@@ -22,8 +26,8 @@
 #define _LIBSEVEN_ALIGN4 __attribute__((__aligned__(4)))
 
 #define LIBSEVEN_VERSION_MAJOR 0
-#define LIBSEVEN_VERSION_MINOR 16
-#define LIBSEVEN_VERSION_PATCH 1
+#define LIBSEVEN_VERSION_MINOR 17
+#define LIBSEVEN_VERSION_PATCH 0
 
 #define LIBSEVEN_VERSION \
     _LIBSEVEN_STR2(LIBSEVEN_VERSION_MAJOR) "." \
@@ -40,7 +44,5 @@
 #define BITS(n)                         (BIT(n) - 1)
 #define BITFIELD(name, value)           \
     (((value) & BITS(BF_##name##_LENGTH)) << (BF_##name##_OFFSET))
-
-#include <seven/types.h>
 
 #endif /* !_LIBSEVEN_BASE_H */

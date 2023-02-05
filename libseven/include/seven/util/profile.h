@@ -15,7 +15,7 @@ _LIBSEVEN_EXTERN_C
 // using timers 2 and 3.
 //
 // data is an optional pointer to any data the function needs.
-extern u32 profileRun(void (*function)(void*), void *data);
+extern uint32_t profileRun(void (*function)(void*), void *data);
 
 _LIBSEVEN_EXTERN_C_END
 
