@@ -177,16 +177,6 @@ SECTIONS
 
         /* Static initialization and finalization */
 
-        .init :
-        {
-                KEEP(*(SORT_NONE(.init)))
-        } >LOAD_REGION
-
-        .fini :
-        {
-                KEEP(*(SORT_NONE(.fini)))
-        } >LOAD_REGION
-
         .preinit_array :
         {
                 PROVIDE_HIDDEN(__preinit_array_start = .);

@@ -1,14 +1,10 @@
-version = '0.5.1'
+version = '0.6.0'
 
 sources = [
-  'src/gba/rom_header.s',
   'src/gba/crt0.s',
-  'src/gba/ram.c',
-]
-
-sources_mb = [
-  'src/gba/multiboot_header.s',
-  'src/gba/crt0.s',
+  'src/gba/exit.c',
+  'src/gba/fini.c',
+  'src/gba/init.c',
   'src/gba/ram.c',
 ]
 
@@ -20,13 +16,13 @@ link_args = ['-specs=' + lib / 'nocrt0.specs', '-L' + lib / 'ldscripts']
 
 minrt = static_library(
   'minrt_rom',
-  sources,
+  sources + ['src/gba/rom_header.s'],
   include_directories: includes + ['src/gba'],
   install: true)
 
 minrt_mb = static_library(
   'minrt_mb',
-  sources_mb,
+  sources + ['src/gba/multiboot_header.s'],
   include_directories: includes + ['src/gba'],
   install: true)
 

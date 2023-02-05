@@ -113,7 +113,7 @@ _start:
     ldr         r2, =__bss_len
 
     @ Initialization
-    bl          __libc_init_array
+    bl          __minrt_init_array
 
     @ main(0, NULL,NULL)
     movs        r0, #0 @ argc
@@ -126,9 +126,8 @@ pool: .pool
 
 .section        .text._exit,"ax",%progbits
 _exit:
-    @ Disable IRQs and halt
-    ldr         r3, =REG_IME
-    strh        r3, [r3]
+    ldr         r1, =REG_IME
+    str         r1, [r1]
     b           .
 
 .section        .noinit,"aw",%nobits
