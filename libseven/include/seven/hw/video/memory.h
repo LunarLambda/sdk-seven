@@ -4,8 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_HW_VIDEO_MEMORY_H
-#define _LIBSEVEN_HW_VIDEO_MEMORY_H
+#pragma once
 
 #include <seven/base.h>
 #include <seven/hw/memory.h>
@@ -25,5 +24,3 @@ _LIBSEVEN_EXTERN_C
 #define OAM_OBJS         MEMARRAY(MEM_OAM, struct Object, 128)
 
 _LIBSEVEN_EXTERN_C_END
-
-#endif /* !_LIBSEVEN_HW_VIDEO_MEMORY_H */

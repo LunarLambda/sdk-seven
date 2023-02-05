@@ -4,8 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_HW_VIDEO_PRELUDE_H
-#define _LIBSEVEN_HW_VIDEO_PRELUDE_H
+#pragma once
 
 #include <seven/base.h>
 #include <seven/hw/video.h>
@@ -13,5 +12,3 @@
 #include <seven/hw/video/color.h>
 #include <seven/hw/video/memory.h>
 #include <seven/hw/video/types.h>
-
-#endif /* !_LIBSEVEN_HW_VIDEO_PRELUDE_H */

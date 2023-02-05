@@ -4,8 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_PRELUDE_H
-#define _LIBSEVEN_PRELUDE_H
+#pragma once
 
 #include <seven/base.h>
 #include <seven/attributes.h>
@@ -17,5 +16,3 @@
 #include <seven/hw/bios/memory.h>
 #include <seven/hw/bios/reset.h>
 #include <seven/hw/bios/wait.h>
-
-#endif /* !_LIBSEVEN_PRELUDE_H */

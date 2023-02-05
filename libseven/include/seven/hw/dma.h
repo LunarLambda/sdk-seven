@@ -4,8 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_HW_DMA_H
-#define _LIBSEVEN_HW_DMA_H
+#pragma once
 
 #include <seven/base.h>
 
@@ -111,5 +110,3 @@ enum DMAControlPreset
 extern void dmaSet(uint32_t channel, struct DMA dma);
 
 _LIBSEVEN_EXTERN_C_END
-
-#endif /* !_LIBSEVEN_HW_DMA_H */

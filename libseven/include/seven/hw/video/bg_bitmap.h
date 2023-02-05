@@ -4,8 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_HW_VIDEO_BG_BITMAP_H
-#define _LIBSEVEN_HW_VIDEO_BG_BITMAP_H
+#pragma once
 
 #include <seven/base.h>
 #include <seven/hw/video/memory.h>
@@ -33,5 +32,3 @@ typedef uint16_t Mode4Frame[MODE4_HEIGHT][MODE4_WIDTH/2];
 typedef uint16_t Mode5Frame[MODE5_HEIGHT][MODE5_WIDTH];
 
 _LIBSEVEN_EXTERN_C_END
-
-#endif /* !_LIBSEVEN_HW_VIDEO_BG_BITMAP_H */

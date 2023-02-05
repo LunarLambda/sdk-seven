@@ -4,13 +4,10 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_TEMPLATE_H
-#define _LIBSEVEN_TEMPLATE_H
+#pragma once
 
 #include <seven/base.h>
 
 _LIBSEVEN_EXTERN_C
 
 _LIBSEVEN_EXTERN_C_END
-
-#endif /* !_LIBSEVEN_TEMPLATE_H */

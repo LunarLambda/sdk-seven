@@ -4,8 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_UTIL_BIT_H
-#define _LIBSEVEN_UTIL_BIT_H
+#pragma once
 
 #include <seven/base.h>
 
@@ -63,6 +62,4 @@ extern uint32_t bitCLZ16(uint16_t value);
 extern uint32_t bitCLZ8(uint8_t value);
 
 _LIBSEVEN_EXTERN_C_END
-
-#endif /* !_LIBSEVEN_UTIL_BIT_H */
 

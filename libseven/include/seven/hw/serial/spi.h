@@ -4,8 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_HW_SERIAL_SPI_H
-#define _LIBSEVEN_HW_SERIAL_SPI_H
+#pragma once
 
 #include <seven/base.h>
 
@@ -31,5 +30,3 @@ enum SerialControlSPI
 };
 
 _LIBSEVEN_EXTERN_C_END
-
-#endif /* !_LIBSEVEN_HW_SERIAL_SPI_H */

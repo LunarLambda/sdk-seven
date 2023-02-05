@@ -4,8 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_HW_TIMER_H
-#define _LIBSEVEN_HW_TIMER_H
+#pragma once
 
 #include <seven/base.h>
 
@@ -48,5 +47,3 @@ extern void timerDisable(uint32_t num);
 extern uint16_t timerGetValue(uint32_t num);
 
 _LIBSEVEN_EXTERN_C_END
-
-#endif /* !_LIBSEVEN_HW_TIMER_H */

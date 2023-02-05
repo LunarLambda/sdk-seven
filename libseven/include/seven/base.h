@@ -4,8 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_BASE_H
-#define _LIBSEVEN_BASE_H
+#pragma once
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -44,5 +43,3 @@
 #define BITS(n)                         (BIT(n) - 1)
 #define BITFIELD(name, value)           \
     (((value) & BITS(BF_##name##_LENGTH)) << (BF_##name##_OFFSET))
-
-#endif /* !_LIBSEVEN_BASE_H */

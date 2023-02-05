@@ -4,8 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_HW_VIDEO_OAM_H
-#define _LIBSEVEN_HW_VIDEO_OAM_H
+#pragma once
 
 #include <seven/base.h>
 #include <seven/hw/video/memory.h>
@@ -19,5 +18,3 @@ size_t oamWriteMatrices(size_t oam_index, struct Matrix *mats, size_t n_mats);
 size_t oamWriteMatricesUnchecked(size_t oam_index, struct Matrix *mats, size_t n_mats);
 
 _LIBSEVEN_EXTERN_C_END
-
-#endif /* !_LIBSEVEN_HW_VIDEO_OAM_H */

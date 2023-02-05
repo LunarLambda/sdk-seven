@@ -4,8 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_UTIL_LOG_H
-#define _LIBSEVEN_UTIL_LOG_H
+#pragma once
 
 #include <seven/base.h>
 
@@ -61,5 +60,3 @@ extern uint8_t logGetMaxLevel(void);
 extern void logOutput(uint8_t level, const char *message);
 
 _LIBSEVEN_EXTERN_C_END
-
-#endif /* !_LIBSEVEN_UTIL_LOG_H */

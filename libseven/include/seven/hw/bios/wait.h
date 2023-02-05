@@ -4,8 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_HW_BIOS_WAIT_H
-#define _LIBSEVEN_HW_BIOS_WAIT_H
+#pragma once
 
 #include <seven/base.h>
 
@@ -18,5 +17,3 @@ extern void biosIntrWait(bool wait_next, uint16_t intr_flags);
 extern void biosVBlankIntrWait(void);
 
 _LIBSEVEN_EXTERN_C_END
-
-#endif /* !_LIBSEVEN_HW_BIOS_WAIT_H */

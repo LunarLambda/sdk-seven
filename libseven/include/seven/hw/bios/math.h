@@ -4,8 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_HW_BIOS_MATH_H
-#define _LIBSEVEN_HW_BIOS_MATH_H
+#pragma once
 
 #include <seven/base.h>
 
@@ -24,5 +23,3 @@ extern int16_t biosArcTan(int16_t tan);
 extern uint16_t biosArcTan2(int16_t x, int16_t y);
 
 _LIBSEVEN_EXTERN_C_END
-
-#endif /* !_LIBSEVEN_HW_BIOS_MATH_H */

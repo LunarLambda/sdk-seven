@@ -4,8 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_UTIL_ASSERT_H
-#define _LIBSEVEN_UTIL_ASSERT_H
+#pragma once
 
 #include <seven/base.h>
 
@@ -67,5 +66,3 @@ extern void _LIBSEVEN_NORETURN assertRaise(
         uint32_t line);
 
 _LIBSEVEN_EXTERN_C_END
-
-#endif /* !_LIBSEVEN_UTIL_ASSERT_H */

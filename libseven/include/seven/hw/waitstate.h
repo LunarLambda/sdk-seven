@@ -4,8 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_HW_WAITSTATE_H
-#define _LIBSEVEN_HW_WAITSTATE_H
+#pragma once
 
 #include <seven/base.h>
 
@@ -47,5 +46,3 @@ enum Waitstate
 };
 
 _LIBSEVEN_EXTERN_C_END
-
-#endif /* !_LIBSEVEN_HW_WAITSTATE_H */

@@ -4,8 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_HW_BIOS_RESET_H
-#define _LIBSEVEN_HW_BIOS_RESET_H
+#pragma once
 
 #include <seven/base.h>
 
@@ -41,5 +40,3 @@ enum RegisterRamResetFlags
 extern void biosRegisterRamReset(uint8_t reset_flags);
 
 _LIBSEVEN_EXTERN_C_END
-
-#endif /* !_LIBSEVEN_HW_BIOS_RESET_H */

@@ -4,8 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_HW_INPUT_H
-#define _LIBSEVEN_HW_INPUT_H
+#pragma once
 
 #include <seven/base.h>
 
@@ -119,5 +118,3 @@ extern int32_t inputAxisLR(struct InputState i);
 extern int32_t inputAxisAB(struct InputState i);
 
 _LIBSEVEN_EXTERN_C_END
-
-#endif /* !_LIBSEVEN_HW_INPUT_H */

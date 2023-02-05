@@ -4,8 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_HW_VIDEO_TYPES_H
-#define _LIBSEVEN_HW_VIDEO_TYPES_H
+#pragma once
 
 #include <seven/base.h>
 
@@ -35,5 +34,3 @@ struct Object
 } _LIBSEVEN_ALIGN4;
 
 _LIBSEVEN_EXTERN_C_END
-
-#endif /* !_LIBSEVEN_HW_VIDEO_TYPES_H */

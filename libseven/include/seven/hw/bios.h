@@ -4,8 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_HW_BIOS_H
-#define _LIBSEVEN_HW_BIOS_H
+#pragma once
 
 enum SoftwareInterruptNumber
 {
@@ -60,5 +59,3 @@ enum SoftwareInterruptNumber
     SWI_SOUNDDRIVERVSYNCOFF             = 40,
     SWI_SOUNDDRIVERVSYNCON              = 41,
 };
-
-#endif /* !_LIBSEVEN_HW_BIOS_H */

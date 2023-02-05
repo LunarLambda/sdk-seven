@@ -4,8 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_UTIL_DEBUG_H
-#define _LIBSEVEN_UTIL_DEBUG_H
+#pragma once
 
 #include <seven/base.h>
 
@@ -24,6 +23,4 @@ enum DebugException
 bool dbgRaiseException(uint32_t exception);
 
 _LIBSEVEN_EXTERN_C_END
-
-#endif /* !_LIBSEVEN_UTIL_DEBUG_H */
 

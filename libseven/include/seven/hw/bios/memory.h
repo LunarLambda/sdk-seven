@@ -4,8 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_HW_BIOS_MEMORY_H
-#define _LIBSEVEN_HW_BIOS_MEMORY_H
+#pragma once
 
 #include <seven/base.h>
 
@@ -27,5 +26,3 @@ extern void biosCpuSet(const void *src, void *dst, uint32_t ctrl);
 extern void biosCpuFastSet(const void *src, void *dst, uint32_t ctrl);
 
 _LIBSEVEN_EXTERN_C_END
-
-#endif /* !_LIBSEVEN_HW_BIOS_MEMORY_H */

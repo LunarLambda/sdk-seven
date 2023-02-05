@@ -4,8 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_HW_VIDEO_MOSAIC_H
-#define _LIBSEVEN_HW_VIDEO_MOSAIC_H
+#pragma once
 
 #include <seven/base.h>
 
@@ -34,5 +33,3 @@ _LIBSEVEN_EXTERN_C
 #define MOSAIC_OBJ_V(v) BITFIELD(MOSAIC_OBJ_V, (v))
 
 _LIBSEVEN_EXTERN_C_END
-
-#endif /* !_LIBSEVEN_HW_VIDEO_MOSAIC_H */

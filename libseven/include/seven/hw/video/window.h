@@ -4,8 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_HW_VIDEO_WINDOW_H
-#define _LIBSEVEN_HW_VIDEO_WINDOW_H
+#pragma once
 
 #include <seven/base.h>
 
@@ -34,5 +33,3 @@ enum WindowControl
 #define WINDOW_DIM(l, h)        ((((l) & 255) << 8) | ((h) & 255))
 
 _LIBSEVEN_EXTERN_C_END
-
-#endif /* !_LIBSEVEN_HW_VIDEO_WINDOW_H */

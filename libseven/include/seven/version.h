@@ -4,8 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_VERSION_H
-#define _LIBSEVEN_VERSION_H
+#pragma once
 
 #include <seven/base.h>
 
@@ -17,5 +16,3 @@ _LIBSEVEN_EXTERN_C
             ".previous\n")
 
 _LIBSEVEN_EXTERN_C_END
-
-#endif /* !_LIBSEVEN_VERSION_H */

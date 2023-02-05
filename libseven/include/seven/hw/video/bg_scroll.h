@@ -4,8 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_HW_VIDEO_BG_SCROLL_H
-#define _LIBSEVEN_HW_VIDEO_BG_SCROLL_H
+#pragma once
 
 #include <seven/base.h>
 
@@ -21,5 +20,3 @@ _LIBSEVEN_EXTERN_C
 #define REG_BG3VOFS     VOLADDR(0x0400001E, uint16_t)
 
 _LIBSEVEN_EXTERN_C_END
-
-#endif /* !_LIBSEVEN_HW_VIDEO_BG_SCROLL_H */

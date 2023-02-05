@@ -4,8 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_UTIL_SIMD_H
-#define _LIBSEVEN_UTIL_SIMD_H
+#pragma once
 
 #include <seven/base.h>
 
@@ -22,5 +21,3 @@ extern void simdAdd(uint32_t mask, void *lhs, const void *rhs, size_t len);
 extern void simdSub(uint32_t mask, void *lhs, const void *rhs, size_t len);
 
 _LIBSEVEN_EXTERN_C_END
-
-#endif /* !_LIBSEVEN_UTIL_SIMD_H */

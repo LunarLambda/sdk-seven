@@ -4,8 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_TYPES_H
-#define _LIBSEVEN_TYPES_H
+#pragma once
 
 #include <limits.h>
 #include <stddef.h>
@@ -98,5 +97,3 @@ typedef iptr            sptr;
 #define SPTR_BITS       IPTR_BITS
 
 #endif /* !_LIBSEVEN_NOCOMPATIBLE */
-
-#endif /* !_LIBSEVEN_TYPES_H */
