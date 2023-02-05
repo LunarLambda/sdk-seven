@@ -27,7 +27,7 @@ target_compile_options(minrt PRIVATE
 
 target_link_options(minrt INTERFACE
     -mthumb
-    -specs=${CMAKE_CURRENT_LIST_DIR}lib/nocrt0.specs
+    -specs=${CMAKE_CURRENT_LIST_DIR}/lib/nocrt0.specs
     -L${CMAKE_CURRENT_LIST_DIR}/lib/ldscripts
     -Trom.mem
     -Tgba.x
@@ -51,7 +51,7 @@ target_compile_options(minrt_multiboot PRIVATE
 
 target_link_options(minrt_multiboot INTERFACE
     -mthumb
-    -specs=${CMAKE_CURRENT_LIST_DIR}lib/nocrt0.specs
+    -specs=${CMAKE_CURRENT_LIST_DIR}/lib/nocrt0.specs
     -L${CMAKE_CURRENT_LIST_DIR}/lib/ldscripts
     -Tmultiboot.mem
     -Tgba.x
