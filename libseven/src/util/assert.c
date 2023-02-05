@@ -26,7 +26,7 @@ extern AssertHandlerFn* assertGetHandler(void)
     return ASSERT.handler;
 }
 
-extern void NORETURN assertRaise(
+extern void _LIBSEVEN_NORETURN assertRaise(
         const char *message,
         const char *function,
         const char *file,

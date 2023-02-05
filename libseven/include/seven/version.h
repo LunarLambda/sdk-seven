@@ -4,24 +4,18 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_BASE_VERSION_H
-#define _LIBSEVEN_BASE_VERSION_H
+#ifndef _LIBSEVEN_VERSION_H
+#define _LIBSEVEN_VERSION_H
 
 #include <seven/base.h>
 
-#define LIBSEVEN_VERSION_MAJOR 0
-#define LIBSEVEN_VERSION_MINOR 15
-#define LIBSEVEN_VERSION_PATCH 1
-
-#define LIBSEVEN_VERSION \
-    _LIBSEVEN_STR2(LIBSEVEN_VERSION_MAJOR) "." \
-    _LIBSEVEN_STR2(LIBSEVEN_VERSION_MINOR) "." \
-    _LIBSEVEN_STR2(LIBSEVEN_VERSION_PATCH)
+_LIBSEVEN_EXTERN_C
 
 #define libsevenEmitVersionString() \
     __asm__(".section .pad,\"aR\",%progbits\n" \
             ".string \"libseven " LIBSEVEN_VERSION "\"\n" \
             ".previous\n")
 
-#endif /* !_LIBSEVEN_BASE_VERSION_H */
+_LIBSEVEN_EXTERN_C_END
 
+#endif /* !_LIBSEVEN_VERSION_H */

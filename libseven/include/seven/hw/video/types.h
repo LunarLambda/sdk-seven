@@ -24,7 +24,7 @@ struct Matrix
     i16 vdx; // vertical shearing factor
     i16 hdy; // horizontal shearing factor
     i16 vdy; // vertical scaling factor
-} ALIGN(4);
+} _LIBSEVEN_ALIGN4;
 
 struct Object
 {
@@ -32,7 +32,7 @@ struct Object
     u16 attr1;
     u16 attr2;
     u16 _reserved;
-} ALIGN(4);
+} _LIBSEVEN_ALIGN4;
 
 _LIBSEVEN_EXTERN_C_END
 

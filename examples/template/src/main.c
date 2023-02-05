@@ -1,3 +1,4 @@
+#include <seven/version.h>
 #include <seven/hw/video/prelude.h>
 #include <seven/hw/video/bg_bitmap.h>
 #include <seven/hw/video/color_constants.h>

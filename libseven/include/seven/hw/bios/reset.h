@@ -11,8 +11,8 @@
 
 _LIBSEVEN_EXTERN_C
 
-extern void NORETURN biosSoftReset(void);
-extern void NORETURN biosHardReset(void);
+extern void _LIBSEVEN_NORETURN biosSoftReset(void);
+extern void _LIBSEVEN_NORETURN biosHardReset(void);
 
 enum SoftResetExFlags
 {
@@ -23,7 +23,7 @@ enum SoftResetExFlags
 // Combines biosRegisterRamReset and svcSoftReset
 // Allows reset from EWRAM, automatically unsets RRR_EWRAM
 // Disables IME to prevent IRQs crashing from a dangling handler
-extern void NORETURN biosSoftResetEx(u8 reset_flags, bool from_ewram);
+extern void _LIBSEVEN_NORETURN biosSoftResetEx(u8 reset_flags, bool from_ewram);
 
 enum RegisterRamResetFlags
 {

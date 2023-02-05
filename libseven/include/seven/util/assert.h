@@ -60,7 +60,7 @@ extern AssertHandlerFn* assertSetHandler(AssertHandlerFn *handler);
 
 extern AssertHandlerFn* assertGetHandler(void);
 
-extern void NORETURN assertRaise(
+extern void _LIBSEVEN_NORETURN assertRaise(
         const char *message,
         const char *function,
         const char *file,

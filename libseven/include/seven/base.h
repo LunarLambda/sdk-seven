@@ -18,10 +18,29 @@
 #define _LIBSEVEN_STR(s) #s
 #define _LIBSEVEN_STR2(s) _LIBSEVEN_STR(s)
 
-#include <seven/base/addresses.h>
-#include <seven/base/attributes.h>
-#include <seven/base/bits.h>
-#include <seven/base/types.h>
-#include <seven/base/version.h>
+#define _LIBSEVEN_NORETURN __attribute__((__noreturn__))
+#define _LIBSEVEN_ALIGN4 __attribute__((__aligned__(4)))
+
+#define LIBSEVEN_VERSION_MAJOR 0
+#define LIBSEVEN_VERSION_MINOR 16
+#define LIBSEVEN_VERSION_PATCH 0
+
+#define LIBSEVEN_VERSION \
+    _LIBSEVEN_STR2(LIBSEVEN_VERSION_MAJOR) "." \
+    _LIBSEVEN_STR2(LIBSEVEN_VERSION_MINOR) "." \
+    _LIBSEVEN_STR2(LIBSEVEN_VERSION_PATCH)
+
+#define VOLADDR(addr, type)             (*(type volatile (*))(addr))
+#define VOLARRAY(addr, type, size)      (*(type volatile (*)[size])(addr))
+
+#define MEMADDR(addr, type)             (*(type (*))(addr))
+#define MEMARRAY(addr, type, size)      (*(type (*)[size])(addr))
+
+#define BIT(n)                          (1 << (n))
+#define BITS(n)                         (BIT(n) - 1)
+#define BITFIELD(name, value)           \
+    (((value) & BITS(BF_##name##_LENGTH)) << (BF_##name##_OFFSET))
+
+#include <seven/types.h>
 
 #endif /* !_LIBSEVEN_BASE_H */

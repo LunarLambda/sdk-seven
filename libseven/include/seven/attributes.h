@@ -4,8 +4,8 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _LIBSEVEN_BASE_ATTRIBUTES_H
-#define _LIBSEVEN_BASE_ATTRIBUTES_H
+#ifndef _LIBSEVEN_ATTRIBUTES_H
+#define _LIBSEVEN_ATTRIBUTES_H
 
 #include <seven/base.h>
 
@@ -40,4 +40,4 @@
     #define EWRAM_BSS           SECTION(".ewram_bss." _LIBSEVEN_SECCOUNT)
 #endif /* !_LIBSEVEN_NOCOMPATIBLE */
 
-#endif /* !_LIBSEVEN_BASE_ATTRIBUTES_H */
+#endif /* !_LIBSEVEN_ATTRIBUTES_H */
