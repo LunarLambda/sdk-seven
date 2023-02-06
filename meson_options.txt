@@ -1,0 +1,1 @@
+option('use_nano', description: 'Use newlib-nano', type: 'feature', value: 'auto')

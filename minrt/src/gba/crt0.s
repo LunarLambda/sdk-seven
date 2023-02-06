@@ -113,7 +113,7 @@ _start:
     ldr         r2, =__bss_len
 
     @ Initialization
-    bl          __minrt_init_array
+    bl          __libc_init_array
 
     @ main(0, NULL,NULL)
     movs        r0, #0 @ argc

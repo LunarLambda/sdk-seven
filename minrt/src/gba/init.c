@@ -5,7 +5,7 @@ extern void (*__preinit_array_end[]) (void) __attribute__((weak));
 extern void (*__init_array_start[]) (void) __attribute__((weak));
 extern void (*__init_array_end[]) (void) __attribute__((weak));
 
-extern void __minrt_init_array(void)
+extern void __libc_init_array(void)
 {
     size_t count;
     size_t i;

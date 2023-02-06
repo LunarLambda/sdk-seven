@@ -1,7 +1,7 @@
 project('sdk-seven', 'c',
-  version: '0.18.1',
+  version: '0.19.0',
   license: 'Zlib',
-  meson_version: '>=0.55.0',
+  meson_version: '>=0.59.0',
   default_options: ['warning_level=2', 'c_std=c99'])
 
 add_project_arguments(
@@ -27,7 +27,9 @@ cc = meson.get_compiler('c')
 
 # devkitARM has nano.specs, but no libc_nano
 #
-if cc.find_library('c_nano', required: false).found()
+has_nano = cc.find_library('c_nano', required: false).found()
+
+if get_option('use_nano').require(has_nano).allowed()
   add_project_link_arguments('-specs=nano.specs', language: 'c')
 endif
 
