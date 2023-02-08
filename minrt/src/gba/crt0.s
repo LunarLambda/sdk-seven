@@ -134,7 +134,7 @@ _exit:
 init: .byte     0
 
 .section        .pad,"aR",%progbits
-.string         "minrt 0.5.1"
+.string         "minrt 0.7.1"
 
 .equiv          REG_IME,        0x04000208
 

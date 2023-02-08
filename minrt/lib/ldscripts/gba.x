@@ -9,6 +9,15 @@ OUTPUT_ARCH(arm)
 ENTRY(_start)
 EXTERN(_header)
 
+PHDRS
+{
+        LOAD PT_LOAD;
+        IWRAM PT_LOAD;
+        EWRAM PT_LOAD;
+        DATA PT_LOAD;
+        PERSISTENT PT_LOAD;
+}
+
 SECTIONS
 {
         /* GBA ROM header */
@@ -19,7 +28,7 @@ SECTIONS
                 __boot_type = 0xC4;
                 __boot_client = 0xC5;
                 KEEP(*(.header_pad .header_pad.*))
-        } >LOAD_REGION
+        } >LOAD_REGION :LOAD
 
         /* Standard code */
 
@@ -44,7 +53,7 @@ SECTIONS
         {
                 *(SORT(.iwram.sorted.*))
                 *(.iwram .iwram.*)
-        } >IWRAM AT>LOAD_REGION
+        } >IWRAM AT>LOAD_REGION :IWRAM
 
         OVERLAY : NOCROSSREFS
         {
@@ -72,7 +81,7 @@ SECTIONS
         {
                 *(SORT(.ewram.sorted.*))
                 *(.ewram .ewram.*)
-        } >EWRAM AT>LOAD_REGION
+        } >EWRAM AT>LOAD_REGION :EWRAM
 
         OVERLAY : NOCROSSREFS
         {
@@ -99,21 +108,21 @@ SECTIONS
         .data :
         {
                 *(.data .data.* .gnu.linkonce.d.*)
-        } >DATA_REGION AT>LOAD_REGION
+        } >DATA_REGION AT>LOAD_REGION :DATA
 
         /* Persistent data */
 
         .persistent :
         {
                 *(.persistent .persistent.* .gnu.linkonce.p.*)
-        } >PERSISTENT_REGION AT>LOAD_REGION
+        } >PERSISTENT_REGION AT>LOAD_REGION :PERSISTENT
 
         /* IWRAM zero-initialized data */
 
         .iwram_bss (NOLOAD) :
         {
                 *(.iwram_bss .iwram_bss.*)
-        } >IWRAM
+        } >IWRAM :NONE
 
         /* EWRAM zero-initialized data */
 
@@ -122,7 +131,7 @@ SECTIONS
                 *(.ewram_bss .ewram_bss.*)
                 /* devkitARM compatibility */
                 *(.sbss .sbss.*)
-        } >EWRAM
+        } >EWRAM :NONE
 
         /* Standard zero-initialized data */
 
@@ -130,21 +139,21 @@ SECTIONS
         {
                 *(.bss .bss.* .gnu.linkonce.b.*)
                 *(COMMON)
-        } >BSS_REGION
+        } >BSS_REGION :NONE
 
         /* Persistent zero-initialized data */
 
         .noinit (NOLOAD) :
         {
                 *(.noinit .noinit.* .gnu.linkonce.n.*)
-        } >NOINIT_REGION
+        } >NOINIT_REGION :NONE
 
         /* Exception handling and unwinding */
 
         .ARM.extab :
         {
                 *(.ARM.extab* .gnu.linkonce.armextab.*)
-        } >LOAD_REGION
+        } >LOAD_REGION :LOAD
 
         .ARM.exidx :
         {
