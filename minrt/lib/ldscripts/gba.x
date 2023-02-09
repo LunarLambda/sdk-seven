@@ -11,11 +11,11 @@ EXTERN(_header)
 
 PHDRS
 {
-        LOAD PT_LOAD;
-        IWRAM PT_LOAD;
-        EWRAM PT_LOAD;
-        DATA PT_LOAD;
-        PERSISTENT PT_LOAD;
+        LOAD PT_LOAD FLAGS(5);
+        IWRAM PT_LOAD FLAGS(7);
+        EWRAM PT_LOAD FLAGS(7);
+        DATA PT_LOAD FLAGS(6);
+        PERSISTENT PT_LOAD FLAGS(6);
 }
 
 SECTIONS

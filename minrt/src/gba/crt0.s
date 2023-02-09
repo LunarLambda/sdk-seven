@@ -7,6 +7,9 @@
 .syntax         unified
 .cpu            arm7tdmi
 
+.section        .pad,"aR",%progbits
+.string         "minrt 0.7.2"
+
 .section        .text._start_rom,"ax",%progbits
 _start_rom:
     and         r0, pc, 0xFF000000
@@ -112,15 +115,7 @@ _start:
     movs        r1, 0
     ldr         r2, =__bss_len
 
-    @ Initialization
-    bl          __libc_init_array
-
-    @ main(0, NULL,NULL)
-    movs        r0, #0 @ argc
-    movs        r1, #0 @ argv
-    movs        r2, #0 @ envp
-    bl          main
-    bl          exit
+    bl          _start_lang
 
 pool: .pool
 
@@ -132,9 +127,6 @@ _exit:
 
 .section        .noinit,"aw",%nobits
 init: .byte     0
-
-.section        .pad,"aR",%progbits
-.string         "minrt 0.7.1"
 
 .equiv          REG_IME,        0x04000208
 

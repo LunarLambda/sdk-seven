@@ -1,10 +1,11 @@
-version = '0.7.1'
+version = '0.7.2'
 
 sources = [
+  'src/c/exit.c',
+  'src/c/fini.c',
+  'src/c/init.c',
+  'src/c/start.c',
   'src/gba/crt0.s',
-  'src/gba/exit.c',
-  'src/gba/fini.c',
-  'src/gba/init.c',
   'src/gba/ram.c',
 ]
 
