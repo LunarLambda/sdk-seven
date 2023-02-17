@@ -15,7 +15,7 @@ enum SerialControlMultiplayer
     #define BF_MULTI_BAUD_OFFSET 0
     #define BF_MULTI_BAUD_LENGTH 2
 
-    #define MULTI_BAUD BITFIELD(MULTI_BAUD, (n))
+    #define MULTI_BAUD(n) BITFIELD(MULTI_BAUD, (n))
 
     MULTI_BAUD_9600 = MULTI_BAUD(0),
     MULTI_BAUD_38400 = MULTI_BAUD(1),

@@ -13,16 +13,16 @@ _LIBSEVEN_EXTERN_C
 enum RControlRaw
 {
     RAW_SC_DIR_OUT    = BIT(4),
-    RAW_SC_DIR_IN     = !SIO_RAW_SC_DIR_OUT,
+    RAW_SC_DIR_IN     = !RAW_SC_DIR_OUT,
 
     RAW_SD_DIR_OUT    = BIT(5),
-    RAW_SD_DIR_IN     = !SIO_RAW_SD_DIR_OUT,
+    RAW_SD_DIR_IN     = !RAW_SD_DIR_OUT,
 
     RAW_SI_DIR_OUT    = BIT(6),
-    RAW_SI_DIR_IN     = !SIO_RAW_SI_DIR_OUT,
+    RAW_SI_DIR_IN     = !RAW_SI_DIR_OUT,
 
     RAW_SO_DIR_OUT    = BIT(7),
-    RAW_SO_DIR_IN     = !SIO_RAW_SO_DIR_OUT,
+    RAW_SO_DIR_IN     = !RAW_SO_DIR_OUT,
 
     RAW_SI_IRQ_ENABLE = BIT(8),
 };
