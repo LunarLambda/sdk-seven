@@ -1,13 +1,28 @@
-version = '0.7.2'
+version = '0.7.3'
 
-sources = [
+sources_c = [
   'src/c/exit.c',
   'src/c/fini.c',
   'src/c/init.c',
   'src/c/start.c',
+]
+
+sources_rs = [
+  'src/rust/start.c',
+]
+
+sources = [
   'src/gba/crt0.s',
   'src/gba/ram.c',
 ]
+
+lang = get_option('minrt_lang')
+
+if lang == 'c'
+  sources += sources_c
+elif lang == 'rust'
+  sources += sources_rs
+endif
 
 includes = ['include']
 
