@@ -38,7 +38,7 @@ Address     | Size | Access | GBATEK      | libgba          | libtonc     | libs
  0400 004C  | 16   | W      | MOSAIC      | MOSAIC          | MOSAIC      | MOSAIC
  0400 0050  | 16   | R/W    | BLDCNT      | BLDCNT          | BLDCNT      | BLDCNT
  0400 0052  | 16   | R/W    | BLDALPHA    | BLDALPHA        | BLDALPHA    | BLDALPHA
- 0400 0054  | 16   | W      | BLDY        | BLDY            | BLDY        | **BLDVAL**
+ 0400 0054  | 16   | W      | BLDY        | BLDY            | BLDY        | BLDY
 ​|||||||
  0400 0060  | 16   | R/W    | SOUND1CNT_L | SOUND1CNT_L     | SOUND1CNT_L | -
  0400 0062  | 16   | R/W    | SOUND1CNT_H | SOUND1CNT_H     | SOUND1CNT_H | -
@@ -85,22 +85,22 @@ Address     | Size | Access | GBATEK      | libgba          | libtonc     | libs
  0400 010E  | 16   | R/W    | TM3CNT_H    | TM3CNT_H        | TM3CNT_H    | **TM3CNT**
 ​|||||||
  0400 0120  | 32   | R/W    | SIODATA32   | SIODATA32       | SIODATA32   | SIODATA32
- 0400 0120  | 16   | R/W    | SIOMULTI0   | SIOMULTI0       | SIOMULTI0   | -
- 0400 0122  | 16   | R/W    | SIOMULTI1   | SIOMULTI1       | SIOMULTI1   | -
- 0400 0124  | 16   | R/W    | SIOMULTI2   | SIOMULTI2       | SIOMULTI2   | -
- 0400 0126  | 16   | R/W    | SIOMULTI3   | SIOMULTI3       | SIOMULTI3   | -
+ 0400 0120  | 16   | R/W    | SIOMULTI0   | SIOMULTI0       | SIOMULTI0   | **MULTIRECV0**
+ 0400 0122  | 16   | R/W    | SIOMULTI1   | SIOMULTI1       | SIOMULTI1   | **MULTIRECV1**
+ 0400 0124  | 16   | R/W    | SIOMULTI2   | SIOMULTI2       | SIOMULTI2   | **MULTIRECV2**
+ 0400 0126  | 16   | R/W    | SIOMULTI3   | SIOMULTI3       | SIOMULTI3   | **MULTIRECV3**
  0400 0128  | 16   | R/W    | SIOCNT      | SIOCNT          | SIOCNT      | SIOCNT
- 0400 012A  | 16   | R/W    | SIOMLT_SEND | SIOMLT_SEND     | SIOMLT_SEND | -
+ 0400 012A  | 16   | R/W    | SIOMLT_SEND | SIOMLT_SEND     | SIOMLT_SEND | **MULTISEND**
  0400 012A  | 16/8 | R/W    | SIODATA8    | SIODATA8        | SIODATA8    | SIODATA8
 ​|||||||
  0400 0130  | 16   | R      | KEYINPUT    | KEYINPUT [²]    | KEYINPUT [²]| KEYINPUT
  0400 0132  | 16   | R/W    | KEYCNT      | KEYCNT          | KEYCNT      | KEYCNT
 ​|||||||
- 0400 0134  | 16   | R/W    | RCNT        | RCNT            | RCNT        | **SIOMODE2**
- 0400 0140  | 16   | R/W    | JOYCNT      | **HS_CTRL**     | JOYCNT      | -
- 0400 0150  | 32   | R/W    | JOY_RECV    | **JOYRE**       | JOY_RECV    | -
- 0400 0154  | 32   | R/W    | JOY_TRANS   | **JOYTR**       | JOY_TRANS   | -
- 0400 0158  | 16   | R      | JOYSTAT     | **JSTAT** [²]   | JOYSTAT [²] | -
+ 0400 0134  | 16   | R/W    | RCNT        | RCNT            | RCNT        | RCNT
+ 0400 0140  | 16   | R/W    | JOYCNT      | **HS_CTRL**     | JOYCNT      | JOYCNT
+ 0400 0150  | 32   | R/W    | JOY_RECV    | **JOYRE**       | JOY_RECV    | **JOYRECV**
+ 0400 0154  | 32   | R/W    | JOY_TRANS   | **JOYTR**       | JOY_TRANS   | **JOYSEND**
+ 0400 0158  | 16   | R      | JOYSTAT     | **JSTAT** [²]   | JOYSTAT [²] | JOYSTAT
 ​|||||||
 [0400 0200] | 16   | R/W    | IE          | IE              | IE          | IE
  0400 0202  | 16   | R/W    | IF          | IF              | IF          | IF
