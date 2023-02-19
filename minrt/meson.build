@@ -1,5 +1,3 @@
-version = '0.7.3'
-
 sources_c = [
   'src/c/exit.c',
   'src/c/fini.c',
@@ -57,13 +55,13 @@ minrt_dep = declare_dependency(
   include_directories: includes,
   link_with: minrt,
   link_args: link_args + ['-Trom.mem', '-Tgba.x'],
-  version: version)
+  version: minrt_version)
 
 minrt_mb_dep = declare_dependency(
   include_directories: includes,
   link_with: minrt_mb,
   link_args: link_args + ['-Tmultiboot.mem', '-Tgba.x'],
-  version: version)
+  version: minrt_version)
 
 meson.override_dependency('minrt', minrt_dep)
 meson.override_dependency('minrt-multiboot', minrt_mb_dep)

@@ -1,26 +1,29 @@
 project('sdk-seven', 'c',
-  version: '0.19.4',
+  version: '0.19.5',
   license: 'Zlib',
   meson_version: '>=0.59.0',
   default_options: ['warning_level=2', 'c_std=c99'])
 
-add_project_arguments(
+libseven_version = '0.17.2'
+minrt_version = '0.7.3'
+
+cflags = [
   '-mthumb',
   '-ffunction-sections',
   '-fdata-sections',
-  language: 'c')
+]
 
-add_project_link_arguments(
+ldflags = [
   '-mthumb',
   '-Wl,--gc-sections',
-  '-Wl,-z,max-page-size=1',
-  language: 'c')
+  '-Wl,-z,max-page-size=1'
+]
 
 # Generate debug info compatible with no$gba v3.05
 #
 # This does not work if libc or other system code is built with newer debug info
 if get_option('debug')
-  add_project_arguments('-gdwarf-4', language: 'c')
+  cflags += '-gdwarf-4'
 endif
 
 cc = meson.get_compiler('c')
@@ -30,7 +33,7 @@ cc = meson.get_compiler('c')
 has_nano = cc.find_library('c_nano', required: false).found()
 
 if get_option('use_nano').require(has_nano).allowed()
-  add_project_link_arguments('-specs=nano.specs', language: 'c')
+  ldflags += '-specs=nano.specs'
 endif
 
 # Remove warnings on newer toolchains
@@ -43,8 +46,11 @@ endif
 ld_h = run_command(cc, '-Wl,--help', capture: true, check: false)
 
 if ld_h.stdout().contains('--no-warn-rwx-segments')
-  add_project_link_arguments('-Wl,--no-warn-rwx-segments', language: 'c')
+  ldflags += '-Wl,--no-warn-rwx-segments'
 endif
+
+add_project_arguments(cflags, language: 'c')
+add_project_link_arguments(ldflags, language: 'c')
 
 subdir('libseven')
 subdir('minrt')

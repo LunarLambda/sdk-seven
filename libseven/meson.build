@@ -1,5 +1,3 @@
-version = '0.17.1'
-
 sources = [
   'src/hw/bios.s',
   'src/hw/dma.s',
@@ -33,6 +31,6 @@ install_subdir('include/seven', install_dir: get_option('includedir'))
 libseven_dep = declare_dependency(
   include_directories: includes,
   link_with: libseven,
-  version: version)
+  version: libseven_version)
 
 meson.override_dependency('libseven', libseven_dep)
