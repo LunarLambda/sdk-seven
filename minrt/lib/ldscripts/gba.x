@@ -14,6 +14,7 @@ PHDRS
         LOAD PT_LOAD FLAGS(5);
         IWRAM PT_LOAD FLAGS(7);
         EWRAM PT_LOAD FLAGS(7);
+        VRAM PT_LOAD FLAGS(7);
         DATA PT_LOAD FLAGS(6);
         PERSISTENT PT_LOAD FLAGS(6);
 }
@@ -103,6 +104,34 @@ SECTIONS
                 .ewramF { *(.ewramF .ewramF.*) }
         } >EWRAM AT>LOAD_REGION
 
+        /* VRAM code/data */
+
+        .vram :
+        {
+                *(SORT(.vram.sorted.*))
+                *(.vram .vram.*)
+        } >VRAM AT>LOAD_REGION :VRAM
+
+        OVERLAY : NOCROSSREFS
+        {
+                .vram0 { *(.vram0 .vram0.*) }
+                .vram1 { *(.vram1 .vram1.*) }
+                .vram2 { *(.vram2 .vram2.*) }
+                .vram3 { *(.vram3 .vram3.*) }
+                .vram4 { *(.vram4 .vram4.*) }
+                .vram5 { *(.vram5 .vram5.*) }
+                .vram6 { *(.vram6 .vram6.*) }
+                .vram7 { *(.vram7 .vram7.*) }
+                .vram8 { *(.vram8 .vram8.*) }
+                .vram9 { *(.vram9 .vram9.*) }
+                .vramA { *(.vramA .vramA.*) }
+                .vramB { *(.vramB .vramB.*) }
+                .vramC { *(.vramC .vramC.*) }
+                .vramD { *(.vramD .vramD.*) }
+                .vramE { *(.vramE .vramE.*) }
+                .vramF { *(.vramF .vramF.*) }
+        } >VRAM AT>LOAD_REGION
+
         /* Standard data */
 
         .data :
@@ -132,6 +161,13 @@ SECTIONS
                 /* devkitARM compatibility */
                 *(.sbss .sbss.*)
         } >EWRAM :NONE
+
+        /* VRAM zero-initialized data */
+
+        .vram_bss (NOLOAD) :
+        {
+                *(.vram_bss .vram_bss.*)
+        } >VRAM :NONE
 
         /* Standard zero-initialized data */
 
@@ -222,6 +258,7 @@ SECTIONS
         .load_end : {} >LOAD_REGION
         .iwram_end : {} >IWRAM
         .ewram_end : {} >EWRAM
+        .vram_end : {} >VRAM
 
         /* Section symbols */
 
@@ -240,6 +277,12 @@ SECTIONS
 
         __ewram_overlay = ADDR(.ewram0);
 
+        __vram_vma = ADDR(.vram);
+        __vram_lma = LOADADDR(.vram);
+        __vram_len = SIZEOF(.vram);
+
+        __vram_overlay = ADDR(.vram0);
+
         __data_vma = ADDR(.data);
         __data_lma = LOADADDR(.data);
         __data_len = SIZEOF(.data);
@@ -254,6 +297,9 @@ SECTIONS
         __ewram_bss_vma = ADDR(.ewram_bss);
         __ewram_bss_len = SIZEOF(.ewram_bss);
 
+        __vram_bss_vma = ADDR(.vram_bss);
+        __vram_bss_len = SIZEOF(.vram_bss);
+
         __bss_vma = ADDR(.bss);
         __bss_len = SIZEOF(.bss);
 
@@ -265,6 +311,7 @@ SECTIONS
 
         __iwram_end = ADDR(.iwram_end);
         __ewram_end = ADDR(.ewram_end);
+        __vram_end = ADDR(.vram_end);
 
         /* libc-compatibility symbols */
 

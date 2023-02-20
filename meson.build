@@ -1,11 +1,11 @@
 project('sdk-seven', 'c',
-  version: '0.19.5',
+  version: '0.20.0',
   license: 'Zlib',
   meson_version: '>=0.59.0',
   default_options: ['warning_level=2', 'c_std=c99'])
 
 libseven_version = '0.17.2'
-minrt_version = '0.7.3'
+minrt_version = '0.8.0'
 
 cflags = [
   '-mthumb',

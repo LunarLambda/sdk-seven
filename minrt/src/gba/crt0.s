@@ -8,7 +8,7 @@
 .cpu            arm7tdmi
 
 .section        .pad,"aR",%progbits
-.string         "minrt 0.7.3"
+.string         "minrt 0.8.0"
 
 .section        .text._start_rom,"ax",%progbits
 _start_rom:
@@ -74,6 +74,15 @@ _start:
     bl          memcpy
 1:
 
+    @ .vram section
+    ldr         r0, =__vram_vma
+    ldr         r1, =__vram_lma
+    ldr         r2, =__vram_len
+    cmp         r2, 0
+    beq         1f
+    bl          memcpy
+1:
+
     @ .data section
     ldr         r0, =__data_vma
     ldr         r1, =__data_lma
@@ -98,16 +107,22 @@ _start:
     bl          memcpy
 1:
 
-    @ .iwram.bss section
+    @ .iwram_bss section
     ldr         r0, =__iwram_bss_vma
     movs        r1, 0
     ldr         r2, =__iwram_bss_len
     bl          memset
 
-    @ .ewram.bss section
+    @ .ewram_bss section
     ldr         r0, =__ewram_bss_vma
     movs        r1, 0
     ldr         r2, =__ewram_bss_len
+    bl          memset
+
+    @ .vram_bss section
+    ldr         r0, =__vram_bss_vma
+    movs        r1, 0
+    ldr         r2, =__vram_bss_len
     bl          memset
 
     @ .bss section
