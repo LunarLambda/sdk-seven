@@ -40,7 +40,7 @@ target_compile_options(seven PRIVATE
 add_library(libseven ALIAS seven)
 
 if(EXISTS $ENV{DEVKITPRO})
-    install(TARGETS seven DESTINATION "$ENV{DEVKITPRO}/libseven/lib")
-    install(DIRECTORY include/ DESTINATION "$ENV{DEVKITPRO}/libseven/include")
-    install(FILES LICENSE.txt DESTINATION "$ENV{DEVKITPRO}/libseven")
+    file(TO_CMAKE_PATH "$ENV{DEVKITPRO}" ENV_DEVKITPRO)
+    install(TARGETS seven DESTINATION "${ENV_DEVKITPRO}/libseven/lib")
+    install(DIRECTORY include/ DESTINATION "${ENV_DEVKITPRO}/libseven/include")
 endif()
