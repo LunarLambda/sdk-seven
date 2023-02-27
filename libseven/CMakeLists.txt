@@ -6,6 +6,12 @@
 
 cmake_minimum_required(VERSION 3.0)
 
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+    # Default to MinSizeRel build type
+    set(CMAKE_BUILD_TYPE "MinSizeRel" CACHE STRING "Choose the type of build." FORCE)
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif()
+
 project(libseven C ASM)
 set(CMAKE_INCLUDE_FLAG_ASM "-Wa,-I")
 
@@ -17,6 +23,7 @@ add_library(seven STATIC
     src/hw/isr.s
     src/hw/sram.s
     src/hw/timer.s
+
     src/util/assert.c
     src/util/bit.s
     src/util/debug.s
@@ -26,6 +33,7 @@ add_library(seven STATIC
     src/util/rand.s
     src/util/simd.s
     src/util/str.s
+
     src/video/oam.s
 )
 
@@ -43,4 +51,7 @@ if(EXISTS $ENV{DEVKITPRO})
     file(TO_CMAKE_PATH "$ENV{DEVKITPRO}" ENV_DEVKITPRO)
     install(TARGETS seven DESTINATION "${ENV_DEVKITPRO}/libseven/lib")
     install(DIRECTORY include/ DESTINATION "${ENV_DEVKITPRO}/libseven/include")
+else()
+    install(TARGETS seven LIBRARY DESTINATION lib)
+    install(DIRECTORY include/ DESTINATION include)
 endif()
