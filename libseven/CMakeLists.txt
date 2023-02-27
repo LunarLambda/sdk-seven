@@ -47,11 +47,10 @@ target_compile_options(seven PRIVATE
 # Allow the string "libseven" as a parameter for target_link_libraries
 add_library(libseven ALIAS seven)
 
-if(EXISTS $ENV{DEVKITPRO})
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     file(TO_CMAKE_PATH "$ENV{DEVKITPRO}" ENV_DEVKITPRO)
-    install(TARGETS seven DESTINATION "${ENV_DEVKITPRO}/libseven/lib")
-    install(DIRECTORY include/ DESTINATION "${ENV_DEVKITPRO}/libseven/include")
-else()
-    install(TARGETS seven LIBRARY DESTINATION lib)
-    install(DIRECTORY include/ DESTINATION include)
+    set(CMAKE_INSTALL_PREFIX "${ENV_DEVKITPRO}/libseven" CACHE PATH "..." FORCE)
 endif()
+
+install(TARGETS seven LIBRARY DESTINATION lib)
+install(DIRECTORY include/ DESTINATION include)
