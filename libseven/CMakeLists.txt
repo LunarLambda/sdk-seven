@@ -23,7 +23,6 @@ add_library(seven STATIC
     src/hw/isr.s
     src/hw/sram.s
     src/hw/timer.s
-
     src/util/assert.c
     src/util/bit.s
     src/util/debug.s
@@ -33,7 +32,6 @@ add_library(seven STATIC
     src/util/rand.s
     src/util/simd.s
     src/util/str.s
-
     src/video/oam.s
 )
 
@@ -47,7 +45,7 @@ target_compile_options(seven PRIVATE
 # Allow the string "libseven" as a parameter for target_link_libraries
 add_library(libseven ALIAS seven)
 
-if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT AND EXISTS $ENV{DEVKITPRO})
     file(TO_CMAKE_PATH "$ENV{DEVKITPRO}" ENV_DEVKITPRO)
     set(CMAKE_INSTALL_PREFIX "${ENV_DEVKITPRO}/libseven" CACHE PATH "..." FORCE)
 endif()
