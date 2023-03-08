@@ -8,7 +8,7 @@
 .cpu            arm7tdmi
 
 .section        .pad,"aR",%progbits
-.string         "minrt 0.8.0"
+.string         "minrt 0.8.1"
 
 .section        .text._start_rom,"ax",%progbits
 _start_rom:
@@ -56,39 +56,30 @@ _start:
     bx          r0
 
 .thumb
-    @ .iwram section
-    ldr         r0, =__iwram_vma
-    ldr         r1, =__iwram_lma
+    @ IWRAM segment
     ldr         r2, =__iwram_len
     cmp         r2, 0
     beq         1f
+    ldr         r0, =__iwram_vma
+    ldr         r1, =__iwram_lma
     bl          memcpy
 1:
 
-    @ .ewram section
-    ldr         r0, =__ewram_vma
-    ldr         r1, =__ewram_lma
+    @ EWRAM segment
     ldr         r2, =__ewram_len
     cmp         r2, 0
     beq         1f
+    ldr         r0, =__ewram_vma
+    ldr         r1, =__ewram_lma
     bl          memcpy
 1:
 
-    @ .vram section
-    ldr         r0, =__vram_vma
-    ldr         r1, =__vram_lma
+    @ VRAM segment
     ldr         r2, =__vram_len
     cmp         r2, 0
     beq         1f
-    bl          memcpy
-1:
-
-    @ .data section
-    ldr         r0, =__data_vma
-    ldr         r1, =__data_lma
-    ldr         r2, =__data_len
-    cmp         r2, 0
-    beq         1f
+    ldr         r0, =__vram_vma
+    ldr         r1, =__vram_lma
     bl          memcpy
 1:
 
@@ -99,11 +90,11 @@ _start:
     bne         1f
     movs        r0, 1
     strb        r0, [r3]
-    ldr         r0, =__persistent_vma
-    ldr         r1, =__persistent_lma
     ldr         r2, =__persistent_len
     cmp         r2, 0
     beq         1f
+    ldr         r0, =__persistent_vma
+    ldr         r1, =__persistent_lma
     bl          memcpy
 1:
 
@@ -124,11 +115,6 @@ _start:
     movs        r1, 0
     ldr         r2, =__vram_bss_len
     bl          memset
-
-    @ .bss section
-    ldr         r0, =__bss_vma
-    movs        r1, 0
-    ldr         r2, =__bss_len
 
     bl          _start_lang
 

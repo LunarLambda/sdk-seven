@@ -14,9 +14,9 @@ add_library(minrt STATIC
     src/c/fini.c
     src/c/init.c
     src/c/start.c
-    src/gba/crt0.s
     src/gba/ram.c
     src/gba/rom_header.s
+    src/gba/rt0.s
 )
 
 target_include_directories(minrt PUBLIC include/)

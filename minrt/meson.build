@@ -10,8 +10,8 @@ sources_rs = [
 ]
 
 sources = [
-  'src/gba/crt0.s',
   'src/gba/ram.c',
+  'src/gba/rt0.s',
 ]
 
 lang = get_option('minrt_lang')

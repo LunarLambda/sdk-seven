@@ -139,6 +139,11 @@ SECTIONS
                 *(.data .data.* .gnu.linkonce.d.*)
         } >DATA_REGION AT>LOAD_REGION :DATA
 
+
+        .iwram_init_end : {} >IWRAM
+        .ewram_init_end : {} >EWRAM
+        .vram_init_end : {} >VRAM
+
         /* Persistent data */
 
         .persistent :
@@ -176,6 +181,10 @@ SECTIONS
                 *(.bss .bss.* .gnu.linkonce.b.*)
                 *(COMMON)
         } >BSS_REGION :NONE
+
+        .iwram_bss_end : {} >IWRAM
+        .ewram_bss_end : {} >EWRAM
+        .vram_bss_end : {} >VRAM
 
         /* Persistent zero-initialized data */
 
@@ -267,44 +276,34 @@ SECTIONS
 
         __iwram_vma = ADDR(.iwram);
         __iwram_lma = LOADADDR(.iwram);
-        __iwram_len = SIZEOF(.iwram);
+        __iwram_len = ADDR(.iwram_init_end) - ORIGIN(IWRAM);
 
         __iwram_overlay = ADDR(.iwram0);
 
         __ewram_vma = ADDR(.ewram);
         __ewram_lma = LOADADDR(.ewram);
-        __ewram_len = SIZEOF(.ewram);
+        __ewram_len = ADDR(.ewram_init_end) - ORIGIN(EWRAM);
 
         __ewram_overlay = ADDR(.ewram0);
 
         __vram_vma = ADDR(.vram);
         __vram_lma = LOADADDR(.vram);
-        __vram_len = SIZEOF(.vram);
+        __vram_len = ADDR(.vram_init_end) - ORIGIN(VRAM);
 
         __vram_overlay = ADDR(.vram0);
-
-        __data_vma = ADDR(.data);
-        __data_lma = LOADADDR(.data);
-        __data_len = SIZEOF(.data);
 
         __persistent_vma = ADDR(.persistent);
         __persistent_lma = LOADADDR(.persistent);
         __persistent_len = SIZEOF(.persistent);
 
         __iwram_bss_vma = ADDR(.iwram_bss);
-        __iwram_bss_len = SIZEOF(.iwram_bss);
+        __iwram_bss_len = ADDR(.iwram_bss_end) - ADDR(.iwram_bss);
 
         __ewram_bss_vma = ADDR(.ewram_bss);
-        __ewram_bss_len = SIZEOF(.ewram_bss);
+        __ewram_bss_len = ADDR(.ewram_bss_end) - ADDR(.ewram_bss);
 
         __vram_bss_vma = ADDR(.vram_bss);
-        __vram_bss_len = SIZEOF(.vram_bss);
-
-        __bss_vma = ADDR(.bss);
-        __bss_len = SIZEOF(.bss);
-
-        __noinit_vma = ADDR(.noinit);
-        __noinit_len = SIZEOF(.noinit);
+        __vram_bss_len = ADDR(.vram_bss_end) - ADDR(.vram_bss);
 
         __load = ORIGIN(LOAD_REGION);
         __load_end = ADDR(.load_end);
