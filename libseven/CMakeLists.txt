@@ -6,6 +6,12 @@
 
 cmake_minimum_required(VERSION 3.0)
 
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+    # Default to MinSizeRel build type
+    set(CMAKE_BUILD_TYPE "MinSizeRel" CACHE STRING "Choose the type of build." FORCE)
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif()
+
 project(libseven C ASM)
 set(CMAKE_INCLUDE_FLAG_ASM "-Wa,-I")
 
@@ -39,8 +45,10 @@ target_compile_options(seven PRIVATE
 # Allow the string "libseven" as a parameter for target_link_libraries
 add_library(libseven ALIAS seven)
 
-if(EXISTS $ENV{DEVKITPRO})
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT AND EXISTS $ENV{DEVKITPRO})
     file(TO_CMAKE_PATH "$ENV{DEVKITPRO}" ENV_DEVKITPRO)
-    install(TARGETS seven DESTINATION "${ENV_DEVKITPRO}/libseven/lib")
-    install(DIRECTORY include/ DESTINATION "${ENV_DEVKITPRO}/libseven/include")
+    set(CMAKE_INSTALL_PREFIX "${ENV_DEVKITPRO}/libseven" CACHE PATH "..." FORCE)
 endif()
+
+install(TARGETS seven LIBRARY DESTINATION lib)
+install(DIRECTORY include/ DESTINATION include)
