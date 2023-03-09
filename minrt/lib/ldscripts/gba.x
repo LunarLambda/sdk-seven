@@ -56,26 +56,6 @@ SECTIONS
                 *(.iwram .iwram.*)
         } >IWRAM AT>LOAD_REGION :IWRAM
 
-        OVERLAY : NOCROSSREFS
-        {
-                .iwram0 { *(.iwram0 .iwram0.*) }
-                .iwram1 { *(.iwram1 .iwram1.*) }
-                .iwram2 { *(.iwram2 .iwram2.*) }
-                .iwram3 { *(.iwram3 .iwram3.*) }
-                .iwram4 { *(.iwram4 .iwram4.*) }
-                .iwram5 { *(.iwram5 .iwram5.*) }
-                .iwram6 { *(.iwram6 .iwram6.*) }
-                .iwram7 { *(.iwram7 .iwram7.*) }
-                .iwram8 { *(.iwram8 .iwram8.*) }
-                .iwram9 { *(.iwram9 .iwram9.*) }
-                .iwramA { *(.iwramA .iwramA.*) }
-                .iwramB { *(.iwramB .iwramB.*) }
-                .iwramC { *(.iwramC .iwramC.*) }
-                .iwramD { *(.iwramD .iwramD.*) }
-                .iwramE { *(.iwramE .iwramE.*) }
-                .iwramF { *(.iwramF .iwramF.*) }
-        } >IWRAM AT>LOAD_REGION
-
         /* EWRAM code/data */
 
         .ewram :
@@ -83,26 +63,6 @@ SECTIONS
                 *(SORT(.ewram.sorted.*))
                 *(.ewram .ewram.*)
         } >EWRAM AT>LOAD_REGION :EWRAM
-
-        OVERLAY : NOCROSSREFS
-        {
-                .ewram0 { *(.ewram0 .ewram0.*) }
-                .ewram1 { *(.ewram1 .ewram1.*) }
-                .ewram2 { *(.ewram2 .ewram2.*) }
-                .ewram3 { *(.ewram3 .ewram3.*) }
-                .ewram4 { *(.ewram4 .ewram4.*) }
-                .ewram5 { *(.ewram5 .ewram5.*) }
-                .ewram6 { *(.ewram6 .ewram6.*) }
-                .ewram7 { *(.ewram7 .ewram7.*) }
-                .ewram8 { *(.ewram8 .ewram8.*) }
-                .ewram9 { *(.ewram9 .ewram9.*) }
-                .ewramA { *(.ewramA .ewramA.*) }
-                .ewramB { *(.ewramB .ewramB.*) }
-                .ewramC { *(.ewramC .ewramC.*) }
-                .ewramD { *(.ewramD .ewramD.*) }
-                .ewramE { *(.ewramE .ewramE.*) }
-                .ewramF { *(.ewramF .ewramF.*) }
-        } >EWRAM AT>LOAD_REGION
 
         /* VRAM code/data */
 
@@ -112,26 +72,6 @@ SECTIONS
                 *(.vram .vram.*)
         } >VRAM AT>LOAD_REGION :VRAM
 
-        OVERLAY : NOCROSSREFS
-        {
-                .vram0 { *(.vram0 .vram0.*) }
-                .vram1 { *(.vram1 .vram1.*) }
-                .vram2 { *(.vram2 .vram2.*) }
-                .vram3 { *(.vram3 .vram3.*) }
-                .vram4 { *(.vram4 .vram4.*) }
-                .vram5 { *(.vram5 .vram5.*) }
-                .vram6 { *(.vram6 .vram6.*) }
-                .vram7 { *(.vram7 .vram7.*) }
-                .vram8 { *(.vram8 .vram8.*) }
-                .vram9 { *(.vram9 .vram9.*) }
-                .vramA { *(.vramA .vramA.*) }
-                .vramB { *(.vramB .vramB.*) }
-                .vramC { *(.vramC .vramC.*) }
-                .vramD { *(.vramD .vramD.*) }
-                .vramE { *(.vramE .vramE.*) }
-                .vramF { *(.vramF .vramF.*) }
-        } >VRAM AT>LOAD_REGION
-
         /* Standard data */
 
         .data :
@@ -139,10 +79,9 @@ SECTIONS
                 *(.data .data.* .gnu.linkonce.d.*)
         } >DATA_REGION AT>LOAD_REGION :DATA
 
-
-        .iwram_init_end : {} >IWRAM
-        .ewram_init_end : {} >EWRAM
-        .vram_init_end : {} >VRAM
+        .iwram_data_end : {} >IWRAM
+        .ewram_data_end : {} >EWRAM
+        .vram_data_end : {} >VRAM
 
         /* Persistent data */
 
@@ -276,21 +215,15 @@ SECTIONS
 
         __iwram_vma = ADDR(.iwram);
         __iwram_lma = LOADADDR(.iwram);
-        __iwram_len = ADDR(.iwram_init_end) - ORIGIN(IWRAM);
-
-        __iwram_overlay = ADDR(.iwram0);
+        __iwram_len = ADDR(.iwram_data_end) - ADDR(.iwram);
 
         __ewram_vma = ADDR(.ewram);
         __ewram_lma = LOADADDR(.ewram);
-        __ewram_len = ADDR(.ewram_init_end) - ORIGIN(EWRAM);
-
-        __ewram_overlay = ADDR(.ewram0);
+        __ewram_len = ADDR(.ewram_data_end) - ADDR(.ewram);
 
         __vram_vma = ADDR(.vram);
         __vram_lma = LOADADDR(.vram);
-        __vram_len = ADDR(.vram_init_end) - ORIGIN(VRAM);
-
-        __vram_overlay = ADDR(.vram0);
+        __vram_len = ADDR(.vram_data_end) - ADDR(.vram);
 
         __persistent_vma = ADDR(.persistent);
         __persistent_lma = LOADADDR(.persistent);

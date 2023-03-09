@@ -8,7 +8,7 @@
 .cpu            arm7tdmi
 
 .section        .pad,"aR",%progbits
-.string         "minrt 0.8.1"
+.string         "minrt 0.9.0"
 
 .section        .text._start_rom,"ax",%progbits
 _start_rom:
