@@ -38,13 +38,13 @@ extern void irqInitDefault(void)
     irqInit(isrDefault);
 }
 
-extern void irqInitSimple(IrqHandlerFn *handler)
+extern void irqInitMinimal(IrqHandlerFn *handler)
 {
     REG_IME = 0;
 
-    ISR_SIMPLE_HANDLER = handler;
+    ISR_MINIMAL_HANDLER = handler;
 
-    irqInit(isrSimple);
+    irqInit(isrMinimal);
 }
 
 extern void irqInitStub(void)
