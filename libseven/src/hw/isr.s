@@ -15,233 +15,85 @@
 .equiv OFF_IE_IME,      REG_IME - REG_IE
 .equiv OFF_IE_IFBIOS,   REG_IFBIOS - REG_IE
 
+@ r0: REG_BASE
+@ r1: Interrupt flag
+@ r2: <scratch>
+@ r3: Handler function
 fn isrDefault arm
-    @ Post-increment so we can reach IF
-    ldr         r1, [r0, OFF_IE]!               @ 3
-    and         r1, r1, r1, lsr 16              @ 4
+    @ Read IE & IF
+    ldr         r1, [r0, OFF_IE]!                               @ 3
+    and         r1, r1, r1, lsr 16                              @ 4
 
-    @ Isolate lowest set bit, that's the one we'll handle
-    rsb         r2, r1, 0                       @ 5
-    and         r1, r1, r2                      @ 6
+    @ Handle the lowest set IRQ
+    rsb         r2, r1, 0                                       @ 5
+    and         r1, r1, r2                                      @ 6
 
     @ Acknowlegde IF
-    strh        r1, [r0, OFF_IE_IF]             @ 8
+    strh        r1, [r0, OFF_IE_IF]                             @ 8
 
-    @ This little dance leaves us with REG_BASE back in r1,
-    @ and also lets us write only to IFBIOS,
-    @ just in case that could ever be a correctness issue.
-    ldr         r2, [r0, OFF_IE_IFBIOS]!        @ 11
-    orr         r2, r2, r1                      @ 12
-    strh        r2, [r0], 8                     @ 14
+    @ Acknowledge IFBIOS
+    ldr         r2, [r0, OFF_IE_IFBIOS]!                        @ 11
+    orr         r2, r2, r1                                      @ 12
+    strh        r2, [r0], 8                                     @ 14
 
-    @ Lookup the IRQ-flag in the handler table using a 16-bit Debruijn sequence.
-    mov         r2, 0x09000000                  @ 15
-    add         r2, r2, 0xAF0000                @ 16
+    @ Lookup the IRQ handler using a 16-bit Debruijn sequence
+    mov         r0, 0x09000000                                  @ 15
+    add         r0, r0, 0xAF0000                                @ 16
+    mul         r2, r0, r1                                      @ 18/19
+    lsr         r2, r2, 28                                      @ 20
 
-    @ Faster to do r2 * r0 than r0 * r2
-    @ This is because the ARM7 has a 32x8 multiplier.
-    @ So the number of used bytes in the second operand
-    @ determines the number of cycles taken to do the multiply.
-    @
-    @ The ARM ARM says "it is believed" to be valid to make Rd = Rn, although
-    @ it used to be marked as UNPREDICTABLE.
-    @ (THUMB-mode muls forces Rd = Rn anyway?)
-    mul         r0, r2, r1                      @ 18/19
-    lsr         r0, r0, 28                      @ 20
-    adr         r1, ISR_DEFAULT_HANDLERS        @ 21
-    ldr         r1, [r1, r0, lsl 2]             @ 24
+    @ Load handler
+    adr         r3, ISR_DEFAULT_HANDLERS                        @ 21
+    ldr         r3, [r3, r2, lsl 2]                             @ 24
+    cmp         r3, 0                                           @ 25
+    bxeq        lr                                              @ 26
 
-    @ Exit if NULL
-    cmp         r1, 0                           @ 25
-    bxeq        lr                              @ 26
+    @ Enable nesting
+    mrs         r2, spsr                                        @ 27
+    push        {r2, lr}                                        @ 30
 
-    mrs         r2, spsr
-    push        {r2, lr}
-    mov         lr, pc
-    bx          r1                              @ 29+
-    pop         {r2, lr}
-    msr         spsr, r2
-    bx          lr
+    @ Call
+    mov         r0, r1                                          @ 31
+    mov         lr, pc                                          @ 32
+    bx          r3                                              @ 35
 
-@ 0000  0 VBLANK
-@ 0001  1 HBLANK
-@ 0010  2 VCOUNT
-@ 0011  5 TIMER2
-@ 0100  3 TIMER0
-@ 0101  9 DMA1
-@ 0110  6 TIMER3
-@ 0111 11 DMA3
-@ 1000 15 NONE
-@ 1001  4 TIMER1
-@ 1010  8 DMA0
-@ 1011 10 DMA2
-@ 1100 14 NONE
-@ 1101  7 SERIAL
-@ 1110 13 CART
-@ 1111 12 KEY
+    @ Return
+    pop         {r2, lr}                                        @ 39
+    msr         spsr, r2                                        @ 40
+    bx          lr                                              @ 43
 data ISR_DEFAULT_HANDLERS global .inline=1
     .fill       16, 4, 0
 endd
 endfn
 
+@ r0: REG_BASE
+@ r1: Interrupt flag
+@ r2: <scratch>
+@ r3: Handler function
 fn isrMinimal arm
-    mov         r1, #REG_BASE
+    @ Read IE & IF
+    ldr         r1, [r0, #OFF_IE]!                              @ 3
+    and         r1, r1, r1, lsr #16                             @ 4
 
-    @ Get IE & IF
-    ldr         r0, [r1, #OFF_IE]!
-    and         r0, r0, r0, lsr #16
+    @ Acknowledge IF
+    strh        r1, [r0, #OFF_IE_IF]                            @ 6
 
-    @ Ack IF
-    strh        r0, [r1, #OFF_IE_IF]
+    @ Acknowledge IFBIOS
+    ldr         r2, [r0, #OFF_IE_IFBIOS]!                       @ 9
+    orr         r2, r2, r1                                      @ 10
+    strh        r2, [r0], 8                                     @ 12
 
-    @ Ack IFBIOS
-    ldr         r2, [r1, #OFF_IE_IFBIOS]
-    orr         r2, r2, r0
-    str         r2, [r1, #OFF_IE_IFBIOS]
+    @ Load handler
+    ldr         r3, ISR_MINIMAL_HANDLER                         @ 15
+    cmp         r3, 0                                           @ 16
+    bxeq        lr                                              @ 17 / 19 (exit)
 
-    ldr         r2, ISR_SIMPLE_HANDLER
-    cmp         r2, 0
-    bxeq        lr
-    bx          r2
+    @ Call
+    mov         r0, r1                                          @ 18
+    bx          r3                                              @ 21
 data ISR_MINIMAL_HANDLER global .inline=1
     .word       0
 endd
-endfn
-
-.macro reg_ie_offset val
-    .hword \val - OFF_IE
-.endm
-
-rodata IRQ_SOURCES .align=2
-    .hword 0x0008; reg_ie_offset 0x0004 @ LCD V-Blank, DISPSTAT
-    .hword 0x0010; reg_ie_offset 0x0004 @ LCD H-Blank, DISPSTAT
-    .hword 0x0020; reg_ie_offset 0x0004 @ LCD V-Count, DISPSTAT
-    .hword 0x0040; reg_ie_offset 0x0102 @ Timer 0,     TM0CNT
-    .hword 0x0040; reg_ie_offset 0x0106 @ Timer 1,     TM1CNT
-    .hword 0x0040; reg_ie_offset 0x010A @ Timer 2,     TM2CNT
-    .hword 0x0040; reg_ie_offset 0x010E @ Timer 3,     TM3CNT
-    .hword 0x4000; reg_ie_offset 0x0128 @ Serial IO,   SIOCNT
-    .hword 0x4000; reg_ie_offset 0x00BA @ DMA 0,       DMA0CNT
-    .hword 0x4000; reg_ie_offset 0x00C6 @ DMA 1,       DMA1CNT
-    .hword 0x4000; reg_ie_offset 0x00D2 @ DMA 2,       DMA2CNT
-    .hword 0x4000; reg_ie_offset 0x00DE @ DMA 3,       DMA3CNT
-    .hword 0x4000; reg_ie_offset 0x0132 @ Keypad,      KEYCNT
-    .hword 0x0000; reg_ie_offset 0x0000 @ Cartridge,   -
-endr
-
-@ u16 irqEnableFull(u16 irqs)
-@
-@ r0    REG_IE (previous)
-@ r1    &REG_IE
-@ r2    REG_IME
-@ r3    REG_IE (new)
-@
-@ In loop:
-@
-@ r0    irqs
-@ r1    REG_IE
-@ r2    Register flag
-@ r3    IRQ_SOURCES
-@ r4    Register offset from IE
-@ r5    Register value
-fn irqEnableFull thumb
-    @ irqs &= IRQ_MASK;
-    lsls        r0, r0, #19
-    lsrs        r0, r0, #19
-
-    @ REG_IME = 0;
-    ldr         r1, =REG_IE
-    ldrh        r2, [r1, #OFF_IE_IME]
-    strh        r1, [r1, #OFF_IE_IME]
-
-    push        {r0, r2, r4, r5}
-
-    ldr         r3, =IRQ_SOURCES
-
-.Lief_loop:
-    lsrs        r0, r0, #1
-    bcc         .Lief_continue
-
-    @ load from table
-    ldr         r2, [r3]
-    @ sign extend offset into r4
-    asrs        r4, r2, #16
-
-    ldrh        r5, [r1, r4]
-    orrs        r5, r5, r2
-    strh        r5, [r1, r4]
-
-.Lief_continue:
-    adds        r3, r3, #4
-    cmp         r0, #0
-    bne         .Lief_loop
-
-.Lief_break:
-    pop         {r0, r2, r4, r5}
-
-    movs        r3, r0
-    ldrh        r0, [r1]
-    orrs        r3, r3, r0
-    strh        r3, [r1]
-
-    strh        r2, [r1, #OFF_IE_IME]
-    bx          lr
-endfn
-
-@ u16 irqDisableFull(u16 irqs)
-@
-@ r0    REG_IE (previous)
-@ r1    &REG_IE
-@ r2    REG_IME
-@ r3    REG_IE (new)
-@
-@ In loop:
-@
-@ r0    irqs
-@ r1    &REG_IE
-@ r2    Register flag
-@ r3    IRQ_SOURCES
-@ r4    Register offset
-@ r5    Register value
-fn irqDisableFull thumb
-    @ irqs &= IRQ_MASK;
-    lsls        r0, r0, #19
-    lsrs        r0, r0, #19
-
-    @ REG_IME = 0;
-    ldr         r1, =REG_IE
-    ldrh        r2, [r1, #OFF_IE_IME]
-    strh        r1, [r1, #OFF_IE_IME]
-
-    push        {r0, r2, r4, r5}
-
-    ldr         r3, =IRQ_SOURCES
-.Lidf_loop:
-    lsrs        r0, r0, #1
-    bcc         .Lidf_continue
-
-    ldr         r2, [r3]
-    asrs        r4, r2, #16
-
-    ldrh        r5, [r1, r4]
-    bics        r5, r5, r2
-    strh        r5, [r1, r4]
-
-.Lidf_continue:
-    adds        r3, r3, #4
-    cmp         r0, #0
-    bne         .Lidf_loop
-
-.Lidf_break:
-    pop         {r0, r2, r4, r5}
-
-    mvns        r3, r0
-    ldrh        r0, [r1]
-    ands        r3, r3, r0
-    strh        r3, [r1]
-
-    strh        r2, [r1, #OFF_IE_IME]
-    bx          lr
 endfn
 
 @ vim: ft=armv4 et sta sw=4 sts=8

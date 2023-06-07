@@ -12,11 +12,12 @@ int main(void)
 {
     // Set up the necessary interrupt handling
     irqInitDefault();
-    irqEnableFull(IRQ_VBLANK);
+    irqEnable(IRQ_VBLANK);
     irqHandlerSet(IRQ_VBLANK, vblank_callback);
 
     // Clear the force-blank bit
     REG_DISPCNT = 0;
+    REG_DISPSTAT = LCD_VBLANK_IRQ_ENABLE;
 
     while (1)
     {

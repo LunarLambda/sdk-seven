@@ -1,16 +1,17 @@
 project('sdk-seven', 'c',
-  version: '0.21.0',
+  version: '0.22.0',
   license: 'Zlib',
   meson_version: '>=0.59.0',
   default_options: ['warning_level=2', 'c_std=c99'])
 
-libseven_version = '0.17.2'
+libseven_version = '0.18.0'
 minrt_version = '0.9.0'
 
 cflags = [
   '-mthumb',
   '-ffunction-sections',
   '-fdata-sections',
+  '-masm-syntax-unified'
 ]
 
 ldflags = [

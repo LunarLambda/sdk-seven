@@ -105,13 +105,7 @@ extern void irqInitDefault(void);
 
 // Initialize interrupt handling using a single handler function.
 //
-extern void irqInitSimple(IrqHandlerFn *fn);
-
-// Initialize interrupt handling using a stub handler
-// that only acknowledges the IRQs and returns.
-//
-// This is enough for the BIOS interrupt wait functions to work.
-extern void irqInitStub(void);
+extern void irqInitMinimal(IrqHandlerFn *fn);
 
 // Set the handler associated with the specified irq.
 //
@@ -150,5 +144,14 @@ extern uint16_t irqDisableFull(uint16_t irqs);
 
 // Calls a function with IRQs disabled, passing data as an argument.
 extern void irqFree(void (*f)(void*), void *arg);
+
+// Mask IRQs at the CPU level.
+extern void irqMask(void);
+
+// Unmask IRQs at the CPU level. Used for enabling nested interrupts.
+extern void irqUnmask(void);
+
+// Returns whether IRQs are masked at the CPU level.
+extern bool irqMasked(void);
 
 _LIBSEVEN_EXTERN_C_END

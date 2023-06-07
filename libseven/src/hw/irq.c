@@ -8,11 +8,10 @@
 #include <seven/hw/irq.h>
 
 extern IsrFn isrDefault;
-extern IsrFn isrSimple;
-extern IsrFn isrStub;
+extern IsrFn isrMinimal;
 
-extern IrqHandlerFn* ISR_SIMPLE_HANDLER;
-extern IrqHandlerFn* ISR_DEFAULT_HANDLERS[16];
+extern IrqHandlerFn *ISR_MINIMAL_HANDLER;
+extern IrqHandlerFn *ISR_DEFAULT_HANDLERS[16];
 
 extern void irqInit(IsrFn *isr)
 {
@@ -23,7 +22,6 @@ extern void irqInit(IsrFn *isr)
     MEM_ISR = isr;
 
     REG_IME = 1;
-    return;
 }
 
 extern void irqInitDefault(void)
@@ -45,11 +43,6 @@ extern void irqInitMinimal(IrqHandlerFn *handler)
     ISR_MINIMAL_HANDLER = handler;
 
     irqInit(isrMinimal);
-}
-
-extern void irqInitStub(void)
-{
-    irqInit(isrStub);
 }
 
 extern bool irqHandlerSet(uint16_t irq, IrqHandlerFn *fn)
@@ -118,7 +111,7 @@ extern uint16_t irqDisable(uint16_t irqs)
     return old;
 }
 
-extern void irqFree(void (*f)(void*), void *arg)
+extern void irqFree(void (*f)(void *), void *arg)
 {
     uint32_t ime = REG_IME;
     REG_IME = 0;
@@ -126,6 +119,41 @@ extern void irqFree(void (*f)(void*), void *arg)
     f(arg);
 
     REG_IME = ime;
+}
 
-    return;
+_LIBSEVEN_ARM_FN extern void irqMask(void)
+{
+    __asm__ volatile
+    (
+        "mrs r0, cpsr\n"
+        "orr r0, r0, 0x80\n"
+        "msr cpsr_c, r0\n"
+        ::: "r0"
+    );
+}
+
+_LIBSEVEN_ARM_FN extern void irqUnmask(void)
+{
+    __asm__ volatile
+    (
+        "mrs r0, cpsr\n"
+        "bic r0, r0, 0x80\n"
+        "msr cpsr_c, r0\n"
+        ::: "r0"
+    );
+}
+
+_LIBSEVEN_ARM_FN extern bool irqMasked(void)
+{
+    bool masked;
+
+    __asm__ volatile
+    (
+        "mrs %0, cpsr\n"
+        "lsr %0, %0, 7\n"
+        "and %0, %0, 1\n"
+        : "=r"(masked)
+    );
+
+    return masked;
 }
