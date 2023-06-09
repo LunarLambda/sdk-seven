@@ -44,4 +44,4 @@ HardReset               | 38         | ✔️          | Undocumented, resets ba
 ?                       | 39         | ❌          | Undocumented, used internally by Stop/Halt
 SoundDriverVSyncOff     | 40         | ✔️          |
 SoundDriverVSyncOn      | 41         | ✔️          |
-?                       | 42         | ❌          | Undocumented, copies pointers to sound related functions
+?                       | 42         | ❌          | Undocumented, copies pointers to sound-related functions
