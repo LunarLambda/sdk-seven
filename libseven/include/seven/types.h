@@ -66,7 +66,7 @@ typedef uintptr_t       uptr;
 #define USIZE_BITS      (CHAR_BIT * sizeof(usize))
 #define UPTR_BITS       (CHAR_BIT * sizeof(uptr))
 
-#ifndef _LIBSEVEN_NOCOMPATIBLE
+#ifdef LIBSEVEN_COMPATIBLE
 
 typedef i8              s8;
 typedef i16             s16;
@@ -96,4 +96,4 @@ typedef iptr            sptr;
 #define SSIZE_BITS      ISIZE_BITS
 #define SPTR_BITS       IPTR_BITS
 
-#endif /* !_LIBSEVEN_NOCOMPATIBLE */
+#endif /* LIBSEVEN_COMPATIBLE */

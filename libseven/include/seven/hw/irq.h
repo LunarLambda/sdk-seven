@@ -10,10 +10,6 @@
 
 _LIBSEVEN_EXTERN_C
 
-// Attribute for compiling functions in a way that is suitable for ISRs.
-//
-#define ISR_FUNCTION    IWRAM_CODE ARM_CODE
-
 // Interrupt Enable
 //
 #define REG_IE          VOLADDR(0x04000200, uint16_t)
@@ -28,11 +24,14 @@ _LIBSEVEN_EXTERN_C
 
 // Interrupt Service Routine Function Pointer
 //
-#define MEM_ISR         MEMADDR(0x03FFFFFC, IsrFn*)
+#define MEM_ISR         VOLADDR(0x03FFFFFC, IsrFn*)
+
+// Interrupt Flags used by BIOS
+#define MEM_IFBIOS      VOLADDR(0x03FFFFF8, uint16_t)
 
 // IRQ bitflags
 //
-enum IRQ
+enum IRQFlag
 {
     IRQ_VBLANK          = BIT(0),
     IRQ_HBLANK          = BIT(1),
@@ -57,7 +56,7 @@ enum IRQGroup
     IRQS_BLANK          = IRQ_VBLANK  | IRQ_HBLANK,
     IRQS_TIMER          = IRQ_TIMER_0 | IRQ_TIMER_1 | IRQ_TIMER_2 | IRQ_TIMER_3,
     IRQS_DMA            = IRQ_DMA_0   | IRQ_DMA_1   | IRQ_DMA_2   | IRQ_DMA_3,
-    // IRQs in this group can wake up the GBA from a svcStop() call.
+    // IRQs in this group can wake up the GBA from biosStop().
     IRQS_EXTERNAL       = IRQ_SERIAL  | IRQ_KEYPAD  | IRQ_CARTRIDGE,
     IRQS_ALL            = BITS(14),
 };
@@ -101,17 +100,13 @@ extern void irqInit(IsrFn *isr);
 // Initialize interrupt handling using a handler system.
 //
 // Used with the irqHandler* functions.
+// Supports nesting by calling irqUnmask() inside a handler.
 extern void irqInitDefault(void);
 
-// Initialize interrupt handling using a single handler function.
+// Initialize interrupt handling using an optional, single handler function.
 //
-extern void irqInitSimple(IrqHandlerFn *fn);
-
-// Initialize interrupt handling using a stub handler
-// that only acknowledges the IRQs and returns.
-//
-// This is enough for the BIOS interrupt wait functions to work.
-extern void irqInitStub(void);
+// Does not support nesting by default.
+extern void irqInitMinimal(IrqHandlerFn *fn);
 
 // Set the handler associated with the specified irq.
 //
@@ -138,17 +133,16 @@ extern uint16_t irqEnable(uint16_t irqs);
 // Returns the old value of the IE register.
 extern uint16_t irqDisable(uint16_t irqs);
 
-// Enable the specified IRQs and IRQ enable bits in the respective IO registers.
-//
-// Returns the old value of the IE register.
-extern uint16_t irqEnableFull(uint16_t irqs);
-
-// Disable the specified IRQs and IRQ enable bits in the respective IO registers.
-//
-// Returns the old value of the IE register.
-extern uint16_t irqDisableFull(uint16_t irqs);
-
 // Calls a function with IRQs disabled, passing data as an argument.
-extern void irqFree(void (*f)(void*), void *arg);
+extern void irqFree(void (*f)(void *), void *arg);
+
+// Mask IRQs at the CPU level.
+extern void irqMask(void);
+
+// Unmask IRQs at the CPU level. Used for enabling nested interrupts.
+extern void irqUnmask(void);
+
+// Returns whether IRQs are masked at the CPU level.
+extern bool irqMasked(void);
 
 _LIBSEVEN_EXTERN_C_END
