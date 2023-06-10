@@ -3,6 +3,7 @@
 DIST=$PWD/dist
 
 make_dist() {
+    VERSION=$(grep "${PROJECT}_version" meson.build | cut -d"'" -f2)
     cd ${DIR:-$PROJECT}
     git archive -o $DIST/$PROJECT-$VERSION.zip \
         --prefix=$PROJECT-$VERSION/ --add-file=../LICENSE_MPL-2.0.txt --add-file=../LICENSE_CC0-1.0.txt HEAD .
@@ -12,5 +13,6 @@ make_dist() {
 
 [ ! -d "$DIST" ] && mkdir "$DIST" || rm "$DIST"/*
 
-(PROJECT=libseven VERSION=0.17.2 make_dist)
-(PROJECT=minrt VERSION=0.9.0 make_dist)
+for p in libseven minrt; do
+    (PROJECT="$p" make_dist)
+done
