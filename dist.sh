@@ -13,6 +13,6 @@ make_dist() {
 
 [ ! -d "$DIST" ] && mkdir "$DIST" || rm "$DIST"/*
 
-for p in libseven minrt; do
+for p in libseven minrt libutil; do
     (PROJECT="$p" make_dist)
 done

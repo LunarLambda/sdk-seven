@@ -10,6 +10,6 @@
 
 _LIBSEVEN_EXTERN_C
 
-#error "seven/util/overlay.h is a stub header"
+#error "util/memory.h is a stub header"
 
 _LIBSEVEN_EXTERN_C_END

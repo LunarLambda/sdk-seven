@@ -1,11 +1,12 @@
 project('sdk-seven', 'c',
-  version: '0.24.0',
+  version: '0.25.0',
   license: 'Zlib',
   meson_version: '>=0.59.0',
   default_options: ['warning_level=2', 'c_std=c99'])
 
-libseven_version = '0.20.0'
+libseven_version = '0.21.0'
 minrt_version = '0.9.0'
+libutil_version = '0.1.0'
 
 cflags = [
   '-mthumb',
@@ -56,6 +57,7 @@ add_project_link_arguments(ldflags, language: 'c')
 
 subdir('libseven')
 subdir('minrt')
+subdir('libutil')
 subdir('tools')
 
 if not meson.is_subproject()

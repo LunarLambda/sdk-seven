@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 #include <seven/hw/irq.h>
-#include <seven/util/assert.h>
+#include <util/assert.h>
 
 static struct {
     AssertHandlerFn *handler;

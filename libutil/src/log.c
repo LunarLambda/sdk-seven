@@ -4,7 +4,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-#include <seven/util/log.h>
+#include <util/log.h>
 
 typedef bool LogInitFn(void);
 typedef void LogOutputFn(uint8_t, const char *);

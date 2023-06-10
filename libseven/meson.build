@@ -6,15 +6,6 @@ sources = [
   'src/hw/isr.s',
   'src/hw/sram.s',
   'src/hw/timer.c',
-  'src/util/assert.c',
-  'src/util/bit.s',
-  'src/util/debug.s',
-  'src/util/log.c',
-  'src/util/mem.s',
-  'src/util/profile.s',
-  'src/util/rand.s',
-  'src/util/simd.s',
-  'src/util/str.s',
   'src/video/oam.s',
 ]
 
