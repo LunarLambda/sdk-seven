@@ -7,6 +7,7 @@
 #pragma once
 
 #include <seven/base.h>
+#include <seven/hw/bios.h>
 
 _LIBSEVEN_EXTERN_C
 
@@ -31,10 +32,20 @@ struct BgAffineDstData
     int32_t start_y;
 };
 
-extern void biosBgAffineSet(
+inline void biosBgAffineSet(
     const struct BgAffineSrcData *src,
     struct BgAffineDstData *dst,
-    uint32_t num);
+    uint32_t num)
+{
+    register const struct BgAffineSrcData *r0 __asm__("r0") = src;
+    register struct BgAffineDstData *r1 __asm__("r1") = dst;
+    register uint32_t r2 __asm__("r2") = num;
+
+    __asm__(_LIBSEVEN_INLINE_SWI
+            : "+r"(r0), "+r"(r1), "+r"(r2)
+            : [num]"I"(SWI_BGAFFINESET)
+            : "r3", "memory");
+}
 
 struct ObjAffineSrcData
 {
@@ -59,10 +70,21 @@ enum ObjAffineSetOffset
     OAS_OFFSET_OAM     = 8,
 };
 
-extern void biosObjAffineSet(
+inline void biosObjAffineSet(
         const struct ObjAffineSrcData *src,
         void *dst,
         uint32_t num,
-        uint32_t offset);
+        uint32_t offset)
+{
+    register const struct ObjAfineSrcData *r0 __asm__("r0") = src;
+    register void *r1 __asm__("r1") = dst;
+    register uint32_t r2 __asm__("r2") = num;
+    register uint32_t r3 __asm__("r3") = offset;
+
+    __asm__(_LIBSEVEN_INLINE_SWI
+            : "+r"(r0), "+r"(r1), "+r"(r2), "+r"(r3)
+            : [num]"I"(SWI_OBJAFFINESET)
+            : "memory");
+}
 
 _LIBSEVEN_EXTERN_C_END

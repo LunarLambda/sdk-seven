@@ -10,10 +10,34 @@
 
 _LIBSEVEN_EXTERN_C
 
-extern void biosSoundDriverMain(void);
-extern void biosSoundDriverVSync(void);
-extern void biosSoundChannelClear(void);
-extern void biosSoundDriverVSyncOff(void);
-extern void biosSoundDriverVSyncOn(void);
+inline void biosSoundDriverMain(void)
+{
+    __asm__(_LIBSEVEN_INLINE_SWI
+            :: [num]"I"(SWI_SOUNDDRIVERMAIN) : "r0", "r1", "r3");
+}
+
+inline void biosSoundDriverVSync(void)
+{
+    __asm__(_LIBSEVEN_INLINE_SWI
+            :: [num]"I"(SWI_SOUNDDRIVERVSYNC) : "r0", "r1", "r3");
+}
+
+inline void biosSoundChannelClear(void)
+{
+    __asm__(_LIBSEVEN_INLINE_SWI
+            :: [num]"I"(SWI_SOUNDCHANNELCLEAR) : "r0", "r1", "r3");
+}
+
+inline void biosSoundDriverVSyncOff(void)
+{
+    __asm__(_LIBSEVEN_INLINE_SWI
+            :: [num]"I"(SWI_SOUNDDRIVERVSYNCOFF) : "r0", "r1", "r3");
+}
+
+inline void biosSoundDriverVSyncOn(void)
+{
+    __asm__(_LIBSEVEN_INLINE_SWI
+            :: [num]"I"(SWI_SOUNDDRIVERVSYNCON) : "r0", "r1", "r3");
+}
 
 _LIBSEVEN_EXTERN_C_END
