@@ -7,11 +7,23 @@
 #pragma once
 
 #include <seven/base.h>
+#include <seven/hw/bios.h>
 
 _LIBSEVEN_EXTERN_C
 
-extern void _LIBSEVEN_NORETURN biosSoftReset(void);
-extern void _LIBSEVEN_NORETURN biosHardReset(void);
+inline void _LIBSEVEN_NORETURN biosSoftReset(void)
+{
+    __asm__(_LIBSEVEN_INLINE_SWI :: [num]"I"(SWI_SOFTRESET));
+
+    __builtin_unreachable();
+}
+
+inline void _LIBSEVEN_NORETURN biosHardReset(void)
+{
+    __asm__(_LIBSEVEN_INLINE_SWI :: [num]"I"(SWI_HARDRESET));
+
+    __builtin_unreachable();
+}
 
 enum SoftResetExFlags
 {
@@ -19,7 +31,7 @@ enum SoftResetExFlags
     SRE_FROM_RAM = 1,
 };
 
-// Combines biosRegisterRamReset and svcSoftReset
+// Combines biosRegisterRamReset and biosSoftReset
 // Allows reset from EWRAM, automatically unsets RRR_EWRAM
 // Disables IME to prevent IRQs crashing from a dangling handler
 extern void _LIBSEVEN_NORETURN biosSoftResetEx(uint8_t reset_flags, bool from_ewram);
@@ -37,6 +49,14 @@ enum RegisterRamResetFlags
     RRR_EVERYTHING      = BITS(8),
 };
 
-extern void biosRegisterRamReset(uint8_t reset_flags);
+inline void biosRegisterRamReset(uint8_t reset_flags)
+{
+    register uint8_t r0 __asm__("r0") = reset_flags;
+
+    __asm__(_LIBSEVEN_INLINE_SWI
+            : "+r"(r0)
+            : [num]"I"(SWI_REGISTERRAMRESET)
+            : "r1", "r3", "memory");
+}
 
 _LIBSEVEN_EXTERN_C_END

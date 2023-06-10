@@ -29,7 +29,7 @@ swi_impl biosArcTan                9
 swi_impl biosArcTan2              10
 swi_impl biosCpuSet               11
 swi_impl biosCpuFastSet           12
-swi_impl biosBiosChecksum         13
+swi_impl biosChecksum             13
 swi_impl biosBgAffineSet          14
 swi_impl biosObjAffineSet         15
 swi_impl biosBitUnPack            16
