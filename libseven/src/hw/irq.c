@@ -129,7 +129,7 @@ extern void irqFree(void (*f)(void *), void *arg)
     REG_IME = ime;
 }
 
-_LIBSEVEN_ARM_FN extern void irqMask(void)
+_LIBSEVEN_TARGET_ARM extern void irqMask(void)
 {
     __asm__ volatile
     (
@@ -140,7 +140,7 @@ _LIBSEVEN_ARM_FN extern void irqMask(void)
     );
 }
 
-_LIBSEVEN_ARM_FN extern void irqUnmask(void)
+_LIBSEVEN_TARGET_ARM extern void irqUnmask(void)
 {
     __asm__ volatile
     (
@@ -151,7 +151,7 @@ _LIBSEVEN_ARM_FN extern void irqUnmask(void)
     );
 }
 
-_LIBSEVEN_ARM_FN extern bool irqMasked(void)
+_LIBSEVEN_TARGET_ARM extern bool irqMasked(void)
 {
     bool masked;
 

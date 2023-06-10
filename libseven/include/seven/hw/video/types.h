@@ -23,7 +23,7 @@ struct Matrix
     int16_t vdx; // vertical shearing factor
     int16_t hdy; // horizontal shearing factor
     int16_t vdy; // vertical scaling factor
-} _LIBSEVEN_ALIGN4;
+} _LIBSEVEN_ALIGNED;
 
 struct Object
 {
@@ -31,6 +31,6 @@ struct Object
     uint16_t attr1;
     uint16_t attr2;
     uint16_t _reserved;
-} _LIBSEVEN_ALIGN4;
+} _LIBSEVEN_ALIGNED;
 
 _LIBSEVEN_EXTERN_C_END

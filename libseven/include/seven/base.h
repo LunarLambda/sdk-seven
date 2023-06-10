@@ -21,10 +21,10 @@
 #define _LIBSEVEN_STR(s) #s
 #define _LIBSEVEN_STR2(s) _LIBSEVEN_STR(s)
 
-#define _LIBSEVEN_ARM_FN __attribute__((__target__("arm"))) _LIBSEVEN_NOINLINE
+#define _LIBSEVEN_TARGET_ARM __attribute__((__target__("arm"), __noinline__))
 #define _LIBSEVEN_NOINLINE __attribute__((__noinline__))
 #define _LIBSEVEN_NORETURN __attribute__((__noreturn__))
-#define _LIBSEVEN_ALIGN4 __attribute__((__aligned__(4)))
+#define _LIBSEVEN_ALIGNED __attribute__((__aligned__(4)))
 
 #define LIBSEVEN_VERSION_MAJOR 0
 #define LIBSEVEN_VERSION_MINOR 18
