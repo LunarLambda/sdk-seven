@@ -46,8 +46,8 @@ struct DMA
 
 enum DMAControl
 {
-    #define BF_DMA_DST_OFFSET 5
-    #define BF_DMA_DST_LENGTH 2
+    #define BF_DMA_DST_OFF 5
+    #define BF_DMA_DST_LEN 2
 
     #define DMA_DST(n) BITFIELD(DMA_DST, (n))
 
@@ -56,8 +56,8 @@ enum DMAControl
     DMA_DST_FIXED       = DMA_DST(2),
     DMA_DST_RELOAD      = DMA_DST(3),
 
-    #define BF_DMA_SRC_OFFSET 7
-    #define BF_DMA_SRC_LENGTH 2
+    #define BF_DMA_SRC_OFF 7
+    #define BF_DMA_SRC_LEN 2
 
     #define DMA_SRC(n) BITFIELD(DMA_SRC, (n))
 
@@ -70,8 +70,8 @@ enum DMAControl
     DMA_32BIT           = BIT(10),
     DMA_16BIT           = !DMA_32BIT,
 
-    #define BF_DMA_START_OFFSET 12
-    #define BF_DMA_START_LENGTH 2
+    #define BF_DMA_START_OFF 12
+    #define BF_DMA_START_LEN 2
 
     #define DMA_START(n) BITFIELD(DMA_START, (n))
 

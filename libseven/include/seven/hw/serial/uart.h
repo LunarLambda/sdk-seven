@@ -12,8 +12,8 @@ _LIBSEVEN_EXTERN_C
 
 enum SerialControlUART
 {
-    #define BF_UART_BAUD_OFFSET 0
-    #define BF_UART_BAUD_LENGTH 2
+    #define BF_UART_BAUD_OFF 0
+    #define BF_UART_BAUD_LEN 2
 
     #define UART_BAUD(n) BITFIELD(UART_BAUD, (n))
 

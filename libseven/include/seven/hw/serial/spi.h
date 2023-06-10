@@ -12,8 +12,8 @@ _LIBSEVEN_EXTERN_C
 
 enum SerialControlSPI
 {
-    #define BF_SPI_CLOCK_OFFSET 0
-    #define BF_SPI_CLOCK_LENGTH 2
+    #define BF_SPI_CLOCK_OFF 0
+    #define BF_SPI_CLOCK_LEN 2
 
     #define SPI_CLOCK(n) BITFIELD(SPI_CLOCK, (n))
 

@@ -12,18 +12,18 @@ _LIBSEVEN_EXTERN_C
 
 #define REG_WAITCNT             VOLADDR(0x04000204, uint16_t)
 
-#define BF_WAIT_SRAM_OFFSET     0
-#define BF_WAIT_SRAM_LENGTH     2
+#define BF_WAIT_SRAM_OFF     0
+#define BF_WAIT_SRAM_LEN     2
 
 #define WAIT_SRAM(n) BITFIELD(WAIT_SRAM, (n))
 
-#define BF_WAIT_ROM_N_OFFSET    2
-#define BF_WAIT_ROM_N_LENGTH    2
+#define BF_WAIT_ROM_N_OFF    2
+#define BF_WAIT_ROM_N_LEN    2
 
 #define WAIT_ROM_N(n) BITFIELD(WAIT_ROM_N, (n))
 
-#define BF_WAIT_ROM_S_OFFSET    4
-#define BF_WAIT_ROM_S_LENGTH    1
+#define BF_WAIT_ROM_S_OFF    4
+#define BF_WAIT_ROM_S_LEN    1
 
 #define WAIT_ROM_S(n) BITFIELD(WAIT_ROM_S, (n))
 

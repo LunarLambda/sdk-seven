@@ -12,8 +12,8 @@ _LIBSEVEN_EXTERN_C
 
 enum SerialControlMultiplayer
 {
-    #define BF_MULTI_BAUD_OFFSET 0
-    #define BF_MULTI_BAUD_LENGTH 2
+    #define BF_MULTI_BAUD_OFF 0
+    #define BF_MULTI_BAUD_LEN 2
 
     #define MULTI_BAUD(n) BITFIELD(MULTI_BAUD, (n))
 
@@ -26,8 +26,8 @@ enum SerialControlMultiplayer
 
     MULTI_READY_FLAG = BIT(3),
 
-    #define BF_MULTI_CLIENT_ID_OFFSET 4
-    #define BF_MULTI_CLIENT_ID_LENGTH 2
+    #define BF_MULTI_CLIENT_ID_OFF 4
+    #define BF_MULTI_CLIENT_ID_LEN 2
 
     MULTI_ERROR_FLAG = BIT(6),
 

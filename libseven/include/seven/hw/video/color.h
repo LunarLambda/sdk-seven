@@ -11,18 +11,18 @@
 
 _LIBSEVEN_EXTERN_C
 
-#define BF_COLOR_R_OFFSET 0
-#define BF_COLOR_R_LENGTH 5
+#define BF_COLOR_R_OFF 0
+#define BF_COLOR_R_LEN 5
 
 #define COLOR_R(n) BITFIELD(COLOR_R, (n))
 
-#define BF_COLOR_G_OFFSET 5
-#define BF_COLOR_G_LENGTH 5
+#define BF_COLOR_G_OFF 5
+#define BF_COLOR_G_LEN 5
 
 #define COLOR_G(n) BITFIELD(COLOR_G, (n))
 
-#define BF_COLOR_B_OFFSET 10
-#define BF_COLOR_B_LENGTH 5
+#define BF_COLOR_B_OFF 10
+#define BF_COLOR_B_LEN 5
 
 #define COLOR_B(n) BITFIELD(COLOR_B, (n))
 

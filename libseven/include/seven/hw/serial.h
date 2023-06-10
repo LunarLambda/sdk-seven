@@ -29,8 +29,8 @@ _LIBSEVEN_EXTERN_C
 
 enum SerialControl
 {
-    #define BF_SIO_MODE_OFFSET 12
-    #define BF_SIO_MODE_LENGTH 2
+    #define BF_SIO_MODE_OFF 12
+    #define BF_SIO_MODE_LEN 2
 
     #define SIO_MODE(n) BITFIELD(SIO_MODE, (n))
 
@@ -47,8 +47,8 @@ enum SerialControl
 
 enum RControl
 {
-    #define BF_R_MODE_OFFSET 14
-    #define BF_R_MODE_LENGTH 2
+    #define BF_R_MODE_OFF 14
+    #define BF_R_MODE_LEN 2
 
     #define R_MODE(n) BITFIELD(R_MODE, (n))
 

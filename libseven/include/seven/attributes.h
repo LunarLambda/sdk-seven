@@ -8,8 +8,6 @@
 
 #include <seven/base.h>
 
-#define _LIBSEVEN_COUNTER _LIBSEVEN_STR2(__COUNTER__)
-
 #define ALIGN(n)          __attribute__((__aligned__(n)))
 #define ARM_CODE          __attribute__((__target__("arm"))) NOINLINE
 #define NOINLINE          __attribute__((__noinline__))

@@ -29,8 +29,8 @@ enum LCDDimensions
 enum DisplayControl
 {
 
-    #define BF_VIDEO_MODE_OFFSET 0
-    #define BF_VIDEO_MODE_LENGTH 3
+    #define BF_VIDEO_MODE_OFF 0
+    #define BF_VIDEO_MODE_LEN 3
 
     #define VIDEO_MODE(n) BITFIELD(VIDEO_MODE, (n))
 
@@ -68,8 +68,8 @@ enum DisplayStatus
     LCD_HBLANK_IRQ_ENABLE = BIT(4),
     LCD_VCOUNT_IRQ_ENABLE = BIT(5),
 
-    #define BF_LCD_TARGET_VCOUNT_OFFSET 8
-    #define BF_LCD_TARGET_VCOUNT_LENGTH 8
+    #define BF_LCD_TARGET_VCOUNT_OFF 8
+    #define BF_LCD_TARGET_VCOUNT_LEN 8
 
     #define LCD_TARGET_VCOUNT(n) BITFIELD(LCD_TARGET_VCOUNT, (n))
 };
@@ -84,16 +84,16 @@ enum VerticalCount
 
 enum BackgroundControl
 {
-    #define BF_BG_PRIORITY_OFFSET 0
-    #define BF_BG_PRIORITY_LENGTH 2
+    #define BF_BG_PRIORITY_OFF 0
+    #define BF_BG_PRIORITY_LEN 2
 
     #define BG_PRIORITY(n) BITFIELD(BG_PRIORITY, (n))
 
     BG_PRIORITY_MIN          = BG_PRIORITY(3),
     BG_PRIORITY_MAX          = BG_PRIORITY(0),
 
-    #define BF_BG_GFX_BASE_OFFSET 2
-    #define BF_BG_GFX_BASE_LENGTH 2
+    #define BF_BG_GFX_BASE_OFF 2
+    #define BF_BG_GFX_BASE_LEN 2
 
     #define BG_GFX_BASE(n) BITFIELD(BG_GFX_BASE, (n))
 
@@ -102,15 +102,15 @@ enum BackgroundControl
     BG_TILE_8BPP             = BIT(7),
     BG_TILE_4BPP             = !BG_TILE_8BPP,
 
-    #define BF_BG_MAP_BASE_OFFSET 8
-    #define BF_BG_MAP_BASE_LENGTH 5
+    #define BF_BG_MAP_BASE_OFF 8
+    #define BF_BG_MAP_BASE_LEN 5
 
     #define BG_MAP_BASE(n) BITFIELD(BG_MAP_BASE, (n))
 
     BG_AFFINE_WRAP           = BIT(13),
 
-    #define BF_BG_SIZE_OFFSET 14
-    #define BF_BG_SIZE_LENGTH 2
+    #define BF_BG_SIZE_OFF 14
+    #define BF_BG_SIZE_LEN 2
 
     #define BG_SIZE(n) BITFIELD(BG_SIZE, (n))
 
@@ -119,8 +119,8 @@ enum BackgroundControl
     BG_SIZE_256X512          = BG_SIZE(2),
     BG_SIZE_512X512          = BG_SIZE(3),
 
-    #define BF_BG_AFFINE_SIZE_OFFSET 14
-    #define BF_BG_AFFINE_SIZE_LENGTH 2
+    #define BF_BG_AFFINE_SIZE_OFF 14
+    #define BF_BG_AFFINE_SIZE_LEN 2
 
     #define BG_AFFINE_SIZE(n) BITFIELD(BG_AFFINE_SIZE, (n))
 

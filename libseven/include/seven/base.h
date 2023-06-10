@@ -18,30 +18,33 @@
     #define _LIBSEVEN_EXTERN_C_END
 #endif
 
-#define _LIBSEVEN_STR(s) #s
-#define _LIBSEVEN_STR2(s) _LIBSEVEN_STR(s)
+#define _LIBSEVEN_STR(s)     #s
+#define _LIBSEVEN_STR1(s)    _LIBSEVEN_STR(s)
 
+#define _LIBSEVEN_COUNTER    _LIBSEVEN_STR1(__COUNTER__)
+
+#define _LIBSEVEN_ALIGNED    __attribute__((__aligned__(4)))
+#define _LIBSEVEN_NOINLINE   __attribute__((__noinline__))
+#define _LIBSEVEN_NORETURN   __attribute__((__noreturn__))
 #define _LIBSEVEN_TARGET_ARM __attribute__((__target__("arm"), __noinline__))
-#define _LIBSEVEN_NOINLINE __attribute__((__noinline__))
-#define _LIBSEVEN_NORETURN __attribute__((__noreturn__))
-#define _LIBSEVEN_ALIGNED __attribute__((__aligned__(4)))
+
+#define _LIBSEVEN_INLINE_SWI "swi %[num] << ((1f - . == 4) * -16); 1:"
 
 #define LIBSEVEN_VERSION_MAJOR 0
-#define LIBSEVEN_VERSION_MINOR 18
+#define LIBSEVEN_VERSION_MINOR 19
 #define LIBSEVEN_VERSION_PATCH 0
 
 #define LIBSEVEN_VERSION \
-    _LIBSEVEN_STR2(LIBSEVEN_VERSION_MAJOR) "." \
-    _LIBSEVEN_STR2(LIBSEVEN_VERSION_MINOR) "." \
-    _LIBSEVEN_STR2(LIBSEVEN_VERSION_PATCH)
+    _LIBSEVEN_STR1(LIBSEVEN_VERSION_MAJOR) "." \
+    _LIBSEVEN_STR1(LIBSEVEN_VERSION_MINOR) "." \
+    _LIBSEVEN_STR1(LIBSEVEN_VERSION_PATCH)
 
-#define VOLADDR(addr, type)             (*(type volatile (*))(addr))
-#define VOLARRAY(addr, type, size)      (*(type volatile (*)[size])(addr))
+#define VOLADDR(addr, type)        (*(type volatile (*))(addr))
+#define VOLARRAY(addr, type, size) (*(type volatile (*)[size])(addr))
 
-#define MEMADDR(addr, type)             (*(type (*))(addr))
-#define MEMARRAY(addr, type, size)      (*(type (*)[size])(addr))
+#define MEMADDR(addr, type)        (*(type (*))(addr))
+#define MEMARRAY(addr, type, size) (*(type (*)[size])(addr))
 
-#define BIT(n)                          (1 << (n))
-#define BITS(n)                         (BIT(n) - 1)
-#define BITFIELD(name, value)           \
-    (((value) & BITS(BF_##name##_LENGTH)) << (BF_##name##_OFFSET))
+#define BIT(n)            (1 << (n))
+#define BITS(n)           (BIT(n) - 1)
+#define BITFIELD(name, x) (((x) & BITS(BF_##name##_LEN)) << (BF_##name##_OFF))

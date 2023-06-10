@@ -13,16 +13,16 @@ _LIBSEVEN_EXTERN_C
 
 enum Tile
 {
-    #define BF_TILE_NUMBER_OFFSET 0
-    #define BF_TILE_NUMBER_LENGTH 10
+    #define BF_TILE_NUMBER_OFF 0
+    #define BF_TILE_NUMBER_LEN 10
 
     #define TILE_NUMBER(n) BITFIELD(TILE_NUMBER, (n))
 
     TILE_FLIP_H = BIT(10),
     TILE_FLIP_V = BIT(11),
 
-    #define BF_TILE_PALETTE_OFFSET 12
-    #define BF_TILE_PALETTE_LENGTH 4
+    #define BF_TILE_PALETTE_OFF 12
+    #define BF_TILE_PALETTE_LEN 4
 
     #define TILE_PALETTE(n) BITFIELD(TILE_PALETTE, (n))
 };
