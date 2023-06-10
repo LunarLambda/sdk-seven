@@ -19,9 +19,11 @@ It includes the following components:
 ## Setup
 
 ```
-./meson-setup.sh
+./setup.sh
 ninja -C build
 ```
+
+Check `meson configure build` for available configuration options.
 
 ## Support
 
