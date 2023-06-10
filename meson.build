@@ -11,13 +11,14 @@ cflags = [
   '-mthumb',
   '-ffunction-sections',
   '-fdata-sections',
-  '-masm-syntax-unified'
+  '-masm-syntax-unified',
 ]
 
 ldflags = [
   '-mthumb',
   '-Wl,--gc-sections',
-  '-Wl,-z,max-page-size=1'
+  '-Wl,-z,max-page-size=1',
+  '-Wno-lto-type-mismatch',
 ]
 
 # Generate debug info compatible with no$gba v3.05

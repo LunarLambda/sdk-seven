@@ -10,8 +10,16 @@
 extern IsrFn isrDefault;
 extern IsrFn isrMinimal;
 
-extern IrqHandlerFn *ISR_MINIMAL_HANDLER;
-extern IrqHandlerFn *ISR_DEFAULT_HANDLERS[16];
+// Mark these as volatile because LTO cannot verify that isrDefault/isrMinimal
+// is called because it's invoked indirectly through the hardware.
+//
+// This means LTO will consider calls to irqSetHandler and similar to be dead
+// accesses, and remove them entirely
+//
+// For our purposes, writing these does produce a side effect, so volatile is
+// actually the semantically correct option here.
+extern IrqHandlerFn * volatile ISR_MINIMAL_HANDLER;
+extern IrqHandlerFn * volatile ISR_DEFAULT_HANDLERS[16];
 
 extern void irqInit(IsrFn *isr)
 {

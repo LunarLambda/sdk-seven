@@ -116,7 +116,7 @@ _start:
     ldr         r2, =__vram_bss_len
     bl          memset
 
-    bl          _start_lang
+    bl          _lang_start
 
 pool: .pool
 
