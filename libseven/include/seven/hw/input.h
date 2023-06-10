@@ -12,11 +12,11 @@ _LIBSEVEN_EXTERN_C
 
 // Keypad input register. Reports held keys as active-low bits.
 //
-#define REG_KEYINPUT    VOLADDR(0x04000130, const uint16_t)
+#define REG_KEYINPUT VOLADDR(0x04000130, const uint16_t)
 
 // Keypad control register. Allows configuring the keypad IRQ.
 //
-#define REG_KEYCNT      VOLADDR(0x04000132, uint16_t)
+#define REG_KEYCNT   VOLADDR(0x04000132, uint16_t)
 
 // Key bits as used by KEYINPUT and KEYCNT.
 enum Key
@@ -64,16 +64,17 @@ enum KeyIndex
 
 enum KeyIRQ
 {
-    KEY_IRQ_ENABLE       = BIT(14),
-    KEY_IRQ_PRESS_ALL    = BIT(15),
-    KEY_IRQ_PRESS_ANY    = !KEY_IRQ_PRESS_ALL,
+    KEY_IRQ_ENABLE    = BIT(14),
+    KEY_IRQ_PRESS_ALL = BIT(15),
+    KEY_IRQ_PRESS_ANY = !KEY_IRQ_PRESS_ALL,
 };
 
+_LIBSEVEN_ALIGNED
 struct InputState
 {
     uint16_t now;
     uint16_t last;
-} __attribute__((aligned(4)));
+};
 
 // Returns a fresh InputState.
 extern struct InputState inputNew(void);

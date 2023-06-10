@@ -32,14 +32,14 @@ _LIBSEVEN_EXTERN_C
 
 #define BF_LSL(lhs, name, rhs)          (BF_SET((lhs), name, BF_GET((lhs), name) << (rhs)))
 #define BF_LSR(lhs, name, rhs)          (BF_SET((lhs), name, BF_GET((lhs), name) >> (rhs)))
-#define BF_ROL(lhs, name, rhs)          (BF_SET((lhs), name, BF_GET((lhs), name) << (rhs) | BF_GET((lhs), name) >> ((BF_##name##_LENGTH) - (rhs))))
-#define BF_ROR(lhs, name, rhs)          (BF_SET((lhs), name, BF_GET((lhs), name) >> (rhs) | BF_GET((lhs), name) << ((BF_##name##_LENGTH) - (rhs))))
+#define BF_ROL(lhs, name, rhs)          (BF_SET((lhs), name, BF_GET((lhs), name) << (rhs) | BF_GET((lhs), name) >> ((BF_##name##_LEN) - (rhs))))
+#define BF_ROR(lhs, name, rhs)          (BF_SET((lhs), name, BF_GET((lhs), name) >> (rhs) | BF_GET((lhs), name) << ((BF_##name##_LEN) - (rhs))))
 
 #define BF_MASK(name)                   \
-    (BITS((BF_##name##_LENGTH)) << (BF_##name##_OFFSET))
+    (BITS((BF_##name##_LEN)) << (BF_##name##_OFF))
 
 #define BF_GET(lhs, name)               \
-    ((lhs) >> ((BF_##name##_OFFSET)) & BITS((BF_##name##_LENGTH)))
+    ((lhs) >> ((BF_##name##_OFF)) & BITS((BF_##name##_LEN)))
 
 #define BF_SET(lhs, name, rhs)          \
     (BF_ORR((lhs) & ~BF_MASK(name), name, (rhs)))

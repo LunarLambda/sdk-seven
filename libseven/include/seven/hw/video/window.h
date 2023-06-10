@@ -10,15 +10,15 @@
 
 _LIBSEVEN_EXTERN_C
 
-#define REG_WIN0H       VOLADDR(0x04000040, uint16_t)
-#define REG_WIN1H       VOLADDR(0x04000042, uint16_t)
-#define REG_WIN0V       VOLADDR(0x04000044, uint16_t)
-#define REG_WIN1V       VOLADDR(0x04000046, uint16_t)
+#define REG_WIN0H   VOLADDR(0x04000040, uint16_t)
+#define REG_WIN1H   VOLADDR(0x04000042, uint16_t)
+#define REG_WIN0V   VOLADDR(0x04000044, uint16_t)
+#define REG_WIN1V   VOLADDR(0x04000046, uint16_t)
 
-#define REG_WIN0IN      VOLADDR(0x04000048, uint8_t)
-#define REG_WIN1IN      VOLADDR(0x04000049, uint8_t)
-#define REG_WIN0OUT     VOLADDR(0x0400004A, uint8_t)
-#define REG_WIN1OUT     VOLADDR(0x0400004B, uint8_t)
+#define REG_WIN0IN  VOLADDR(0x04000048, uint8_t)
+#define REG_WIN1IN  VOLADDR(0x04000049, uint8_t)
+#define REG_WIN0OUT VOLADDR(0x0400004A, uint8_t)
+#define REG_WIN1OUT VOLADDR(0x0400004B, uint8_t)
 
 enum WindowControl
 {

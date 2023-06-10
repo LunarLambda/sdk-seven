@@ -10,11 +10,6 @@
 
 _LIBSEVEN_EXTERN_C
 
-#define BF_PSR_MODE_OFF 0
-#define BF_PSR_MODE_LEN 5
-
-#define PSR_MODE(n) BITFIELD(PSR_MODE, (n))
-
 #define BF_PSR_CONTROL_BITS_OFF 0
 #define BF_PSR_CONTROL_BITS_LEN 8
 
@@ -27,6 +22,11 @@ _LIBSEVEN_EXTERN_C
 
 enum ProgramStatusRegister
 {
+    #define BF_PSR_MODE_OFF 0
+    #define BF_PSR_MODE_LEN 5
+
+    #define PSR_MODE(n) BITFIELD(PSR_MODE, (n))
+
     PSR_MODE_USR = PSR_MODE(0x10),
     PSR_MODE_FIQ = PSR_MODE(0x11),
     PSR_MODE_IRQ = PSR_MODE(0x12),

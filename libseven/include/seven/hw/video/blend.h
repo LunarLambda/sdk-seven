@@ -10,14 +10,9 @@
 
 _LIBSEVEN_EXTERN_C
 
-#define REG_BLDCNT      VOLADDR(0x04000050, uint16_t)
-#define REG_BLDALPHA    VOLADDR(0x04000052, uint16_t)
-#define REG_BLDY        VOLADDR(0x04000054, uint16_t)
-
-#define BF_BLEND_MODE_OFF 6
-#define BF_BLEND_MODE_LEN 2
-
-#define BLEND_MODE(n) BITFIELD(BLEND_MODE, (n))
+#define REG_BLDCNT   VOLADDR(0x04000050, uint16_t)
+#define REG_BLDALPHA VOLADDR(0x04000052, uint16_t)
+#define REG_BLDY     VOLADDR(0x04000054, uint16_t)
 
 enum BlendControl
 {
@@ -27,6 +22,11 @@ enum BlendControl
     BLEND_TARGET_BG3      = BIT(3),
     BLEND_TARGET_OBJ      = BIT(4),
     BLEND_TARGET_BD       = BIT(5),
+
+    #define BF_BLEND_MODE_OFF 6
+    #define BF_BLEND_MODE_LEN 2
+
+    #define BLEND_MODE(n) BITFIELD(BLEND_MODE, (n))
 
     BLEND_MODE_NONE       = BLEND_MODE(0),
     BLEND_MODE_ALPHA      = BLEND_MODE(1),

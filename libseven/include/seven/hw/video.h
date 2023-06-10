@@ -10,14 +10,14 @@
 
 _LIBSEVEN_EXTERN_C
 
-#define REG_DISPCNT     VOLADDR(0x04000000, uint16_t)
-#define REG_DISPSTAT    VOLADDR(0x04000004, uint16_t)
-#define REG_VCOUNT      VOLADDR(0x04000006, const uint16_t)
-#define REG_BGCNT       VOLARRAY(0x04000008, uint16_t, 4)
-#define REG_BG0CNT      VOLADDR(0x04000008, uint16_t)
-#define REG_BG1CNT      VOLADDR(0x0400000A, uint16_t)
-#define REG_BG2CNT      VOLADDR(0x0400000C, uint16_t)
-#define REG_BG3CNT      VOLADDR(0x0400000E, uint16_t)
+#define REG_DISPCNT  VOLADDR(0x04000000, uint16_t)
+#define REG_DISPSTAT VOLADDR(0x04000004, uint16_t)
+#define REG_VCOUNT   VOLADDR(0x04000006, const uint16_t)
+#define REG_BGCNT    VOLARRAY(0x04000008, uint16_t, 4)
+#define REG_BG0CNT   VOLADDR(0x04000008, uint16_t)
+#define REG_BG1CNT   VOLADDR(0x0400000A, uint16_t)
+#define REG_BG2CNT   VOLADDR(0x0400000C, uint16_t)
+#define REG_BG3CNT   VOLADDR(0x0400000E, uint16_t)
 
 enum LCDDimensions
 {
@@ -28,34 +28,33 @@ enum LCDDimensions
 
 enum DisplayControl
 {
+    #define BF_DISPLAY_MODE_OFF 0
+    #define BF_DISPLAY_MODE_LEN 3
 
-    #define BF_VIDEO_MODE_OFF 0
-    #define BF_VIDEO_MODE_LEN 3
+    #define DISPLAY_MODE(n) BITFIELD(DISPLAY_MODE, (n))
 
-    #define VIDEO_MODE(n) BITFIELD(VIDEO_MODE, (n))
+    DISPLAY_MODE_REGULAR        = DISPLAY_MODE(0),
+    DISPLAY_MODE_MIXED          = DISPLAY_MODE(1),
+    DISPLAY_MODE_AFFINE         = DISPLAY_MODE(2),
+    DISPLAY_MODE_BITMAP         = DISPLAY_MODE(3),
+    DISPLAY_MODE_BITMAP_INDEXED = DISPLAY_MODE(4),
+    DISPLAY_MODE_BITMAP_SMALL   = DISPLAY_MODE(5),
 
-    VIDEO_MODE_REGULAR        = VIDEO_MODE(0),
-    VIDEO_MODE_MIXED          = VIDEO_MODE(1),
-    VIDEO_MODE_AFFINE         = VIDEO_MODE(2),
-    VIDEO_MODE_BITMAP         = VIDEO_MODE(3),
-    VIDEO_MODE_BITMAP_INDEXED = VIDEO_MODE(4),
-    VIDEO_MODE_BITMAP_SMALL   = VIDEO_MODE(5),
+    DISPLAY_FRAME_SELECT        = BIT(4),
 
-    VIDEO_FRAME_SELECT        = BIT(4),
+    DISPLAY_OBJ_LAYOUT_1D       = BIT(6),
+    DISPLAY_OBJ_LAYOUT_2D       = !DISPLAY_OBJ_LAYOUT_1D,
 
-    VIDEO_OBJ_LAYOUT_1D       = BIT(6),
-    VIDEO_OBJ_LAYOUT_2D       = !VIDEO_OBJ_LAYOUT_1D,
+    DISPLAY_FORCE_BLANK         = BIT(7),
 
-    VIDEO_FORCE_BLANK         = BIT(7),
-
-    VIDEO_BG0_ENABLE          = BIT(8),
-    VIDEO_BG1_ENABLE          = BIT(9),
-    VIDEO_BG2_ENABLE          = BIT(10),
-    VIDEO_BG3_ENABLE          = BIT(11),
-    VIDEO_OBJ_ENABLE          = BIT(12),
-    VIDEO_WIN0_ENABLE         = BIT(13),
-    VIDEO_WIN1_ENABLE         = BIT(14),
-    VIDEO_OBJ_WIN_ENABLE      = BIT(15),
+    DISPLAY_BG0_ENABLE          = BIT(8),
+    DISPLAY_BG1_ENABLE          = BIT(9),
+    DISPLAY_BG2_ENABLE          = BIT(10),
+    DISPLAY_BG3_ENABLE          = BIT(11),
+    DISPLAY_OBJ_ENABLE          = BIT(12),
+    DISPLAY_WIN0_ENABLE         = BIT(13),
+    DISPLAY_WIN1_ENABLE         = BIT(14),
+    DISPLAY_OBJ_WIN_ENABLE      = BIT(15),
 };
 
 enum DisplayStatus
