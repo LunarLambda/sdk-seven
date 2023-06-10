@@ -5,7 +5,7 @@ sources = [
   'src/hw/irq.c',
   'src/hw/isr.s',
   'src/hw/sram.s',
-  'src/hw/timer.s',
+  'src/hw/timer.c',
   'src/util/assert.c',
   'src/util/bit.s',
   'src/util/debug.s',

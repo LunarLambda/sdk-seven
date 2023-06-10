@@ -31,7 +31,7 @@
 #define _LIBSEVEN_INLINE_SWI "swi %[num] << ((1f - . == 4) * -16); 1:"
 
 #define LIBSEVEN_VERSION_MAJOR 0
-#define LIBSEVEN_VERSION_MINOR 19
+#define LIBSEVEN_VERSION_MINOR 20
 #define LIBSEVEN_VERSION_PATCH 0
 
 #define LIBSEVEN_VERSION \

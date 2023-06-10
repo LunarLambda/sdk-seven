@@ -38,12 +38,29 @@ enum TimerControl
     TIMER_ENABLE        = BIT(7),
 };
 
-extern void timerSet(uint32_t num, uint16_t reload, uint16_t flags);
+// Convert a number of ticks at the given frequency to a duration in seconds.
+//
+// Takes one of the TIMER_FREQ values above.
+extern uint32_t timerTicksToSecs(uint32_t ticks, uint32_t freq);
 
-extern void timerEnable(uint32_t num);
+// Convert a number of ticks at the given frequency to a duration in milliseconds.
+//
+// Takes one of the TIMER_FREQ values above.
+extern uint32_t timerTicksToMillis(uint32_t ticks, uint32_t freq);
 
-extern void timerDisable(uint32_t num);
+// Convert a number of CPU cycles to a duration in microseconds.
+extern uint32_t timerCyclesToMicros(uint32_t cycles);
 
-extern uint16_t timerGetValue(uint32_t num);
+// Start a cascade of two timers.
+extern void timerCascadeStart(uint32_t tm_num);
+
+// Stop a cascade of two timers.
+extern void timerCascadeStop(uint32_t tm_num);
+
+// Read the value of two cascaded timers without stopping them.
+//
+// If the timers are running and both timers overflow while reading their values,
+// the result will be incorrect if the upper timer has a reload value other than 0.
+extern uint32_t timerCascadeRead(uint32_t tm_num);
 
 _LIBSEVEN_EXTERN_C_END
