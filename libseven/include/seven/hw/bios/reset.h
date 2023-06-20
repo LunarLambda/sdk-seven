@@ -53,7 +53,9 @@ inline void biosRegisterRamReset(uint8_t reset_flags)
 {
     register uint8_t r0 __asm__("r0") = reset_flags;
 
-    __asm__(_LIBSEVEN_INLINE_SWI
+    // Needs volatile because we care about side effects like I/O
+    // and GCC might discard this because of the unused output otherwise.
+    __asm__ volatile (_LIBSEVEN_INLINE_SWI
             : "+r"(r0)
             : [num]"I"(SWI_REGISTERRAMRESET)
             : "r1", "r3", "memory");

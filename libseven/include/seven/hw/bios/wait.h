@@ -26,7 +26,9 @@ inline void biosIntrWait(bool wait_next, uint16_t intr_flags)
     register bool r0 __asm__("r0") = wait_next;
     register uint16_t r1 __asm__("r1") = intr_flags;
 
-    __asm__(_LIBSEVEN_INLINE_SWI
+    // Needs volatile because we care about side effects but GCC might optimize
+    // this out because of the unused output operand.
+    __asm__ volatile (_LIBSEVEN_INLINE_SWI
             : "+r"(r0), "+r"(r1)
             : [num]"I"(SWI_INTRWAIT)
             : "r3");
