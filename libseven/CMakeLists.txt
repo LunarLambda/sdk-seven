@@ -16,6 +16,7 @@ project(libseven C ASM)
 set(CMAKE_INCLUDE_FLAG_ASM "-Wa,-I")
 
 add_library(seven STATIC
+    src/hw/bios.c
     src/hw/bios.s
     src/hw/dma.s
     src/hw/input.c

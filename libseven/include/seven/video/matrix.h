@@ -7,9 +7,8 @@
 #pragma once
 
 #include <seven/base.h>
+#include <seven/video/types.h>
 
 _LIBSEVEN_EXTERN_C
-
-#error "seven/hw/sound.h is a stub header"
 
 _LIBSEVEN_EXTERN_C_END

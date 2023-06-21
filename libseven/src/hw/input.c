@@ -1,4 +1,4 @@
-#include <seven/hw/input.h>
+#include <seven/input.h>
 
 extern struct InputState inputNew(void)
 {

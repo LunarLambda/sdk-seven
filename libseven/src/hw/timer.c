@@ -1,5 +1,5 @@
 #include <seven/base.h>
-#include <seven/hw/timer.h>
+#include <seven/timer.h>
 
 static uint32_t freq_to_shift(uint32_t freq)
 {

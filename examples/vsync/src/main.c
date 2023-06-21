@@ -1,5 +1,5 @@
 #include <seven/prelude.h>
-#include <seven/hw/video/memory.h>
+#include <seven/video/memory.h>
 
 void vblank_callback(u16 irqs)
 {

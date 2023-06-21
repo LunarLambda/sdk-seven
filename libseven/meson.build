@@ -1,4 +1,5 @@
 sources = [
+  'src/hw/bios.c',
   'src/hw/bios.s',
   'src/hw/dma.s',
   'src/hw/input.c',

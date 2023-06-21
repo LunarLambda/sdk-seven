@@ -7,8 +7,8 @@
 #pragma once
 
 #include <seven/base.h>
-#include <seven/hw/video/memory.h>
-
-_LIBSEVEN_EXTERN_C
-
-_LIBSEVEN_EXTERN_C_END
+#include <seven/video.h>
+#include <seven/video/bg_tiled.h>
+#include <seven/video/color.h>
+#include <seven/video/memory.h>
+#include <seven/video/types.h>

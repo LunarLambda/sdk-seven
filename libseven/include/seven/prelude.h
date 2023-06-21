@@ -9,10 +9,8 @@
 #include <seven/base.h>
 #include <seven/attributes.h>
 #include <seven/types.h>
-#include <seven/hw/input.h>
-#include <seven/hw/irq.h>
-#include <seven/hw/memory.h>
-#include <seven/hw/video.h>
-#include <seven/hw/bios/memory.h>
-#include <seven/hw/bios/reset.h>
-#include <seven/hw/bios/wait.h>
+#include <seven/video.h>
+#include <seven/input.h>
+#include <seven/irq.h>
+#include <seven/memory.h>
+#include <seven/bios.h>

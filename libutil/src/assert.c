@@ -6,7 +6,7 @@
 
 #include <stdlib.h>
 
-#include <seven/hw/irq.h>
+#include <seven/irq.h>
 #include <util/assert.h>
 
 static struct {

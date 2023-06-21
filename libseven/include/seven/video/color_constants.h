@@ -7,7 +7,7 @@
 #pragma once
 
 #include <seven/base.h>
-#include <seven/hw/video/color.h>
+#include <seven/video/color.h>
 
 _LIBSEVEN_EXTERN_C
 

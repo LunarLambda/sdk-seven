@@ -5,7 +5,7 @@
  */
 
 #include <seven/base.h>
-#include <seven/hw/irq.h>
+#include <seven/irq.h>
 
 extern IsrFn isrDefault;
 extern IsrFn isrMinimal;
