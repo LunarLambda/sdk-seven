@@ -28,11 +28,9 @@
 #define _LIBSEVEN_NORETURN   __attribute__((__noreturn__))
 #define _LIBSEVEN_TARGET_ARM __attribute__((__target__("arm"), __noinline__))
 
-#define _LIBSEVEN_INLINE_SWI "swi %[num] << ((1f - . == 4) * -16); 1:"
-
 #define LIBSEVEN_VERSION_MAJOR 0
 #define LIBSEVEN_VERSION_MINOR 22
-#define LIBSEVEN_VERSION_PATCH 0
+#define LIBSEVEN_VERSION_PATCH 1
 
 #define LIBSEVEN_VERSION \
     _LIBSEVEN_STR1(LIBSEVEN_VERSION_MAJOR) "." \

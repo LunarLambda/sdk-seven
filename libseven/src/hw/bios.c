@@ -212,9 +212,8 @@ extern void biosObjAffineSet(
     register uint32_t r3 __asm__("r3") = offset;
 
     __asm__ (SWI_ASM
-            : "+r"(r0), "+r"(r1), "+r"(r2), "+r"(r3)
-            : [num]"I"(SWI_OBJAFFINESET)
-            : "memory");
+            : "+r"(r0), "+r"(r1), "+r"(r2), "+r"(r3), "=m"(*(uint8_t (*) [])r1)
+            : [num]"I"(SWI_OBJAFFINESET), "m"(*(const struct ObjAffineSrcData (*) [])r0));
 }
 
 // SWI 16 - BitUnPack
@@ -227,10 +226,10 @@ extern void biosBitUnPack(
     register void *r1 __asm__("r1") = dst;
     register const struct BitUnPackParam *r2 __asm__("r2") = param;
 
-    __asm__ (_LIBSEVEN_INLINE_SWI
-            : "+r"(r0), "+r"(r1), "+r"(r2)
-            : [num]"I"(SWI_BITUNPACK)
-            : "r3", "memory");
+    __asm__ (SWI_ASM
+            : "+r"(r0), "+r"(r1), "+r"(r2), "=m"(*(uint8_t (*) [])r0)
+            : [num]"I"(SWI_BITUNPACK), "m"(*(uint8_t (*) [])r1)
+            : "r3");
 }
 
 // SWI 17 - LZ77UnCompWram
@@ -239,10 +238,10 @@ extern void biosLZ77UnCompWram(const void *src, void *dst)
     register const void *r0 __asm__("r0") = src;
     register void *r1 __asm__("r1") = dst;
 
-    __asm__ (_LIBSEVEN_INLINE_SWI
-            : "+r"(r0), "+r"(r1)
-            : [num]"I"(SWI_LZ77UNCOMPWRAM)
-            : "r3", "memory");
+    __asm__ (SWI_ASM
+            : "+r"(r0), "+r"(r1), "=m"(*(uint8_t (*) [])r1)
+            : [num]"I"(SWI_LZ77UNCOMPWRAM), "m"(*(uint8_t (*) [])r0)
+            : "r3");
 }
 
 // SWI 18 - LZ77UnCompVram
@@ -251,10 +250,10 @@ extern void biosLZ77UnCompVram(const void *src, void *dst)
     register const void *r0 __asm__("r0") = src;
     register void *r1 __asm__("r1") = dst;
 
-    __asm__ (_LIBSEVEN_INLINE_SWI
-            : "+r"(r0), "+r"(r1)
-            : [num]"I"(SWI_LZ77UNCOMPVRAM)
-            : "r3", "memory");
+    __asm__ (SWI_ASM
+            : "+r"(r0), "+r"(r1), "=m"(*(uint8_t (*) [])r1)
+            : [num]"I"(SWI_LZ77UNCOMPVRAM), "m"(*(uint8_t (*) [])r0)
+            : "r3");
 }
 
 // SWI 19 - HuffUnComp
@@ -263,10 +262,10 @@ extern void biosHuffUnComp(const void *src, void *dst)
     register const void *r0 __asm__("r0") = src;
     register void *r1 __asm__("r1") = dst;
 
-    __asm__(_LIBSEVEN_INLINE_SWI
-            : "+r"(r0), "+r"(r1)
-            : [num]"I"(SWI_HUFFUNCOMP)
-            : "r3", "memory");
+    __asm__ (SWI_ASM
+            : "+r"(r0), "+r"(r1), "=m"(*(uint8_t (*) [])r1)
+            : [num]"I"(SWI_HUFFUNCOMP), "m"(*(uint8_t (*) [])r0)
+            : "r3");
 }
 
 // SWI 20 - RLUnCompWram
@@ -275,10 +274,10 @@ extern void biosRLUnCompWram(const void *src, void *dst)
     register const void *r0 __asm__("r0") = src;
     register void *r1 __asm__("r1") = dst;
 
-    __asm__(_LIBSEVEN_INLINE_SWI
-            : "+r"(r0), "+r"(r1)
-            : [num]"I"(SWI_RLUNCOMPWRAM)
-            : "r3", "memory");
+    __asm__ (SWI_ASM
+            : "+r"(r0), "+r"(r1), "=m"(*(uint8_t (*) [])r1)
+            : [num]"I"(SWI_RLUNCOMPWRAM), "m"(*(uint8_t (*) [])r0)
+            : "r3");
 }
 
 // SWI 21 - RLUnCompVram
@@ -287,10 +286,10 @@ extern void biosRLUnCompVram(const void *src, void *dst)
     register const void *r0 __asm__("r0") = src;
     register void *r1 __asm__("r1") = dst;
 
-    __asm__(_LIBSEVEN_INLINE_SWI
-            : "+r"(r0), "+r"(r1)
-            : [num]"I"(SWI_RLUNCOMPVRAM)
-            : "r3", "memory");
+    __asm__ (SWI_ASM
+            : "+r"(r0), "+r"(r1), "=m"(*(uint8_t (*) [])r1)
+            : [num]"I"(SWI_RLUNCOMPVRAM), "m"(*(uint8_t (*) [])r0)
+            : "r3");
 }
 
 // SWI 22 - Diff8bitUnFilterWram
@@ -299,10 +298,10 @@ extern void biosDiff8bitUnFilterWram(const void *src, void *dst)
     register const void *r0 __asm__("r0") = src;
     register void *r1 __asm__("r1") = dst;
 
-    __asm__(_LIBSEVEN_INLINE_SWI
-            : "+r"(r0), "+r"(r1)
-            : [num]"I"(SWI_DIFF8BITUNFILTERWRAM)
-            : "r3", "memory");
+    __asm__ (SWI_ASM
+            : "+r"(r0), "+r"(r1), "=m"(*(uint8_t (*) [])r1)
+            : [num]"I"(SWI_DIFF8BITUNFILTERWRAM), "m"(*(uint8_t (*) [])r0)
+            : "r3");
 }
 
 // SWI 23 - Diff8bitUnFilterVram
@@ -311,10 +310,10 @@ extern void biosDiff8bitUnFilterVram(const void *src, void *dst)
     register const void *r0 __asm__("r0") = src;
     register void *r1 __asm__("r1") = dst;
 
-    __asm__(_LIBSEVEN_INLINE_SWI
-            : "+r"(r0), "+r"(r1)
-            : [num]"I"(SWI_DIFF8BITUNFILTERVRAM)
-            : "r3", "memory");
+    __asm__ (SWI_ASM
+            : "+r"(r0), "+r"(r1), "=m"(*(uint8_t (*) [])r1)
+            : [num]"I"(SWI_DIFF8BITUNFILTERVRAM), "m"(*(uint8_t (*) [])r0)
+            : "r3");
 }
 
 // SWI 24 - Diff16bitUnFilter
@@ -323,10 +322,10 @@ extern void biosDiff16bitUnFilter(const void *src, void *dst)
     register const void *r0 __asm__("r0") = src;
     register void *r1 __asm__("r1") = dst;
 
-    __asm__(_LIBSEVEN_INLINE_SWI
-            : "+r"(r0), "+r"(r1)
-            : [num]"I"(SWI_DIFF16BITUNFILTER)
-            : "r3", "memory");
+    __asm__ (SWI_ASM
+            : "+r"(r0), "+r"(r1), "=m"(*(uint8_t (*) [])r1)
+            : [num]"I"(SWI_DIFF16BITUNFILTER), "m"(*(uint8_t (*) [])r0)
+            : "r3");
 }
 
 // SWI 25 - SoundBiasChange
@@ -336,21 +335,21 @@ extern void biosDiff16bitUnFilter(const void *src, void *dst)
 // SWI 28 - SoundDriverMain
 extern void biosSoundDriverMain(void)
 {
-    __asm__(_LIBSEVEN_INLINE_SWI
+    __asm__ (SWI_ASM
             :: [num]"I"(SWI_SOUNDDRIVERMAIN) : "r0", "r1", "r3");
 }
 
 // SWI 29 - SoundDriverVSync
 extern void biosSoundDriverVSync(void)
 {
-    __asm__(_LIBSEVEN_INLINE_SWI
+    __asm__ (SWI_ASM
             :: [num]"I"(SWI_SOUNDDRIVERVSYNC) : "r0", "r1", "r3");
 }
 
 // SWI 30 - SoundChannelClear
 extern void biosSoundChannelClear(void)
 {
-    __asm__(_LIBSEVEN_INLINE_SWI
+    __asm__ (SWI_ASM
             :: [num]"I"(SWI_SOUNDCHANNELCLEAR) : "r0", "r1", "r3");
 }
 
@@ -378,14 +377,14 @@ extern void biosHardReset(void)
 // SWI 40 - SoundDriverVSyncOff
 extern void biosSoundDriverVSyncOff(void)
 {
-    __asm__(_LIBSEVEN_INLINE_SWI
+    __asm__ (SWI_ASM
             :: [num]"I"(SWI_SOUNDDRIVERVSYNCOFF) : "r0", "r1", "r3");
 }
 
 // SWI 41 - SoundDriverVSyncOn
 extern void biosSoundDriverVSyncOn(void)
 {
-    __asm__(_LIBSEVEN_INLINE_SWI
+    __asm__ (SWI_ASM
             :: [num]"I"(SWI_SOUNDDRIVERVSYNCON) : "r0", "r1", "r3");
 }
 
