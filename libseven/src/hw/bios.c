@@ -33,13 +33,13 @@ extern void biosRegisterRamReset(uint8_t reset_flags)
 // SWI 2 - Halt
 extern void biosHalt(void)
 {
-    __asm__ (SWI_ASM :: [num]"I"(SWI_HALT) : "r0", "r1", "r3");
+    __asm__ (SWI_ASM :: [num]"I"(SWI_HALT));
 }
 
 // SWI 3 - Stop
 extern void biosStop(void)
 {
-    __asm__ (SWI_ASM :: [num]"I"(SWI_STOP) : "r0", "r1", "r3");
+    __asm__ (SWI_ASM :: [num]"I"(SWI_STOP));
 }
 
 // SWI 4 - IntrWait
@@ -49,8 +49,8 @@ extern void biosIntrWait(bool wait_next, uint16_t intr_flags)
     register uint16_t r1 __asm__("r1") = intr_flags;
 
     __asm__ volatile (SWI_ASM
-            : "+r"(r0), "+r"(r1)
-            : [num]"I"(SWI_INTRWAIT)
+            : "+r"(r0)
+            : "r"(r1), [num]"I"(SWI_INTRWAIT)
             : "r3");
 }
 
