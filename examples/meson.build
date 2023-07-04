@@ -4,3 +4,4 @@ minrt_mb = dependency('minrt-multiboot')
 
 subdir('template')
 subdir('vsync')
+subdir('dacs')
