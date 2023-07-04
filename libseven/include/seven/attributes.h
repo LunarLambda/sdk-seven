@@ -12,7 +12,6 @@
 #define ARM_CODE          __attribute__((__target__("arm"))) NOINLINE
 #define NOINLINE          __attribute__((__noinline__))
 #define NORETURN          __attribute__((__noreturn__))
-#define PACKED            __attribute__((__packed__))
 #define SECTION(name)     __attribute__((__section__(name)))
 #define THUMB_CODE        __attribute__((__target__("thumb"))) NOINLINE
 
