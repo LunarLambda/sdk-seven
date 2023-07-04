@@ -76,17 +76,46 @@ struct InputState
     uint16_t last;
 };
 
+_LIBSEVEN_ALIGNED
+struct InputRepeat
+{
+    uint16_t keys;
+    uint16_t initial_delay;
+    uint16_t repeat_delay;
+    uint16_t hold;
+    uint16_t _state;
+    uint16_t _counter;
+};
+
 // Returns a fresh InputState.
 extern struct InputState inputNew(void);
 
 // Updates the given keypad state. Should be called once per frame.
 extern struct InputState inputPoll(struct InputState i);
 
+// Inject the given keys into the given keypad state. Equivalent to calling inputPoll, if REG_KEYINPUT returned keys.
+extern struct InputState inputInject(uint16_t keys, struct InputState i);
+
+// Performs SOCD (Simultaneous Opposed Cardinal Direction) filtering on the given input state.
+// Uses a neutral resolution, meaning holding opposite direction results in neither direction being held.
+extern struct InputState inputFilterSocd(struct InputState i);
+
+// [WIP]
+//
+// Applies the given repeat state to the given input state. Should be called once per frame.
+//
+// This input layer should be applied last, and the resulting state stored separately from the input state.
+// This is because to track the repeat state correctly, the function needs the "true" input state.
+// extern struct InputState inputApplyRepeat(struct InputRepeat *r, struct InputState i);
+
 // Returns the keys that were pressed this frame. ("Rising egde")
 extern uint16_t inputKeysPressed(uint16_t keys, struct InputState i);
 
 // Returns the keys that were released this frame. ("Falling edge")
 extern uint16_t inputKeysReleased(uint16_t keys, struct InputState i);
+
+// Returns the keys whose state changed this frame. ("Any edge")
+extern uint16_t inputKeysChanged(uint16_t keys, struct InputState i);
 
 // Returns the keys that are being held this frame.
 extern uint16_t inputKeysDown(uint16_t keys, struct InputState i);
