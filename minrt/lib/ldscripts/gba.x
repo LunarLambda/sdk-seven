@@ -193,6 +193,13 @@ SECTIONS
                 PROVIDE_HIDDEN(__fini_array_end = .);
         } >LOAD_REGION
 
+        /* Debug Handler */
+
+        .dacs 0x09FFC000 :
+        {
+                KEEP(*(.dacs .dacs.*))
+        }
+
         /* ROM padding */
 
         .pad :
