@@ -17,6 +17,7 @@ cflags = [
 
 ldflags = [
   '-mthumb',
+  '-Wl,-Map=%',
   '-Wl,--gc-sections',
   '-Wl,-z,max-page-size=1',
   '-Wno-lto-type-mismatch',

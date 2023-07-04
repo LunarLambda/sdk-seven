@@ -1,6 +1,5 @@
 example_template = executable('example-template', 'src/main.c',
   dependencies: [libseven, minrt],
-  link_args: [mapfile.format('example-template')],
   name_suffix: 'elf')
 
 custom_target('example-template-rom',
