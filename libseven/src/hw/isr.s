@@ -36,31 +36,33 @@ fn isrDefault arm
     orr         r2, r2, r1                                      @ 12
     strh        r2, [r0], 8                                     @ 14
 
-    @ Lookup the IRQ handler using a 16-bit Debruijn sequence
-    mov         r0, 0x09000000                                  @ 15
-    add         r0, r0, 0xAF0000                                @ 16
-    mul         r2, r0, r1                                      @ 18/19
+    @ Lookup the IRQ handler using a 16-bit Debruijn sequence.
+    mov         r0, 0x09 << 24                                  @ 15
+    orr         r0, 0xAF << 16                                  @ 16
+    mul         r2, r0, r1                                      @ 18 / 19
     lsr         r2, r2, 28                                      @ 20
 
     @ Load handler
     adr         r3, ISR_DEFAULT_HANDLERS                        @ 21
     ldr         r3, [r3, r2, lsl 2]                             @ 24
     cmp         r3, 0                                           @ 25
-    bxeq        lr                                              @ 26
+    bxeq        lr                                              @ 26 / 28
 
     @ Enable nesting
     mrs         r2, spsr                                        @ 27
-    push        {r2, lr}                                        @ 30
+    msr         cpsr_c, 0x9F                                    @ 28
+    push        {r2, lr}                                        @ 31
 
     @ Call
-    mov         r0, r1                                          @ 31
-    mov         lr, pc                                          @ 32
-    bx          r3                                              @ 35
+    mov         r0, r1                                          @ 32
+    mov         lr, pc                                          @ 33
+    bx          r3                                              @ 36
 
     @ Return
-    pop         {r2, lr}                                        @ 39
-    msr         spsr, r2                                        @ 40
-    bx          lr                                              @ 43
+    pop         {r2, lr}                                        @ 40
+    msr         cpsr_c, 0x92                                    @ 41
+    msr         spsr, r2                                        @ 42
+    bx          lr                                              @ 45
 data ISR_DEFAULT_HANDLERS global .inline=1
     .fill       16, 4, 0
 endd
