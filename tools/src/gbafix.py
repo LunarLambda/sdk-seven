@@ -88,7 +88,7 @@ def main():
     p.add_argument("-m", "--maker", type=str, nargs=1, dest="maker_code")
     p.add_argument("-r", "--revision", type=int, nargs=1, dest="version")
     p.add_argument("-p", "--pad", type=int, nargs="?", dest="pad")
-    p.add_argument("-d", "--debug", type=int, nargs="?", help="ignored")
+    p.add_argument("-d", "--debug", type=int, nargs="?", dest="debug")
 
     opts = p.parse_args()
 
@@ -107,6 +107,11 @@ def main():
     header.version      = opts.version or header.version
 
     binh = header.to_bytes()
+
+    if opts.debug != None:
+        binh = bytearray(binh)
+        binh[0x9C] = 0xA5
+        binh[0xB4] = 0x80 if opts.debug else 0x00
 
     opts.file.seek(0)
     opts.file.write(binh)
