@@ -84,9 +84,9 @@ def main():
 
     p.add_argument("file", help="ROM file to fix", type=argparse.FileType("r+b"))
     p.add_argument("-t", "--title", type=str, nargs="?", const="", dest="title")
-    p.add_argument("-c", "--code", type=str, nargs=1, dest="game_code")
-    p.add_argument("-m", "--maker", type=str, nargs=1, dest="maker_code")
-    p.add_argument("-r", "--revision", type=int, nargs=1, dest="version")
+    p.add_argument("-c", "--code", type=str, dest="game_code")
+    p.add_argument("-m", "--maker", type=str, dest="maker_code")
+    p.add_argument("-r", "--revision", type=int, dest="version")
     p.add_argument("-p", "--pad", type=int, nargs="?", dest="pad")
     p.add_argument("-d", "--debug", type=int, nargs="?", dest="debug")
 
@@ -101,9 +101,9 @@ def main():
 
     opts.title = path.basename(opts.file.name) if opts.title == "" else opts.title
 
-    header.title        = opts.title or header.title
-    header.game_code    = opts.game_code or header.game_code
-    header.maker_code   = opts.maker_code or header.maker_code
+    header.title        = opts.title.encode("ascii") if opts.title else header.title
+    header.game_code    = opts.game_code.encode("ascii") if opts.game_code else header.game_code
+    header.maker_code   = opts.maker_code.encode("ascii") if opts.maker_code else header.maker_code
     header.version      = opts.version or header.version
 
     binh = header.to_bytes()
