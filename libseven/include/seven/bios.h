@@ -6,6 +6,10 @@
 
 #pragma once
 
+#include <seven/base.h>
+
+_LIBSEVEN_EXTERN_C
+
 enum SoftwareInterruptNumber
 {
     SWI_SOFTRESET                       =  0,
@@ -204,3 +208,5 @@ _LIBSEVEN_NORETURN
 extern void biosHardReset(void);
 extern void biosSoundDriverVSyncOff(void);
 extern void biosSoundDriverVSyncOn(void);
+
+_LIBSEVEN_EXTERN_C_END
