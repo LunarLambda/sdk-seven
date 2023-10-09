@@ -8,8 +8,20 @@ quite solid already.
 It includes the following components:
 
 - libseven, a development library for interacting with the GBA hardware
+- libutil, a small library of utility functions
 - minrt, a runtime library for building and running GBA ROMs
 - Python helper scripts
+
+While generally aiming to provide optimized routines for many different aspects
+of GBA programming, sdk-seven does not provide optimized memory or math functions.
+
+Consider using [agbabi](https://github.com/felixjones/agbabi) for those.
+
+[meson-gba](https://github.com/LunarLambda/meson-gba) makes it easy to use
+sdk-seven and any number of additional libraries and tools.
+
+[gba-toolchain](https://github.com/felixjones/gba-toolchain) provides similar
+functionality, using Cmake.
 
 ## Requires
 
