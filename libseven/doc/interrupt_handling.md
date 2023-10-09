@@ -64,7 +64,7 @@ Cartridge interrupt request                      | Bit 13 | N/A
 ## Interrupt Vector
 
 When an interrupt is triggered, the CPU switches into IRQ mode and jumps to
-the interrupt vector located at address `0000 0008`. At this point, interrupts
+the interrupt vector located at address `0000 0018`. At this point, interrupts
 are masked via the CPSR. From there it jumps to the following sequence of
 instructions:
 

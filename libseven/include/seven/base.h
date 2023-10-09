@@ -30,7 +30,7 @@
 
 #define LIBSEVEN_VERSION_MAJOR 0
 #define LIBSEVEN_VERSION_MINOR 22
-#define LIBSEVEN_VERSION_PATCH 1
+#define LIBSEVEN_VERSION_PATCH 2
 
 #define LIBSEVEN_VERSION \
     _LIBSEVEN_STR1(LIBSEVEN_VERSION_MAJOR) "." \
@@ -46,3 +46,6 @@
 #define BIT(n)            (1 << (n))
 #define BITS(n)           (BIT(n) - 1)
 #define BITFIELD(name, x) (((x) & BITS(BF_##name##_LEN)) << (BF_##name##_OFF))
+
+#define UNIT_KIB(n)        ((size_t)(n) << 10)
+#define UNIT_MIB(n)        ((size_t)(n) << 20)

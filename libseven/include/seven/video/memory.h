@@ -23,4 +23,18 @@ _LIBSEVEN_EXTERN_C
 
 #define OAM_OBJS         MEMARRAY(MEM_OAM, struct Object, 128)
 
+
+extern int32_t vramAddrToBgTileIndex(const void *addr, uint16_t bgcnt);
+extern int32_t vramAddrToObjTileIndex(const void *addr);
+
+struct MapIndex
+{
+    bool ok;
+    uint8_t block;
+    uint8_t x;
+    uint8_t y;
+};
+
+extern struct MapIndex vramAddrToMapIndex(const void *addr, uint16_t bgcnt, bool is_affine);
+
 _LIBSEVEN_EXTERN_C_END

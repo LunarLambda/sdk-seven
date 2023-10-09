@@ -94,7 +94,7 @@ def byte(s):
 
     if x < 0 or x > 255:
         raise ValueError("version must be between 0 and 255")
-    
+
     return x
 
 def default_title(fp):

@@ -1,2 +1,2 @@
 #!/bin/sh
-meson setup --cross-file=cross/arm-none-eabi.txt --cross-file=cross/arm7tdmi.txt "${1:-build}"
+meson setup --cross-file=meson/arm-none-eabi.ini --cross-file=meson/arm7tdmi.ini "${1:-build}"

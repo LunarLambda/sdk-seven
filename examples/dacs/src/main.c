@@ -2,7 +2,7 @@
 #include <seven/video/bg_bitmap.h>
 #include <seven/video/color_constants.h>
 
-__attribute__((section(".dacs"), target("arm")))
+__attribute__((section(".dacs"), target("arm"), used))
 static void dacs(void)
 {
     REG_DISPCNT = DISPLAY_MODE_BITMAP | DISPLAY_BG2_ENABLE;

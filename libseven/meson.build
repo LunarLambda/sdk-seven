@@ -8,6 +8,7 @@ sources = [
   'src/hw/sram.s',
   'src/hw/timer.c',
   'src/video/oam.s',
+  'src/video/vram.c',
 ]
 
 includes = ['include']
