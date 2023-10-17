@@ -1,2 +1,3 @@
 option('use_nano', description: 'Use newlib-nano', type: 'feature', value: 'auto')
 option('minrt_lang', description: 'Minrt target language', type: 'combo', choices: ['c', 'rust'], value: 'c')
+option('no_libs', description: 'Only compile minrt and tools', type: 'boolean', value: 'false')

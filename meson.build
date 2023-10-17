@@ -10,13 +10,18 @@ libutil_version = '0.2.0'
 
 if not meson.is_subproject()
   subdir('meson/toolchain')
+else
+  add_project_arguments('-masm-syntax-unified', language: 'c')
 endif
 
-subdir('libseven')
 subdir('minrt')
-subdir('libutil')
 subdir('tools')
 
-if not meson.is_subproject()
-  subdir('examples')
+if not get_option('no_libs')
+  subdir('libseven')
+  subdir('libutil')
+
+  if not meson.is_subproject()
+    subdir('examples')
+  endif
 endif
