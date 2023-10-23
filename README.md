@@ -25,7 +25,7 @@ functionality, using Cmake.
 
 ## Requires
 
-- meson >=0.59.0
+- meson >=0.64.0
 - arm-none-eabi toolchain (gcc, binutils, newlib)
 
 ## Setup

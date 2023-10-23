@@ -8,7 +8,7 @@
 .cpu            arm7tdmi
 
 .section        .pad,"aR",%progbits
-.string         "minrt 0.9.0"
+.string         "minrt 0.10.0"
 
 .section        .text._start_rom,"ax",%progbits
 _start_rom:
@@ -39,10 +39,41 @@ _start_rom:
     ldr         pc, =_start
 
 .section        .text._start,"ax",%progbits
+_cpuset:
+    .word       __iwram_lma
+    .word       __iwram_vma
+    .word       __iwram_dma
+    .word       __ewram_lma
+    .word       __ewram_vma
+    .word       __ewram_dma
+    .word       __vram_lma
+    .word       __vram_vma
+    .word       __vram_dma
+    .word       __data_lma
+    .word       __data_vma
+    .word       __data_dma
+    .word       _zero
+    .word       __bss_vma
+    .word       __bss_dma
+    .word       _zero
+    .word       __iwram_bss_vma
+    .word       __iwram_bss_dma
+    .word       _zero
+    .word       __ewram_bss_vma
+    .word       __ewram_bss_dma
+    .word       _zero
+    .word       __vram_bss_vma
+    .word       __vram_bss_dma
+_zero:
+    .word       0, 0, 0
+_trap:
+    b           .
 _start:
     @ IRQs off
     ldr         r0, =REG_IME
     str         r0, [r0]
+    adr         r1, _trap
+    str         r1, [r0, -0x20C]
 
     @ Stack setup
     msr         cpsr_c, 0xD3
@@ -52,82 +83,22 @@ _start:
     msr         cpsr_c, 0x1F
     ldr         sp, =__sp_sys
 
-    add         r0, pc, #1
-    bx          r0
-
-.thumb
-    @ IWRAM segment
-    ldr         r2, =__iwram_len
-    cmp         r2, 0
-    beq         1f
-    ldr         r0, =__iwram_vma
-    ldr         r1, =__iwram_lma
-    bl          memcpy
+    @ Initialize memory segments
+    adr         r4, _cpuset
 1:
-
-    @ EWRAM segment
-    ldr         r2, =__ewram_len
-    cmp         r2, 0
-    beq         1f
-    ldr         r0, =__ewram_vma
-    ldr         r1, =__ewram_lma
-    bl          memcpy
-1:
-
-    @ VRAM segment
-    ldr         r2, =__vram_len
-    cmp         r2, 0
-    beq         1f
-    ldr         r0, =__vram_vma
-    ldr         r1, =__vram_lma
-    bl          memcpy
-1:
-
-    @ .persistent section
-    ldr         r3, =init
-    ldrb        r0, [r3]
+    ldm         r4!, {r0, r1, r2}
     cmp         r0, 0
-    bne         1f
-    movs        r0, 1
-    strb        r0, [r3]
-    ldr         r2, =__persistent_len
-    cmp         r2, 0
-    beq         1f
-    ldr         r0, =__persistent_vma
-    ldr         r1, =__persistent_lma
-    bl          memcpy
-1:
+    swine       11 << 16
+    bne         1b
 
-    @ .iwram_bss section
-    ldr         r0, =__iwram_bss_vma
-    movs        r1, 0
-    ldr         r2, =__iwram_bss_len
-    bl          memset
-
-    @ .ewram_bss section
-    ldr         r0, =__ewram_bss_vma
-    movs        r1, 0
-    ldr         r2, =__ewram_bss_len
-    bl          memset
-
-    @ .vram_bss section
-    ldr         r0, =__vram_bss_vma
-    movs        r1, 0
-    ldr         r2, =__vram_bss_len
-    bl          memset
-
+    @ Start
     bl          _lang_start
-
-pool: .pool
 
 .section        .text._exit,"ax",%progbits
 _exit:
     ldr         r1, =REG_IME
     str         r1, [r1]
     b           .
-
-.section        .noinit,"aw",%nobits
-init: .byte     0
 
 .equiv          REG_IME,        0x04000208
 
